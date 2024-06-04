@@ -1,8 +1,8 @@
 import React from 'react'
-import Header from '../../components/layouts/Header'
-import SideNav from '../../components/layouts/SideNav'
-import Footer from '../../components/layouts/Footer'
 import { Outlet } from 'react-router-dom'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import SideNav from '../components/admin/SideNav'
 
 const AdminLayout = () => {
     return (

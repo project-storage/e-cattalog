@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import AdminLayout from './Layout/Admin/AdminLayout'
-import HomePageAdmin from './pages/Admin/HomePageAdmin'
+import AdminLayout from './Layout/AdminLayout'
+import HomePageAdmin from './pages/admin/HomePageAdmin'
 
 const App = () => {
   return (

@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../components/Header'
+import Header from '../components/sale/Header'
 import { Outlet } from 'react-router-dom'
-import Footer from '../components/Footer'
+import Footer from '../components/sale/Footer'
 import SideNav from '../components/sale/SideNav'
 
 const SaleLayout = () => {
@@ -9,7 +9,9 @@ const SaleLayout = () => {
         <div className='wrapper'>
             <Header />
             <SideNav />
-            <Outlet />
+            <div className="content-wrapper">
+                <Outlet />
+            </div>     
             <Footer />
         </div>
     )

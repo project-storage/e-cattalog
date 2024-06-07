@@ -4,17 +4,18 @@ import AdminLayout from './Layout/AdminLayout'
 import HomePageAdmin from './pages/Admin/HomePageAdmin'
 import HomePageSale from './pages/sale/HomePageSale'
 import SaleLayout from './Layout/SaleLayout'
+import Login from './pages/auth/Login'
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='/' element={<Login/>}/>
         <Route element={<AdminLayout />}>
-          <Route path='/' element={<HomePageAdmin />} />
+          <Route path='/admin' element={<HomePageAdmin />} />
         </Route>
         <Route element={<SaleLayout />}>
           <Route path='/sale' element={<HomePageSale />}/>
-          
         </Route>
       </Routes>
     </BrowserRouter>

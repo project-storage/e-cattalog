@@ -3,31 +3,45 @@ const mongoose = require('mongoose')
 const roleStatus = ['admin', 'user', 'production']
 
 const userSchema = new mongoose.Schema({
-    fullName: {
+    title: {
         type: String,
-        required: true,
+        require: true,
+        unique: true
+    },
+    firstName: {
+        type: String,
+        require: true,
+        unique: true
+    },
+    lastName: {
+        type: String,
+        require: true,
         unique: true
     },
     email: {
         type: String,
-        required: true,
-        unique: true,
+        require: true,
+        unique: true
     },
     password: {
         type: String,
-        required: true,
-    },
-    phone: {
-        type: String,
-        required: true,
+        require: true,
+        unique: true
     },
     role: {
-        type: mongoose.ObjectId,
-        ref: "role",
+        type: String,
+        enum: roleStatus,
         required: true
+    },
+    tel: {
+        type: String,
+        require: true,
+        unique: true
     }
 },
-    { timestamps: true }
+    {
+        timestamps: true
+    }
 )
 
-module.exports = mongoose.model('users', userSchema)
+module.exports = mongoose.model('User', userSchema)

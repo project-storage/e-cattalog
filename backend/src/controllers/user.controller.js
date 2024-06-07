@@ -2,8 +2,7 @@ const User = require('../models/user.model');
 
 const getAllUsers = async (req, res) => {
     try {
-        // ดึงข้อมูลผู้ใช้ทั้งหมดจากฐานข้อมูล และ populate ข้อมูล role
-        const users = await User.find().populate('role');
+        const users = await User.find()
 
         res.status(200).json({ users });
     } catch (error) {
@@ -21,7 +20,7 @@ const searchUserByRole = async (req, res) => {
         }
 
         // Search users by role
-        const users = await User.find({ role }).populate('role');
+        const users = await User.find({ role })
 
         if (!users || users.length === 0) {
             return res.status(404).json({ message: "No users found with this role" });

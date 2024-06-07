@@ -4,27 +4,27 @@ const jwt = require('jsonwebtoken')
 
 const register = async (req, res) => {
     try {
-        const { fullName, email, password, phone, role } = req.body;
+        const { title, firstName, lastName, email, password, tel, role } = req.body;
 
         // ตรวจสอบว่ามีข้อมูลที่จำเป็นทั้งหมดหรือไม่
-        if (!fullName || !email || !password || !phone || !role) {
+        if (!title || !firstName || !lastName || !email || !password || !tel || !role) {
             return res.status(400).json({ msg: "กรุณากรอกข้อมูลให้ครบ" });
         }
 
         // ตรวจสอบเบอร์โทรให้ครบ 10 ตำแหน่ง
-        if (phone.length !== 10) {
+        if (tel.length !== 10) {
             return res.status(400).json({ msg: "กรุณากรอกเบอร์โทรให้ครบ 10 ตำแหน่ง" });
         }
 
         // ตรวจสอบว่าอีเมล์หรือเบอร์โทรนี้ถูกใช้งานแล้วหรือไม่
         const existingEmail = await userModel.findOne({ email });
-        const existingPhone = await userModel.findOne({ phone });
+        const existingTel = await userModel.findOne({ tel });
 
         if (existingEmail) {
             return res.status(400).json({ msg: "อีเมลนี้ถูกใช้งานแล้ว" });
         }
 
-        if (existingPhone) {
+        if (existingTel) {
             return res.status(400).json({ msg: "เบอร์โทรนี้ถูกใช้งานแล้ว" });
         }
 
@@ -33,10 +33,12 @@ const register = async (req, res) => {
 
         // สร้างผู้ใช้ใหม่
         const newUser = new userModel({
-            fullName,
+            title,
+            firstName,
+            lastName,
             email,
             password: hashedPassword,
-            phone,
+            tel,
             role
         });
 
@@ -55,9 +57,9 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { email, password } = req.body
+        const { email, password } = req.body;
 
-        const user = await userModel.findOne({ email })
+        const user = await userModel.findOne({ email });
         if (!user) {
             return res.status(404).send({
                 message: "อีเมลไม่ได้ลงทะเบียน",
@@ -69,28 +71,29 @@ const login = async (req, res) => {
             return res.status(401).json({
                 status_code: 401,
                 msg: 'รหัสผ่านไม่ถูกต้อง'
-            })
+            });
         }
 
-        const jwtToken = await jwt.sign({
+        const jwtToken = jwt.sign({
             _id: user._id,
             email: user.email,
-            password: user.password
+            role: user.role
         },
-            process.env.JWT_SECRET
-        )
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' } // Optional token expiration
+        );
 
         res.status(200).json({
             success: true,
             msg: "Login successfully",
             data: {
-                full_name: user.fullName,
+                full_name: `${user.title} ${user.firstName} ${user.lastName}`,
                 email: user.email,
-                phone: user.phone,
+                tel: user.tel,
                 role: user.role,
                 token: jwtToken
             }
-        })
+        });
     } catch (error) {
         console.error("Error: " + error);
         res.status(500).json({
@@ -98,8 +101,7 @@ const login = async (req, res) => {
             msg: 'Internal Server Error'
         });
     }
-}
-
+};
 
 module.exports = {
     register,

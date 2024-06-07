@@ -1,12 +1,13 @@
 const mongoose = require('mongoose')
 
-const roleStatus = ['admin', 'user', 'production']
+const roleStatus = ['admin', 'sale']
+const title = ['นาย.', 'นาง.', 'น.ส.','Mr.','Ms.']
 
 const userSchema = new mongoose.Schema({
     title: {
         type: String,
+        enum: title,
         require: true,
-        unique: true
     },
     firstName: {
         type: String,

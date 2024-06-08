@@ -9,7 +9,9 @@ const AdminLayout = () => {
         <div className='wrapper'>
             <Header />
             <SideNav />
-            <Outlet />
+            <div className="content-wrapper">
+                <Outlet />
+            </div>
             <Footer />
         </div>
     )

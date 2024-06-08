@@ -13,7 +13,7 @@ const Login = () => {
                         <p className="login-box-msg">ล็อกอินเพื่อเข้าสู่ระบบ</p>
                         <form action="../../index3.html" method="post">
                             <div className="input-group mb-3">
-                                <input type="email" className="form-control" placeholder="Email" />
+                                <input type="email" className="form-control" placeholder="Email" required />
                                 <div className="input-group-append">
                                     <div className="input-group-text">
                                         <span className="fas fa-envelope" />
@@ -21,7 +21,7 @@ const Login = () => {
                                 </div>
                             </div>
                             <div className="input-group mb-3">
-                                <input type="password" className="form-control" placeholder="Password" />
+                                <input type="password" className="form-control" placeholder="Password" required />
                                 <div className="input-group-append">
                                     <div className="input-group-text">
                                         <span className="fas fa-lock" />

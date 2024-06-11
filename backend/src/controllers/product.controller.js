@@ -1,39 +1,51 @@
-const Product = require('../models/product.model')
+const productModel = require('../models/product.model')
+const fs = require('fs')
 
-const insertProduct = async (req,res) => {
+const createProduct = async (req, res) => {
     try {
-        const {productName,
-                price,
-                description,
-                type,
-        } = req.body
+        const { name, price, description, category } = req.fields
+        const { image } = req.files
 
-        const image = "imageForProduct"
-        await Product.create({
-            productName,
-            description,
-            price,
-            type,
-            image
-        })
-        return res.status(201).json('เพิ่มข้อมูลเสร็จสิ้น')
+        if (!name || !price || !description || !category) {
+            return res.status(400).json({ msg: "กรุณากรอกข้อมูลให้ครบ" });
+        }
+
+        if (image && image.size > 1000000) {
+            return res.status(400).json({ msg: "รูปควรมีขนาดน้อยกว่าหรือเท่ากับ 1 mb" })
+        }
+
+        const newProduct = new productModel({ ...req.fields })
+
+        if (image) {
+            newProduct.image.data = fs.readFileSync(image.path)
+            newProduct.image.contentType = image.type
+        }
+        await newProduct.save()
+
+        res.status(201).json({
+            msg: "Product Create Successfully",
+            data: newProduct,
+        });
     } catch (error) {
-        console.log(error)
-        return res.status(500).json('เกิดข้อผิดพลาดทางเทคกะนิก')
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
-const getAllProduct = async (req,res) => {
+const getAllProduct = async (req, res) => {
     try {
-        const Data = await Product.find()
-        return res.status(200).json({Data})
+        const products = await productModel.find().populate('category').select('-image').limit(12).sort({createdAt: -1})
+
+        // console.log(products)
+        res.status(200).json({data:products})
     } catch (error) {
-        console.log(error)
-        return res.status(500).json('เกิดข้อผิดพลาดทางเทคกะนิก')
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
     }
 }
+
 
 module.exports = {
-    insertProduct,
+    createProduct,
     getAllProduct
 }

@@ -16,10 +16,12 @@ app.use(morgan('dev'))
 const userRouter = require('./routes/user.router.js')
 const authRouter = require('./routes/auth.router.js')
 const productRouter = require('./routes/product.router.js')
+const categoryRouter = require('./routes/category.router.js')
 
 app.use('/api/user', userRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/product',productRouter)
+app.use('/api/category',categoryRouter)
 
 // Define routes
 app.get('/', (req, res) => res.send('Hello World!'));

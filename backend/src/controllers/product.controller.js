@@ -34,16 +34,25 @@ const createProduct = async (req, res) => {
 
 const getAllProduct = async (req, res) => {
     try {
-        const products = await productModel.find().populate('category').select('-image').limit(12).sort({createdAt: -1})
+        const products = await productModel.find().populate('category').select('-image').limit(12).sort({ createdAt: -1 })
 
         // console.log(products)
-        res.status(200).json({data:products})
+        res.status(200).json({ data: products })
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
 }
 
+const getProductById = async (req, res) => {
+    try {
+        const {id} = req.params
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
 
 module.exports = {
     createProduct,

@@ -22,10 +22,9 @@ const createCategory = async (req, res) => {
             slug: slugify(name),
         });
 
-        // await newCategory.save();
+        await newCategory.save();
 
-        console.log(newCategory)
-        // res.status(201).json({ msg: "Category created successfully", data: newCategory });
+        res.status(201).json({ msg: "Category created successfully", data: newCategory });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
@@ -44,6 +43,17 @@ const getAllCategory = async (req, res) => {
     }
 }
 
+
+const getCateoryById = async (req, res) => {
+    try {
+        const queryById = await categoryModel.findOne({ slug: req.params.slug })
+
+        res.status(200).json({ msg: "get by slingle category success", data: queryById })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
 // ฟังก์ชันสำหรับอัปเดตหมวดหมู่
 const updateCategory = async (req, res) => {
     try {
@@ -56,7 +66,7 @@ const updateCategory = async (req, res) => {
 
         const updatedCategory = await categoryModel.findByIdAndUpdate(
             id,
-            { name },
+            { name, slug: slugify(name) },
             { new: true }
         );
 
@@ -92,6 +102,7 @@ const deleteCategory = async (req, res) => {
 module.exports = {
     createCategory,
     getAllCategory,
+    getCateoryById,
     updateCategory,
     deleteCategory
 }

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+const title = ['นาย.', 'นาง.', 'น.ส.', 'Mr.', 'Ms.']
+
 const customerSchema = new mongoose.Schema({
     title: {
         type: String,

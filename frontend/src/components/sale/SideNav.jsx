@@ -26,7 +26,7 @@ const SideNav = () => {
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                                     
                             <li className="nav-item">
-                                <a href="pages/product" className="nav-link">
+                                <a href="sale/product" className="nav-link">
                                     <i className="nav-icon fas fa-clipboard-list" />
                                     <p>
                                         สร้างใบเสนอราคา
@@ -35,7 +35,7 @@ const SideNav = () => {
                                 </a>
                             </li>  
                             <li className="nav-item">
-                                <a href="pages/customer" className="nav-link">
+                                <a href="sale/customer" className="nav-link">
                                     <i className="nav-icon 	fas fa-user-friends" />
                                     <p>
                                         รายชื่อลูกค้า 
@@ -43,7 +43,7 @@ const SideNav = () => {
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a href="pages/profile" className="nav-link">
+                                <a href="sale/profile" className="nav-link">
                                     <i className="nav-icon 	fas fa-user-circle" />
                                     <p>
                                         ข้อมูลส่วนตัว

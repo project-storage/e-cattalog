@@ -5,6 +5,7 @@ import HomePageAdmin from './pages/Admin/HomePageAdmin'
 import HomePageSale from './pages/sale/HomePageSale'
 import SaleLayout from './Layout/SaleLayout'
 import Login from './pages/auth/Login'
+import ProductPage from './pages/sale/ProductPage'
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         </Route>
         <Route element={<SaleLayout />}>
           <Route path='/sale' element={<HomePageSale />}/>
+          <Route path='/sale/product ' element={<ProductPage />}/>
         </Route>
       </Routes>
     </BrowserRouter>

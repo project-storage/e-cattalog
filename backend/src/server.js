@@ -18,13 +18,14 @@ const authRouter = require('./routes/auth.router.js')
 const productRouter = require('./routes/product.router.js')
 const categoryRouter = require('./routes/category.router.js')
 const customerRouter = require('./routes/customer.router.js')
+const orderRouter = require('./routes/order.router.js')
 
 app.use('/api/user', userRouter)
 app.use('/api/customer', customerRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/product', productRouter)
 app.use('/api/category', categoryRouter)
-
+app.use('/api/order', orderRouter)
 // Define routes
 app.get('/', (req, res) => res.send('Hello World!'));
 

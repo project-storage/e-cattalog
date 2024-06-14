@@ -36,7 +36,7 @@ const createProduct = async (req, res) => {
 const getAllProduct = async (req, res) => {
     try {
         const products = await productModel
-            .find()
+            .find({})
             .populate('category')
             .select('-image')
             .limit(12)

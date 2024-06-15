@@ -6,15 +6,13 @@ const createCategory = async (req, res) => {
         const { name } = req.body;
 
         if (!name) {
-            return res.status(400).json({ msg: "กรุณากรอกข้อมูลให้ครบ" });
+            return res.status(400).json({ message: "กรุณากรอกข้อมูลให้ครบ" });
         }
 
         const existingName = await categoryModel.findOne({ name });
 
         if (existingName) {
-            return res.status(400).json({
-                msg: "มีประเภทสินค้านี้อยู่แล้ว"
-            });
+            return res.status(400).json({ message: "มีประเภทสินค้านี้อยู่แล้ว" });
         }
 
         const newCategory = new categoryModel({
@@ -24,12 +22,13 @@ const createCategory = async (req, res) => {
 
         await newCategory.save();
 
-        res.status(201).json({ msg: "Category created successfully", data: newCategory });
+        res.status(201).json({ message: "Category created successfully", data: newCategory });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
+
 
 // ฟังก์ชันสำหรับดึงหมวดหมู่ทั้งหมด
 const getAllCategory = async (req, res) => {
@@ -46,7 +45,8 @@ const getAllCategory = async (req, res) => {
 
 const getCateoryById = async (req, res) => {
     try {
-        const queryById = await categoryModel.findOne({ slug: req.params.slug })
+        const { id } = req.params
+        const queryById = await categoryModel.findById(id)
 
         res.status(200).json({ msg: "get by slingle category success", data: queryById })
     } catch (error) {

@@ -1,18 +1,22 @@
 import React from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const SideNav = () => {
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        navigate('/')
+    }
     return (
         <div>
             {/* Main Sidebar Container */}
             <aside className="main-sidebar sidebar-dark-primary elevation-4">
-              
+
                 {/* Sidebar */}
                 <div className="sidebar">
                     {/* Sidebar user panel (optional) */}
                     <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div className="image">
-                            <img src="dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image" />
-                        </div>
                         <div className="info">
                             <a href="#" className="d-block">Alexander Pierce</a>
                         </div>
@@ -22,61 +26,67 @@ const SideNav = () => {
                             {/* Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library */}
                             <li className="nav-item menu-open">
-                                <a href="#" className="nav-link active">
+                                <NavLink to='/admin/dashboard' className="nav-link active">
                                     <i className="nav-icon fas fa-tachometer-alt" />
                                     <p>
                                         หน้าแรก
                                     </p>
-                                </a>
+                                </NavLink>
                             </li>
                             <li className="nav-header">จัดการระบบ</li>
                             <li className="nav-item">
-                                <a href="pages/kanban.html" className="nav-link">
+                                <NavLink to='/admin/orders' className="nav-link">
                                     <i className="nav-icon fas fa-columns" />
                                     <p>
                                         ใบเสนอราคา
                                     </p>
-                                </a>
+                                </NavLink>
                             </li>
                             <li className="nav-item">
-                                <a href="pages/kanban.html" className="nav-link">
+                                <NavLink to='/admin/products' className="nav-link">
                                     <i className="nav-icon fas fa-columns" />
                                     <p>
                                         สินค้า
                                     </p>
-                                </a>
+                                </NavLink>
                             </li>
                             <li className="nav-item">
-                                <a href="pages/kanban.html" className="nav-link">
+                                <NavLink to='/admin/categories' className="nav-link">
                                     <i className="nav-icon fas fa-columns" />
                                     <p>
                                         ประเภทสินค้า
                                     </p>
-                                </a>
+                                </NavLink>
                             </li>
                             <li className="nav-header">จัดการข้อมูล</li>
                             <li className="nav-item">
-                                <a href="pages/kanban.html" className="nav-link">
+                                <NavLink to='/admin/customers' className="nav-link">
+                                    <i className="nav-icon fas fa-columns" />
+                                    <p>
+                                        ข้อมูลลูกค้า
+                                    </p>
+                                </NavLink>
+                                <NavLink to='/admin/users' className="nav-link">
                                     <i className="nav-icon fas fa-columns" />
                                     <p>
                                         ข้อมูลผู้ใช้งาน
                                     </p>
-                                </a>
+                                </NavLink>
                             </li>
                             <li className="nav-item">
-                                <a href="pages/kanban.html" className="nav-link">
+                                <NavLink to='/admin/profile' className="nav-link">
                                     <i className="nav-icon fas fa-columns" />
                                     <p>
                                         ข้อมูลส่วนตัว
                                     </p>
-                                </a>
+                                </NavLink>
                             </li>
                             <li className="nav-header">ออกจากระบบ</li>
                             <li className="nav-item">
-                                <a href="../logout.php" className="nav-link">
+                                <NavLink onClick={handleLogout} className="nav-link">
                                     <i className="nav-icon far fa-circle text-danger" />
                                     <p className="text">ออกจากระบบ</p>
-                                </a>
+                                </NavLink>
                             </li>
                         </ul>
                     </nav>

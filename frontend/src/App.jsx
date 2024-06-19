@@ -9,6 +9,8 @@ import ProductPage from './pages/sale/ProductPage'
 import ProductsPageAdmin from './pages/Admin/ProductsPageAdmin'
 import CategoriesPageAdmin from './pages/Admin/CategoriesPageAdmin'
 import EditCategoryPageAdmin from './pages/Admin/formEdit/EditCategoryPageAdmin'
+import CreateProductPageAdmin from './pages/Admin/CreateProductPageAdmin'
+import EditProductPageAdmin from './pages/Admin/formEdit/EditProductPageAdmin'
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
         <Route element={<AdminLayout />}>
           <Route path='/admin/dashboard' element={<HomePageAdmin />} />
           <Route path='/admin/products' element={<ProductsPageAdmin/>}/>
+          <Route path='/admin/product/create' element={<CreateProductPageAdmin/>}/>
+          <Route path='/admin/product/edit/:id' element={<EditProductPageAdmin/>}/>
           <Route path='/admin/categories' element={<CategoriesPageAdmin/>}/>
           <Route path='/admin/category/eidt/:id' element={<EditCategoryPageAdmin/>}/>
         </Route>

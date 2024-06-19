@@ -95,39 +95,38 @@ const Categories = () => {
         />
       </div>
 
-      <table className="table table-bordered table-gray table-striped text-center">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">ประเภทสินค้า</th>
-            <th scope="col">แก้ไขข้อมูล</th>
-            <th scope="col">ลบข้อมูล</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentCategories.length > 0 ? (
-            currentCategories.map((category, index) => (
-              <tr key={category.id}>
-                <th scope="row">{indexOfFirstItem + index + 1}</th>
-                <td>{category.name}</td>
-                <td>
-                  <button className='btn btn-warning' onClick={() => handleEidt(category._id)}>Edit</button>
-                </td>
-                <td>
-                  <button className='btn btn-danger' onClick={() => handleDelete(category._id)}>Delete</button>
+      <div className="table-responsive">
+        <table className="table table-bordered table-gray table-striped text-center">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">ประเภทสินค้า</th>
+              <th scope="col">action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentCategories.length > 0 ? (
+              currentCategories.map((category, index) => (
+                <tr key={category.id}>
+                  <th scope="row">{indexOfFirstItem + index + 1}</th>
+                  <td>{category.name}</td>
+                  <td>
+                    <button className='btn btn-warning mr-1' onClick={() => handleEidt(category._id)}>Edit</button>
+                    <button className='btn btn-danger ' onClick={() => handleDelete(category._id)}>Delete</button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">
+                  ไม่พบข้อมูล
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4">
-                ไม่พบข้อมูล
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
 
+      </div>
       {filteredCategories.length > 0 && (
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-end">

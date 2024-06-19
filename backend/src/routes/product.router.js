@@ -10,8 +10,9 @@ productRoutes.post('/create', formidable(), productController.createProduct);
 productRoutes.get('/all', productController.getAllProduct);
 
 // Route สำหรับดึงสินค้าตาม ID
-productRoutes.get('/byId/:slug', productController.getProductById);
+productRoutes.get('/info/:id', productController.getProductById);
 
+productRoutes.get('/image/:id',productController.getByImageProduct)
 // Route สำหรับอัปเดตสินค้า
 productRoutes.put('/update/:id', formidable(), productController.updateProduct);
 

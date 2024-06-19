@@ -4,7 +4,7 @@ const fs = require('fs')
 
 const createProduct = async (req, res) => {
     try {
-        const { name, slug, price, description, category } = req.fields
+        const { name, price, description, category } = req.fields
         const { image } = req.files
 
         if (!name || !price || !description || !category) {
@@ -15,7 +15,7 @@ const createProduct = async (req, res) => {
             return res.status(400).json({ msg: "รูปควรมีขนาดน้อยกว่าหรือเท่ากับ 1 mb" })
         }
 
-        const newProduct = new productModel({ ...req.fields, slug: slugify(name) })
+        const newProduct = new productModel({ ...req.fields })
 
         if (image) {
             newProduct.image.data = fs.readFileSync(image.path)
@@ -50,9 +50,28 @@ const getAllProduct = async (req, res) => {
     }
 }
 
+// get photo
+const getByImageProduct = async (req, res) => {
+    try {
+        const product = await productModel.findById(req.params.id).select("image");
+        if (product.image.data) {
+            res.set("Content-type", product.image.contentType);
+            return res.status(200).send(product.image.data);
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error while getting photo product",
+            error,
+        });
+    }
+};
+
 const getProductById = async (req, res) => {
     try {
-        const product = await productModel.findOne({ slug: req.params.slug })
+        const { id } = req.params
+        const product = await productModel.findById(id)
             .select('-image')
             .populate("category")
 
@@ -72,17 +91,12 @@ const updateProduct = async (req, res) => {
         const { name, price, description, category } = req.fields;
         const { image } = req.files;
 
-        if (!name || !price || !description || !category) {
-            return res.status(400).json({ msg: "กรุณากรอกข้อมูลให้ครบ" });
-        }
-
         if (image && image.size > 1000000) {
             return res.status(400).json({ msg: "รูปควรมีขนาดน้อยกว่าหรือเท่ากับ 1 mb" });
         }
 
         const updatedProduct = await productModel.findByIdAndUpdate(id, {
             ...req.fields,
-            slug: slugify(name),
         }, { new: true });
 
         if (image) {
@@ -125,6 +139,7 @@ const deleteProduct = async (req, res) => {
 module.exports = {
     createProduct,
     getAllProduct,
+    getByImageProduct,
     getProductById,
     updateProduct,
     deleteProduct

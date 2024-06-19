@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import ProductService from '../../service/productService'
+import productService from '../../service/productService'
 const CardProduct = ({ productName, image, price }) => {
     const [cardData, setCardData] = useState([])
 
     const fetchProduct = async () => {
-        const res = await ProductService.getallProduct()
+        const res = await productService.getallProduct()
         setCardData(res.data.data)
     }
     useEffect(() => {

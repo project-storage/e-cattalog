@@ -1,5 +1,7 @@
+import React from 'react'
+import ListFooter from './ListFooter'
+
 const Footer = () => {
-    
     return (
         <div>
             <div>
@@ -12,7 +14,11 @@ const Footer = () => {
                     </div>
                 </footer>
                 {/* Control Sidebar */}
-                <aside className="control-sidebar control-sidebar-dark">
+                <aside className="control-sidebar control-sidebar-dark ">
+                    <div className="d-flex justify-content-center my-auto">รายการสินค้า</div>
+                        <div className="d-flex justify-content-center">
+                             <ListFooter  />
+                        </div>
                 </aside>
             </div>
 

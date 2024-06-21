@@ -1,6 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Header = () => {
+
+    const [count , setCount] = useState('')
+    useEffect( () => {
+        const dataCart = JSON.parse(localStorage.getItem("listOrder"))
+        if(dataCart){
+            const count = dataCart.length;
+        setCount(count)
+        }else {
+            setCount(0)
+        }
+        
+    },[])
     return (
         <div>
             {/* Navbar */}
@@ -22,7 +34,7 @@ const Header = () => {
                     <li className="nav-item">
                         <a className="nav-link me-4" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
                             <i className="fas fa-shopping-cart" />
-                            <span className="badge badge-danger navbar-badge pb-1">3</span>
+                            <span className="badge badge-danger navbar-badge pb-1">{count}</span>
                         </a>
                     </li>
                 </ul>

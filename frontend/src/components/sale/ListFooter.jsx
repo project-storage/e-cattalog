@@ -12,20 +12,23 @@ const ListFooter = () => {
         <table className='table'>
             <thead className=''>
                 <tr>
-                    <th className='py-0'>รายการสินค้า </th>
-                    <th className='py-0'>จำนวน</th>
+                    <th>#</th>
+                    <th className='py-auto'>รายการสินค้า </th>
+                    <th className='py-auto'>จำนวน</th>
                 </tr>
             </thead>
             <tbody>
                 { cart != null ? (
                     cart.map((data,index) => (
                         <tr>
-                            <td>{data.id}</td>
+                            <td className='py-auto px-auto' >{index+1}</td>
+                            <td className='py-auto px-auto'>{data.productName}</td>
+                            <td className='py-auto px-auto'>{data.qty}</td>
                         </tr>
                     ))):(
-                        <div className="d-flex mx-3 my-3justify-content-center">
-                            ไม่มีรายการสินค้า
-                        </div>
+                        <tr>
+                            <td colSpan={3}><div className="d-flex justify-content-center">ไม่มีรายการสินค้า</div></td>
+                        </tr>
                     )
                 }
                     

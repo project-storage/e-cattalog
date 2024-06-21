@@ -14,11 +14,16 @@ const Footer = () => {
                     </div>
                 </footer>
                 {/* Control Sidebar */}
-                <aside className="control-sidebar control-sidebar-dark ">
-                    <div className="d-flex justify-content-center my-auto">รายการสินค้า</div>
-                        <div className="d-flex justify-content-center">
-                             <ListFooter  />
-                        </div>
+                <aside className="control-sidebar control-sidebar-dark " style={{ width: "30%" }}>
+                    <div className="d-flex align-items-center flex-column h-100">
+                        <div className=" my-2">รายการสินค้า</div>
+                    
+                        <ListFooter />
+
+                        
+                            <button className='  my-2 btn btn-warning mt-auto form-control'>ยืนยัน</button>
+
+                    </div>
                 </aside>
             </div>
 

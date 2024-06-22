@@ -25,8 +25,8 @@ const SideNav = () => {
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             {/* Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library */}
-                            <li className="nav-item menu-open">
-                                <NavLink to='/admin/dashboard' className="nav-link active">
+                            <li className="nav-item ">
+                                <NavLink to='/admin/dashboard' className="nav-link">
                                     <i className="nav-icon fas fa-tachometer-alt" />
                                     <p>
                                         หน้าแรก

@@ -13,7 +13,7 @@ const ProductPageSale = () => {
             </div>{/* /.col */}
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
-                <li className="breadcrumb-item"><a href="#">Sale</a></li>
+                <li className="breadcrumb-item"><a href="#">sale</a></li>
                 <li className="breadcrumb-item active">products</li>
               </ol>
             </div>{/* /.col */}

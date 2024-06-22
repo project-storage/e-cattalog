@@ -11,12 +11,14 @@ import EditCategoryPageAdmin from './pages/Admin/formEdit/EditCategoryPageAdmin'
 import CreateProductPageAdmin from './pages/Admin/CreateProductPageAdmin'
 import EditProductPageAdmin from './pages/Admin/formEdit/EditProductPageAdmin'
 import ProductPageSale from './pages/sale/ProductPageSale'
+import Register from './pages/auth/Register'
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Login/>}/>
+        <Route path='/register' element={<Register/>}/>
         <Route element={<AdminLayout />}>
           <Route path='/admin/dashboard' element={<HomePageAdmin />} />
           <Route path='/admin/products' element={<ProductsPageAdmin/>}/>

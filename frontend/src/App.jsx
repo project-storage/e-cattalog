@@ -5,12 +5,12 @@ import HomePageAdmin from './pages/Admin/HomePageAdmin'
 import HomePageSale from './pages/sale/HomePageSale'
 import SaleLayout from './Layout/SaleLayout'
 import Login from './pages/auth/Login'
-import ProductPage from './pages/sale/ProductPage'
 import ProductsPageAdmin from './pages/Admin/ProductsPageAdmin'
 import CategoriesPageAdmin from './pages/Admin/CategoriesPageAdmin'
 import EditCategoryPageAdmin from './pages/Admin/formEdit/EditCategoryPageAdmin'
 import CreateProductPageAdmin from './pages/Admin/CreateProductPageAdmin'
 import EditProductPageAdmin from './pages/Admin/formEdit/EditProductPageAdmin'
+import ProductPageSale from './pages/sale/ProductPageSale'
 
 const App = () => {
   return (
@@ -26,8 +26,8 @@ const App = () => {
           <Route path='/admin/category/eidt/:id' element={<EditCategoryPageAdmin/>}/>
         </Route>
         <Route element={<SaleLayout />}>
-          <Route path='/sale' element={<HomePageSale />}/>
-          <Route path='/sale/product/' element={<ProductPage />}/>
+          <Route path='/sale/dashboard' element={<HomePageSale />}/>
+          <Route path='/sale/products' element={<ProductPageSale />}/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react'
 
 const Header = () => {
 
-    const [count , setCount] = useState('')
-    useEffect( () => {
+    const [count, setCount] = useState('')
+    useEffect(() => {
         const dataCart = JSON.parse(localStorage.getItem("listOrder"))
-        if(dataCart){
+        if (dataCart) {
             const count = dataCart.length;
-        setCount(count)
-        }else {
+            setCount(count)
+        } else {
             setCount(0)
         }
-        
-    },[])
+
+    }, [])
     return (
         <div>
             {/* Navbar */}
@@ -25,11 +25,17 @@ const Header = () => {
                 </ul>
                 {/* Right navbar links */}
                 <ul className="navbar-nav ml-auto mr-5">
-                    <li className="nav-item">
-                        <a className="nav-link" data-widget="fullscreen" href="#" role="button">
-                            <i className="fas fa-expand-arrows-alt" />
-                            
-                        </a>
+                    {/* Notifications Dropdown Menu */}
+                    <li className="nav-item dropdown">
+                        <div className="btn-group">
+                            <button type="button" className="btn border dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i className="fa fa-cog" />   ตั้งค่า
+                            </button>
+                            <div className="dropdown-menu dropdown-menu-right">
+                                <button className="dropdown-item" type="button"> <i className='fas fa-user-circle' /> ข้อมูลส่วนตัว</button>
+                                <button className="dropdown-item" type="button"> <i className='far fa-circle text-danger' /> ออกจากระบบ</button>
+                            </div>
+                        </div>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link me-4" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
@@ -37,6 +43,7 @@ const Header = () => {
                             <span className="badge badge-danger navbar-badge pb-1">{count}</span>
                         </a>
                     </li>
+
                 </ul>
             </nav>
             {/* /.navbar */}

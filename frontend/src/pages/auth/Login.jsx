@@ -24,9 +24,25 @@ const Login = () => {
 
             switch (userRole) {
                 case "admin":
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'เข้าสู่ระบบ',
+                        text: 'ยินดีต้อนรับเข้าสู่ระบบ',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    })
                     navigate('/admin/dashboard');
                     break;
                 case 'sale':
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'เข้าสู่ระบบ',
+                        text: 'ยินดีต้อนรับเข้าสู่ระบบ',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    })
                     navigate('/sale/dashboard');
                     break;
                 default:
@@ -51,7 +67,7 @@ const Login = () => {
         <div className='hold-transition login-page'>
             <div className="login-box">
                 <div className="login-logo">
-                   <b>ระบบ</b>จัดการใบเสนอราคา
+                    <b>ระบบ</b>จัดการใบเสนอราคา
                 </div>
                 <div className="card">
                     <div className="card-body login-card-body">

@@ -1,8 +1,34 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 const Header = () => {
-
     const [count, setCount] = useState('')
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        Swal.fire({
+            icon: 'warning',
+            title: 'แน่ใจแล้วหรอที่จะออกจากระบบ',
+            showCancelButton: true,
+            confirmButtonText: 'กดเพื่อออกจากระบบ',
+            cancelButtonText: 'กดยกเลิกยังไม่แน่ใจ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('token')
+                Swal.fire({
+                    icon: 'success',
+                    title: 'ออกจากระบบสำเร็จ',
+                    text: 'แล้วเจอกันใหม่สวัสดี',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                })
+                navigate('/')
+            }
+        })
+    }
+
     useEffect(() => {
         const dataCart = JSON.parse(localStorage.getItem("listOrder"))
         if (dataCart) {
@@ -36,7 +62,7 @@ const Header = () => {
                             </button>
                             <div className="dropdown-menu dropdown-menu-right">
                                 <button className="dropdown-item" type="button"> <i className='fas fa-user-circle' /> ข้อมูลส่วนตัว</button>
-                                <button className="dropdown-item" type="button"> <i className='far fa-circle text-danger' /> ออกจากระบบ</button>
+                                <button className="dropdown-item" type="button" onClick={handleLogout} > <i className='far fa-circle text-danger' /> ออกจากระบบ</button>
                             </div>
                         </div>
                     </li>

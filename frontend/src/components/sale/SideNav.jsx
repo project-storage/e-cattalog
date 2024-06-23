@@ -1,30 +1,62 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import userService from '../../service/userService'
+import Swal from 'sweetalert2'
 
 const SideNav = () => {
+    const [userInfo, setUserInfo] = useState({})
     const navigate = useNavigate()
 
     const handleLogout = () => {
-        localStorage.removeItem('token')
-        navigate('/')
+        Swal.fire({
+            icon: 'warning',
+            title: 'แน่ใจแล้วหรอที่จะออกจากระบบ',
+            showCancelButton: true,
+            confirmButtonText: 'กดเพื่อออกจากระบบ',
+            cancelButtonText: 'กดยกเลิกยังไม่แน่ใจ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('token')
+                Swal.fire({
+                    icon: 'success',
+                    title: 'ออกจากระบบสำเร็จ',
+                    text: 'แล้วเจอกันใหม่สวัสดี',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                })
+                navigate('/')
+            }
+        })
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await userService.userInfo()
+                setUserInfo(res.data.data)
+            } catch (error) {
+                console.error("Error fetching user info:", error)
+            }
+        }
+        fetchData()
+    }, [])
     return (
         <div>
             {/* Main Sidebar Container */}
             <aside className="main-sidebar sidebar-dark-primary elevation-4">
                 {/* Sidebar */}
                 <div className="sidebar">
-                    {/* Sidebar user panel (optional) */}
-                    <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div className="info">
-                            <a href="#" className="d-block">Alexander Pierce</a>
+                    {userInfo && (
+                        <div className="user-panel mt-3 pb-3 mb-3 d-flex">
+                            <div className="info">
+                                <h5 className="d-block bg-dark">{userInfo.title}{userInfo.firstName} {userInfo.lastName}</h5>
+                                <p className="d-block text-center bg-dark">สถานะ: <span className='bg-success p-1'>{userInfo.role}</span></p>
+                            </div>
                         </div>
-                    </div>
-                    {/* Sidebar Menu */}
+                    )}
                     <nav className="mt-2">
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            {/* Add icons to the links using the .nav-icon class
-         with font-awesome or any other icon font library */}
                             <li className="nav-item">
                                 <NavLink to='/sale/dashboard' className="nav-link">
                                     <i className="nav-icon fas fa-tachometer-alt" />
@@ -61,10 +93,10 @@ const SideNav = () => {
                             </li>
                             <li className="nav-header">ออกจากระบบ</li>
                             <li className="nav-item">
-                                <NavLink onClick={handleLogout} className="nav-link">
+                                <div onClick={handleLogout} className="nav-link" style={{ cursor: 'pointer' }}>
                                     <i className="nav-icon far fa-circle text-danger" />
                                     <p className="text">ออกจากระบบ</p>
-                                </NavLink>
+                                </div>
                             </li>
                         </ul>
                     </nav>

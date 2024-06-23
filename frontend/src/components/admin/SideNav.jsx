@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import userService from '../../service/userService'
 
 const SideNav = () => {
+    const [userInfo, setUserInfo] = useState([])
     const navigate = useNavigate()
 
     const handleLogout = () => {
         localStorage.removeItem('token')
         navigate('/')
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await userService.userInfo()
+            setUserInfo(res.data.data)
+        }
+        fetchData()
+    }, [])
     return (
         <div>
             {/* Main Sidebar Container */}
@@ -16,11 +26,14 @@ const SideNav = () => {
                 {/* Sidebar */}
                 <div className="sidebar">
                     {/* Sidebar user panel (optional) */}
-                    <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div className="info">
-                            <a href="#" className="d-block">Alexander Pierce</a>
+                    {userInfo ? (
+                        <div className="user-panel mt-3 pb-3 mb-3 d-flex">
+                            <div className="info">
+                                <h5 className="d-block bg-dark">{userInfo.title}{userInfo.firstName} {userInfo.lastName}</h5>
+                                <p className="d-block text-center bg-dark">สถานะ: <span className='bg-success p-1'>{userInfo.role}</span></p>
+                            </div>
                         </div>
-                    </div>
+                    ) : null}
                     <nav className="mt-2">
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             {/* Add icons to the links using the .nav-icon class

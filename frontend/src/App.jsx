@@ -12,24 +12,25 @@ import CreateProductPageAdmin from './pages/Admin/CreateProductPageAdmin'
 import EditProductPageAdmin from './pages/Admin/formEdit/EditProductPageAdmin'
 import ProductPageSale from './pages/sale/ProductPageSale'
 import Register from './pages/auth/Register'
-
+import Loading from './components/Loading'
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Login/>}/>
-        <Route path='/register' element={<Register/>}/>
+        <Route path='/loading' element={<Loading />} />
+        <Route path='/' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route element={<AdminLayout />}>
           <Route path='/admin/dashboard' element={<HomePageAdmin />} />
-          <Route path='/admin/products' element={<ProductsPageAdmin/>}/>
-          <Route path='/admin/product/create' element={<CreateProductPageAdmin/>}/>
-          <Route path='/admin/product/edit/:id' element={<EditProductPageAdmin/>}/>
-          <Route path='/admin/categories' element={<CategoriesPageAdmin/>}/>
-          <Route path='/admin/category/eidt/:id' element={<EditCategoryPageAdmin/>}/>
+          <Route path='/admin/products' element={<ProductsPageAdmin />} />
+          <Route path='/admin/product/create' element={<CreateProductPageAdmin />} />
+          <Route path='/admin/product/edit/:id' element={<EditProductPageAdmin />} />
+          <Route path='/admin/categories' element={<CategoriesPageAdmin />} />
+          <Route path='/admin/category/eidt/:id' element={<EditCategoryPageAdmin />} />
         </Route>
         <Route element={<SaleLayout />}>
-          <Route path='/sale/dashboard' element={<HomePageSale />}/>
-          <Route path='/sale/products' element={<ProductPageSale />}/>
+          <Route path='/sale/dashboard' element={<HomePageSale />} />
+          <Route path='/sale/products' element={<ProductPageSale />} />
         </Route>
       </Routes>
     </BrowserRouter>

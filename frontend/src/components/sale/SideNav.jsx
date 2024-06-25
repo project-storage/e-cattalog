@@ -76,7 +76,7 @@ const SideNav = () => {
                             </li>
                             <li className="nav-header">จัดการข้อมูล</li>
                             <li className="nav-item">
-                                <NavLink to="sale/customer" className="nav-link">
+                                <NavLink to="sale/customers" className="nav-link">
                                     <i className="nav-icon 	fas fa-user-friends" />
                                     <p>
                                         รายชื่อลูกค้า

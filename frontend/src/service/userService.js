@@ -9,8 +9,13 @@ const userInfo = () => {
     return http.get("/api/user/info");
 };
 
+const userAll = ()=>{
+    return http.get('/api/user/all')
+}
+
 const userService = {
-    userInfo
+    userInfo,
+    userAll
 }
 
 export default userService;

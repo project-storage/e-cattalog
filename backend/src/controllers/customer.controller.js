@@ -2,21 +2,21 @@ const customerModel = require('../models/customer.model')
 
 const createCustomer = async (req, res) => {
     try {
-        const { title, firstName, lastName, email, tel, address } = req.body
+        const { title, firstName, lastName, email, tel, address, sale } = req.body;
 
         // ตรวจสอบว่ามีข้อมูลที่จำเป็นทั้งหมดหรือไม่
-        if (!title || !firstName || !lastName || !email || !tel || !address) {
+        if (!title || !firstName || !lastName || !email || !tel || !address || !sale) {
             return res.status(400).json({ msg: "กรุณากรอกข้อมูลให้ครบ" });
         }
 
         // ตรวจสอบเบอร์โทรให้ครบ 10 ตำแหน่ง
-        if (tel.length !== 10) {
+        if (typeof tel !== 'string' || tel.length !== 10) {
             return res.status(400).json({ msg: "กรุณากรอกเบอร์โทรให้ครบ 10 ตำแหน่ง" });
         }
 
         // ตรวจสอบว่าอีเมล์หรือเบอร์โทรนี้ถูกใช้งานแล้วหรือไม่
-        const existingEmail = await userModel.findOne({ email });
-        const existingTel = await userModel.findOne({ tel });
+        const existingEmail = await customerModel.findOne({ email });
+        const existingTel = await customerModel.findOne({ tel });
 
         if (existingEmail) {
             return res.status(400).json({ msg: "อีเมลนี้ถูกใช้งานแล้ว" });
@@ -26,23 +26,26 @@ const createCustomer = async (req, res) => {
             return res.status(400).json({ msg: "เบอร์โทรนี้ถูกใช้งานแล้ว" });
         }
 
-        const newCustomer = await customerModel({
+        // สร้างลูกค้าใหม่
+        const newCustomer = new customerModel({
             title,
             firstName,
             lastName,
             email,
             tel,
-            address
-        })
+            address,
+            sale
+        });
 
-        await newCustomer.save()
-
-        res.status(201).json({ msg: "Customer created successfully", data: newUser });
+        await newCustomer.save();
+        // console.log(newCustomer)
+        res.status(201).json({ msg: "Customer created successfully", data: newCustomer });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
+
 
 const getAllCustomer = async (req, res) => {
     try {
@@ -74,10 +77,10 @@ const getCustomerById = async (req, res) => {
 const updateCustomer = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, firstName, lastName, email, tel, address } = req.body;
+        const { title, firstName, lastName, email, tel, address, sale } = req.body;
 
         // Validate input
-        if (!title || !firstName || !lastName || !email || !tel || !address) {
+        if (!title || !firstName || !lastName || !email || !tel || !address || !sale) {
             return res.status(400).json({ msg: "กรุณากรอกข้อมูลให้ครบ" });
         }
 
@@ -98,6 +101,7 @@ const updateCustomer = async (req, res) => {
         customer.email = email;
         customer.tel = tel;
         customer.address = address;
+        customer.sale = sale;
 
         await customer.save();
 

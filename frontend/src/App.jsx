@@ -13,6 +13,11 @@ import EditProductPageAdmin from './pages/Admin/formEdit/EditProductPageAdmin'
 import ProductPageSale from './pages/sale/ProductPageSale'
 import Register from './pages/auth/Register'
 import Loading from './components/Loading'
+import CustomersPageAdmin from './pages/Admin/CustomersPageAdmin'
+import CreateCustomerPageAdmin from './pages/Admin/CreateCustomerPageAdmin'
+import CustomerPageSale from './pages/sale/CustomerPageSale'
+import CreateCustomerPageSale from './pages/sale/CreateCustomerPageSale'
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -27,10 +32,14 @@ const App = () => {
           <Route path='/admin/product/edit/:id' element={<EditProductPageAdmin />} />
           <Route path='/admin/categories' element={<CategoriesPageAdmin />} />
           <Route path='/admin/category/eidt/:id' element={<EditCategoryPageAdmin />} />
+          <Route path='/admin/customers' element={<CustomersPageAdmin />} />
+          <Route path='/admin/customer/create' element={<CreateCustomerPageAdmin />} />
         </Route>
         <Route element={<SaleLayout />}>
           <Route path='/sale/dashboard' element={<HomePageSale />} />
           <Route path='/sale/products' element={<ProductPageSale />} />
+          <Route path='/sale/customers' element={<CustomerPageSale />} />
+          <Route path='/sale/customer/create' element={<CreateCustomerPageSale />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -17,8 +17,8 @@ const getUserInfo = async (req, res) => {
 // Get all users
 const getAllUsers = async (req, res) => {
     try {
-        const users = await userModel.find();
-        res.status(200).json({ users });
+        const users = await userModel.find({ role: 'sale' }).select('-admin');
+        res.status(200).json({ data: users });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });

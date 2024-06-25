@@ -1,42 +1,40 @@
-const mongoose = require('mongoose')
-
-const title = ['นาย.', 'นาง.', 'น.ส.', 'Mr.', 'Ms.']
+const mongoose = require('mongoose');
 
 const customerSchema = new mongoose.Schema({
     title: {
         type: String,
-        enum: title,
-        require: true,
+        required: true,
+        enum: ['นาย.', 'นาง.', 'น.ส.', 'Mr.', 'Ms.']
     },
     firstName: {
         type: String,
-        require: true,
-        unique: true
+        required: true
     },
     lastName: {
         type: String,
-        require: true,
-        unique: true
+        required: true
     },
     email: {
         type: String,
-        require: true,
+        required: true,
         unique: true
     },
     tel: {
         type: String,
-        require: true,
+        required: true,
         unique: true
     },
     address: {
         type: String,
-        require: true,
-        unique: true
+        required: true
+    },
+    sale: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     }
-},
-    {
-        timestamps: true
-    }
-)
+}, {
+    timestamps: true
+});
 
-module.exports = mongoose.model('Customer', customerSchema)
+module.exports = mongoose.model('Customer', customerSchema);

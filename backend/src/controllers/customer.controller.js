@@ -49,7 +49,7 @@ const createCustomer = async (req, res) => {
 
 const getAllCustomer = async (req, res) => {
     try {
-        const custermers = await customerModel.find({})
+        const custermers = await customerModel.find({}).populate('sale')
 
         res.status(200).json({ msg: "get all customer success", data: custermers })
     } catch (error) {
@@ -115,13 +115,11 @@ const updateCustomer = async (req, res) => {
 const deleteCustomer = async (req, res) => {
     try {
         const { id } = req.params;
-        const customer = await customerModel.findById(id);
+        const customer = await customerModel.findByIdAndDelete(id);
 
         if (!customer) {
             return res.status(404).json({ msg: "Customer not found" });
         }
-
-        await customer.remove();
 
         res.status(200).json({ msg: "Customer deleted successfully" });
     } catch (error) {

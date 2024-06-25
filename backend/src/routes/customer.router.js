@@ -7,6 +7,6 @@ customerRouter.get('/info/:id', customerController.getCustomerById)
 customerRouter.post('/create', customerController.createCustomer)
 customerRouter.post('/update/:id', customerController.updateCustomer)
 
-customerRouter.delete('delete/:id', customerController.deleteCustomer)
+customerRouter.delete('/delete/:id', customerController.deleteCustomer)
 
 module.exports = customerRouter

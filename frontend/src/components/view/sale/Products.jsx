@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 const Products = () => {
     const [cardData, setCardData] = useState([])
 
-    const handleAddCard = async (id, productName) => {
+    const handleAddCard = async (id, productName,type) => {
         try {
             const { value: qty } = await Swal.fire({
                 title: "จำนวนสินค้า",
@@ -25,7 +25,7 @@ const Products = () => {
                 // แปลงข้อมูลเป็น array ถ้าไม่มีข้อมูลให้ใช้ array ว่างเปล่า
                 const listOrder = existingList ? JSON.parse(existingList) : [];
                 // เพิ่มรายการใหม่เข้าไปใน array
-                listOrder.push({ id: id, productName: productName, qty: qty });
+                listOrder.push({ id: id, productName: productName, qty: qty ,type: type });
                 // เก็บ array ที่ปรับปรุงแล้วกลับไปที่ localStorage
                 localStorage.setItem('listOrder', JSON.stringify(listOrder));
 
@@ -76,7 +76,7 @@ const Products = () => {
                                 <h5 className='card-title'>{product.name}</h5>
                                 <p className='card-text'>{product.price}</p>
                                 <p className='card-text'>{product.category?.name}</p>
-                                <button onClick={() => { handleAddCard(product._id, product.productName) }} className='btn btn-primary'>เพิ่มสินค้า</button>
+                                <button onClick={() => { handleAddCard(product._id, product.productName,product.type) }} className='btn btn-primary'>เพิ่มสินค้า</button>
                             </div>
                         </div>
                     </div>

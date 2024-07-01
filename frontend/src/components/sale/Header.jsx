@@ -66,12 +66,7 @@ const Header = () => {
                             </div>
                         </div>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link me-4" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-                            <i className="fas fa-shopping-cart" />
-                            <span className="badge badge-danger navbar-badge pb-1">{count}</span>
-                        </a>
-                    </li>
+                    
 
                 </ul>
             </nav>

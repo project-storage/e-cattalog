@@ -1,5 +1,5 @@
 import React from 'react'
-import ListFooter from './ListFooter'
+import ListFooter from './ListCart'
 
 const Footer = () => {
     return (

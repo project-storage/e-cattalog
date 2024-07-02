@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import userService from '../../../../service/userService';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const CreateCustomer = () => {
   const [formData, setFormData] = useState({
@@ -48,7 +49,6 @@ const CreateCustomer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setSuccess('');
 
     try {
       const response = await axios.post('http://localhost:8080/api/customer/create', formData);
@@ -62,6 +62,16 @@ const CreateCustomer = () => {
         address: '',
         sale: formData.sale // Keep the selected sale ID
       });
+
+      Swal.fire({
+        icon: 'success',
+        title: 'เพิ่มข้อมูลสำเร็จ!',
+        text: 'Customer created successfully.',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+      navigate('/admin/customers');
 
     } catch (error) {
       if (error.response && error.response.data) {
@@ -80,10 +90,9 @@ const CreateCustomer = () => {
     <div>
       <h2>Create Customer</h2>
       {error && <div className="alert alert-danger">{error}</div>}
-      {success && <div className="alert alert-success">{success}</div>}
-      <form onSubmit={handleSubmit}>
+         <form onSubmit={handleSubmit}>
         <div className="form-row">
-          <div className="form-group col-md-4">
+          <div className="form-group col-md-2">
             <select
               className="form-control"
               name="title"
@@ -99,7 +108,7 @@ const CreateCustomer = () => {
               <option value="Ms.">Ms.</option>
             </select>
           </div>
-          <div className="form-group col-md-4">
+          <div className="form-group col-md-5">
             <input
               type="text"
               className="form-control"
@@ -110,7 +119,7 @@ const CreateCustomer = () => {
               required
             />
           </div>
-          <div className="form-group col-md-4">
+          <div className="form-group col-md-5">
             <input
               type="text"
               className="form-control"
@@ -147,7 +156,7 @@ const CreateCustomer = () => {
           </div>
         </div>
         <div className="form-group">
-          <input
+          <textarea
             type="text"
             className="form-control"
             name="address"

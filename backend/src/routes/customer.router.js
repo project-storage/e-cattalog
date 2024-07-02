@@ -5,7 +5,7 @@ customerRouter.get('/all', customerController.getAllCustomer)
 customerRouter.get('/info/:id', customerController.getCustomerById)
 
 customerRouter.post('/create', customerController.createCustomer)
-customerRouter.post('/update/:id', customerController.updateCustomer)
+customerRouter.put('/update/:id', customerController.updateCustomer)
 
 customerRouter.delete('/delete/:id', customerController.deleteCustomer)
 

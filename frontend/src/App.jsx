@@ -18,6 +18,7 @@ import CreateCustomerPageAdmin from './pages/Admin/CreateCustomerPageAdmin'
 import CustomerPageSale from './pages/sale/CustomerPageSale'
 import CreateCustomerPageSale from './pages/sale/CreateCustomerPageSale'
 import Cart from './pages/sale/Cart'
+import EditCustomerPageAdmin from './pages/Admin/formEdit/EditCustomerPageAdmin'
 
 const App = () => {
   return (
@@ -35,13 +36,14 @@ const App = () => {
           <Route path='/admin/category/eidt/:id' element={<EditCategoryPageAdmin />} />
           <Route path='/admin/customers' element={<CustomersPageAdmin />} />
           <Route path='/admin/customer/create' element={<CreateCustomerPageAdmin />} />
+          <Route path='/admin/customer/edit/:id' element={<EditCustomerPageAdmin />} />
         </Route>
         <Route element={<SaleLayout />}>
           <Route path='/sale/dashboard' element={<HomePageSale />} />
           <Route path='/sale/products' element={<ProductPageSale />} />
           <Route path='/sale/customers' element={<CustomerPageSale />} />
           <Route path='/sale/customer/create' element={<CreateCustomerPageSale />} />
-          <Route path='sale/cart' element={<Cart/>} />
+          <Route path='/sale/cart' element={<Cart/>} />
         </Route>
       </Routes>
     </BrowserRouter>

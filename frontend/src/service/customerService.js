@@ -8,6 +8,12 @@ const customerAll = async () => {
     return http.get('/api/customer/all')
 }
 
+const customerById = async (id) => {
+    return http.get(`/api/customer/info/${id}`).then((res) => {
+        return res;
+    });
+}
+
 const deleteCustomer = async (id) => {
     return http.delete(`/api/customer/delete/${id.toString()}`)
 }
@@ -15,6 +21,7 @@ const deleteCustomer = async (id) => {
 const customerService = {
     createCustomer,
     customerAll,
+    customerById,
     deleteCustomer
 }
 

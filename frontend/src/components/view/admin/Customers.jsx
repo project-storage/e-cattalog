@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import customerService from '../../../service/customerService';
 import userService from '../../../service/userService';
 import Swal from 'sweetalert2';
@@ -12,8 +12,8 @@ const Customers = () => {
   const [selectedSale, setSelectedSale] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-  const [error,setError] = useState("")
-  
+  const [error, setError] = useState("")
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,6 +42,10 @@ const Customers = () => {
 
   const handleCreate = () => {
     navigate('/admin/customer/create');
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/admin/customer/edit/${id}`);
   };
 
   const handleDelete = async (id) => {

@@ -61,7 +61,7 @@ const getAllCustomer = async (req, res) => {
 const getCustomerById = async (req, res) => {
     try {
         const { id } = req.params;
-        const customer = await customerModel.findById(id);
+        const customer = await customerModel.findById(id).populate('sale');
 
         if (!customer) {
             return res.status(404).json({ msg: "Customer not found" });

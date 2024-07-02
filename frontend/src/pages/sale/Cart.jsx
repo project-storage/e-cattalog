@@ -18,7 +18,7 @@ const Cart = () => {
                     <div className="container">
                         <div className="card my-3 shadow">
                             <div className="card-body">
-                                <ListCart />
+                               
                             </div>
                         </div>
                     </div>

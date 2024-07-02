@@ -48,8 +48,8 @@ const Header = () => {
                     <li className="nav-item">
                         <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
                     </li>
-                    <li class="nav-item d-none d-sm-inline-block">
-                        <a href="index.php" class="nav-link">ระบบจัดทำใบเสนอราคา</a>
+                    <li className="nav-item d-none d-sm-inline-block">
+                        <a href="index.php" className="nav-link">ระบบจัดทำใบเสนอราคา</a>
                     </li>
                 </ul>
                 {/* Right navbar links */}

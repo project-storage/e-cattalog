@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 const Products = () => {
     const [cardData, setCardData] = useState([])
 
-    const handleAddCard = async (id, productName,type) => {
+    const handleAddCard = async (id, productName, type, price) => {
         try {
             const { value: qty } = await Swal.fire({
                 title: "จำนวนสินค้า",
@@ -20,26 +20,41 @@ const Products = () => {
             })
 
             if (qty) {
+                let count = 0;
                 // ดึงข้อมูล listOrder จาก localStorage
                 const existingList = localStorage.getItem('listOrder');
                 // แปลงข้อมูลเป็น array ถ้าไม่มีข้อมูลให้ใช้ array ว่างเปล่า
                 const listOrder = existingList ? JSON.parse(existingList) : [];
-                // เพิ่มรายการใหม่เข้าไปใน array
-                listOrder.push({ id: id, productName: productName, qty: qty ,type: type, discount: 0 });
+                const PreListOrder = listOrder.map((data, index) => {
+                    if (data.id == id) {
+                        const intqty = parseInt(qty,10)
+                        const oldqty = parseInt(data.qty,10)
+                        const totalqty = intqty + oldqty
+                        count++
+                        return { ...data, qty: totalqty }
+                    } 
+                    return data
+                })
+
+                if(count == 0){
+                    // เพิ่มรายการใหม่เข้าไปใน array
+                    PreListOrder.push({ id: id, price: price, productName: productName, qty: qty, type: type, discount: 0 });
+                }
+
                 // เก็บ array ที่ปรับปรุงแล้วกลับไปที่ localStorage
-                localStorage.setItem('listOrder', JSON.stringify(listOrder));
+                localStorage.setItem('listOrder', JSON.stringify(PreListOrder));
 
                 Swal.fire({
                     icon: 'success',
                     title: 'เพิ่มสินค้าสำเร็จ',
                     text: 'สามารถเลือกสินค้าต่อได้เลย',
-                    timer: 2000,
+                    timer: 1000,
                     timerProgressBar: true,
                     showConfirmButton: false,
                 })
                 setTimeout(() => {
                     window.location.reload()
-                }, 2000);
+                }, 1000);
             }
         } catch (error) {
             Swal.fire({
@@ -76,7 +91,7 @@ const Products = () => {
                                 <h5 className='card-title'>{product.name}</h5>
                                 <p className='card-text'>{product.price}</p>
                                 <p className='card-text'>{product.category?.name}</p>
-                                <button onClick={() => { handleAddCard(product._id, product.productName,product.type) }} className='btn btn-primary'>เพิ่มสินค้า</button>
+                                <button onClick={() => { handleAddCard(product._id, product.productName, product.type, product.price) }} className='btn btn-primary'>เพิ่มสินค้า</button>
                             </div>
                         </div>
                     </div>

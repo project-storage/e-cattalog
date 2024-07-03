@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import customerService from '../../service/customerService'
+import Swal from 'sweetalert2'
 
 const SelectCustomer = () => {
 
@@ -12,6 +13,14 @@ const SelectCustomer = () => {
   }
 
   const handleSubmit = () => {
+    if(select == ''){
+      Swal.fire({
+        title:"โปรดเลือกลูกค้า",
+        icon:'error',
+        timer:1000,
+        showConfirmButton:false
+      })
+    }
     console.log(select)
   }
   const handleSelectChange = (e) => {

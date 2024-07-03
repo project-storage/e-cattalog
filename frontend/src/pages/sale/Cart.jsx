@@ -6,7 +6,7 @@ const Cart = () => {
     return (
         <>
             <div className="row">
-                <div className="col-7">
+                <div className="col-8">
                     <div className="container">
                         <div className="card my-3 shadow">
                             <div className="card-body">

@@ -1,17 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import customerService from '../../service/customerService'
 
 const SelectCustomer = () => {
-  const customer = () => {
 
+  const [customer, setCustomer] = useState([])
+  const [select,setSelect] = useState('')
+
+  const fetchCustomer = async () => {
+    const res = await customerService.customerBysaleId()
+    setCustomer(res.data.data)
   }
+
+  const handleSubmit = () => {
+    console.log(select)
+  }
+  const handleSelectChange = (e) => {
+    setSelect(e.target.value);
+  };
+
+  useEffect(() => {
+    fetchCustomer()
+
+  }, [])
+
   return (
     <>
       <label htmlFor="">เลือกรายชื่อลูกค้า</label>
-      <select className='form-control' name="" id="">
-        <option value="1">1</option>
+      <select className='form-control' onChange={handleSelectChange} name="" id="">
+        <option value={null}>โปรดเลือกลูกค้า</option>
+        {customer.map((data, index) => (
+          <option key={data._id} value={data._id}>
+            {data.firstName} {data.lastName}
+          </option>
+        ))}
+
       </select>
 
-      <button className='btn btn-success form-control mt-2'>ยืนยันรายการสินค้า</button>
+      <button className='btn btn-success form-control mt-2' onClick={handleSubmit} >ยืนยันรายการสินค้า</button>
     </>
   )
 }

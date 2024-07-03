@@ -1,7 +1,8 @@
 const customerController = require('../controllers/customer.controller')
+const authToken = require('../middleware/auth')
 const customerRouter = require('express').Router()
 
-customerRouter.get('/sale/:saleId', customerController.getInfoCustomer)
+customerRouter.get('/sale',authToken, customerController.getInfoCustomer)
 customerRouter.get('/all', customerController.getAllCustomer)
 customerRouter.get('/info/:id', customerController.getCustomerById)
 

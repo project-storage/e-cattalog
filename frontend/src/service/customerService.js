@@ -4,6 +4,10 @@ const createCustomer = async (customerData) => {
     return http.post('/api/customer/create', customerData)
 }
 
+const customerBysaleId = async () => {
+    return http.get(`/api/customer/sale`)
+}
+
 const customerAll = async () => {
     return http.get('/api/customer/all')
 }
@@ -22,7 +26,8 @@ const customerService = {
     createCustomer,
     customerAll,
     customerById,
-    deleteCustomer
+    deleteCustomer,
+    customerBysaleId
 }
 
 export default customerService 

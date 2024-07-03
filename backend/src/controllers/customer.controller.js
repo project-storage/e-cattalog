@@ -2,13 +2,7 @@ const customerModel = require('../models/customer.model')
 
 const getInfoCustomer = async (req,res) => {
     try {
-        const {saleId} = req.params;
-
-        if(!saleId) {
-            return res.status(400).json({msg:"กรุณากรอกข้อมูลให้ครบ"})
-        }
-
-        const dataCustomer = await customerModel.find({sale:saleId})
+        const dataCustomer = await customerModel.find({sale:req.user._id})
         return res.status(200).json({data:dataCustomer})
 
     } catch (error) {

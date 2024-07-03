@@ -1,5 +1,21 @@
 const customerModel = require('../models/customer.model')
 
+const getInfoCustomer = async (req,res) => {
+    try {
+        const {saleId} = req.params;
+
+        if(!saleId) {
+            return res.status(400).json({msg:"กรุณากรอกข้อมูลให้ครบ"})
+        }
+
+        const dataCustomer = await customerModel.find({sale:saleId})
+        return res.status(200).json({data:dataCustomer})
+
+    } catch (error) {
+        return res.status(500).json({meg:"Internal server error"})
+    }
+}
+
 const createCustomer = async (req, res) => {
     try {
         const { title, firstName, lastName, email, tel, address, sale } = req.body;
@@ -133,5 +149,6 @@ module.exports = {
     getAllCustomer,
     getCustomerById,
     updateCustomer,
-    deleteCustomer
+    deleteCustomer,
+    getInfoCustomer
 }

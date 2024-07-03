@@ -1,6 +1,7 @@
 const customerController = require('../controllers/customer.controller')
 const customerRouter = require('express').Router()
 
+customerRouter.get('/sale/:saleId', customerController.getInfoCustomer)
 customerRouter.get('/all', customerController.getAllCustomer)
 customerRouter.get('/info/:id', customerController.getCustomerById)
 

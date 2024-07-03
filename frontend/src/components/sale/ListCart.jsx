@@ -49,7 +49,7 @@ const ListCart = () => {
                         <td></td>
                         <td colSpan={3} className='d-flex justify-content-end py-0 pt-2'>
                             <p>ส่วนลด : </p>
-                            <input type="text" className='form-control' name={product.type} min={0} onChange={editDiscount} style={{ height: "30px", width: "60px" }} max={100} />
+                            <input type="number" className='form-control' defaultValue={product.discount} name={product.type} min={0} onChange={editDiscount} style={{ height: "30px", width: "60px" }} max={100} />
                         </td>
                     </tr>
                 );

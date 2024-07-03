@@ -1,5 +1,6 @@
 import React from 'react'
 import ListCart from '../../components/sale/ListCart'
+import SelectCustomer from '../../components/sale/SelectCustomer'
 
 const Cart = () => {
     return (
@@ -18,7 +19,7 @@ const Cart = () => {
                     <div className="container">
                         <div className="card my-3 shadow">
                             <div className="card-body">
-                               
+                               <SelectCustomer/>
                             </div>
                         </div>
                     </div>

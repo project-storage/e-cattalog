@@ -25,7 +25,7 @@ const Products = () => {
                 // แปลงข้อมูลเป็น array ถ้าไม่มีข้อมูลให้ใช้ array ว่างเปล่า
                 const listOrder = existingList ? JSON.parse(existingList) : [];
                 // เพิ่มรายการใหม่เข้าไปใน array
-                listOrder.push({ id: id, productName: productName, qty: qty ,type: type });
+                listOrder.push({ id: id, productName: productName, qty: qty ,type: type, discount: 0 });
                 // เก็บ array ที่ปรับปรุงแล้วกลับไปที่ localStorage
                 localStorage.setItem('listOrder', JSON.stringify(listOrder));
 

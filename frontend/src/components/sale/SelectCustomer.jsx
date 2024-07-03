@@ -5,7 +5,9 @@ const SelectCustomer = () => {
         
     }
   return (
-    <div>SelectCustomer</div>
+    <select className='form-control' name="" id="">
+      <option value="1">1</option>
+    </select>
   )
 }
 

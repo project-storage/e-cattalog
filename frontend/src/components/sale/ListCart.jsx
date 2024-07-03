@@ -4,13 +4,31 @@ const ListCart = () => {
     const [chDiscount, setDiscount] = useState([]);
     const [dataCartSS, setDataCartSS] = useState([]);
     const [rows, setRows] = useState([]);
+    const [dataCh, setDataCh] = useState([[]]);
+
 
     const editDiscount = (e) => {
-        
+        console.log(e.target.name);
+        console.log(e.target.value);
+    
         const dataCartJson = localStorage.getItem('listOrder');
         const dataCart = JSON.parse(dataCartJson);
-        console.log(dataCart)
-    }
+    
+        // สร้างสำเนาใหม่ของ dataCart เพื่อหลีกเลี่ยงการเปลี่ยนแปลงข้อมูลโดยตรง
+        const updatedCart = dataCart.map((data) => {
+            if (data.type === e.target.name) {
+                return { ...data, discount: e.target.value };
+            }
+            return data;
+        });
+    
+        // อัพเดต state ด้วยข้อมูลใหม่
+        setDataCh(updatedCart);
+    
+        // อัพเดตข้อมูลใน localStorage ด้วยข้อมูลใหม่
+        localStorage.setItem('listOrder', JSON.stringify(updatedCart));
+    };
+    
     useEffect(() => {
         const dataCartJson = localStorage.getItem('listOrder');
         const dataCart = JSON.parse(dataCartJson);
@@ -31,16 +49,15 @@ const ListCart = () => {
                         <td></td>
                         <td colSpan={3} className='d-flex justify-content-end py-0 pt-2'>
                             <p>ส่วนลด : </p>
-                            <input type="text" className='form-control' name='nall' min={0} onChange={editDiscount} style={{height:"30px",width:"60px"}} max={100} />
+                            <input type="text" className='form-control' name={product.type} min={0} onChange={editDiscount} style={{ height: "30px", width: "60px" }} max={100} />
                         </td>
                     </tr>
                 );
                 check = product.type;
-                const data = [product.id,product.type]
-                console.log(data)
+                const data = [product.id, product.type]
                 setDiscount([...chDiscount, data])
-            }else{
-                const data = [product.id,product.type]
+            } else {
+                const data = [product.id, product.type]
                 setDiscount([...chDiscount, data])
             }
             newRows.push(
@@ -53,7 +70,6 @@ const ListCart = () => {
         });
 
         setRows(newRows);
-        console.log(chDiscount)
     }, [dataCartSS]);
 
     return (

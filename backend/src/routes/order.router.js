@@ -1,8 +1,9 @@
 const orderController = require('../controllers/order.controller')
+const authToken = require('../middleware/auth')
 const orderRouter = require('express').Router()
 
 // Create a new order
-orderRouter.post('/create', orderController.createOrder);
+orderRouter.post('/create',authToken, orderController.createOrder);
 
 // Retrieve all orders
 orderRouter.get('/all', orderController.getAllOrders);

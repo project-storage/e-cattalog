@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const orderSchema = new mongoose.Schema({
     customer: {
         type: mongoose.ObjectId,
@@ -25,6 +24,15 @@ const orderSchema = new mongoose.Schema({
     sale: {
         type: mongoose.ObjectId,
         ref: "User"
+    },
+    totalPrice:{
+        type:Number,
+        required: true
+    },
+    status:{
+        type:String,
+        enum: ['pass','process','fail'],
+        required: true
     },
     date: {
         type: Date,

@@ -51,10 +51,9 @@ const Products = () => {
                     timer: 1000,
                     timerProgressBar: true,
                     showConfirmButton: false,
-                })
-                setTimeout(() => {
+                }).then(() => {
                     window.location.reload()
-                }, 1000);
+                })
             }
         } catch (error) {
             Swal.fire({

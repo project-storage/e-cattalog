@@ -28,7 +28,7 @@ const ListCart = () => {
 
         // อัพเดตข้อมูลใน localStorage ด้วยข้อมูลใหม่
         localStorage.setItem('listOrder', JSON.stringify(updatedCart));
-        
+        setFS(!FS);
     };
 
     const editQty = (e) => {
@@ -98,7 +98,7 @@ const ListCart = () => {
             )
 
         }
-
+        let Pretotal = 0
         dataCartSS.forEach((product, index) => {
             if (check !== product.type) {
                 newRows.push(
@@ -117,20 +117,23 @@ const ListCart = () => {
             }
 
             const sum = product.price*product.qty
-            setTotal(total+sum)
+            const discount = sum*(product.discount/100)
+            const sumDiscount = sum-discount
+            Pretotal = Pretotal+sumDiscount
+
+            setTotal(Pretotal)
             newRows.push(
                 <tr key={index}>
                     <td>{product.productName}</td>
                     <td style={{ width: 90 }}><input type="number" min={1} onChange={editQty} name={product.id} className='form-control' defaultValue={product.qty} /></td>
                     <td className='d-flex justify-content-center'><button className='btn btn-danger' onClick={delProduct} name={product.id}>ลบ</button></td>
                     <td>{product.price}</td>
-                    <td>{sum}</td>
+                    <td>{sum}/{sumDiscount}</td>
                 </tr>
             );
         });
-
         setRows(newRows);
-    }, [dataCartSS]||[FS]);
+    }, [dataCartSS]);
 
 
     return (
@@ -142,12 +145,15 @@ const ListCart = () => {
                         <th >จำนวน</th>
                         <th></th>
                         <th>ราคา/หน่วย</th>
-                        <th>รวม</th>
+                        <th>รวม/หักส่วนลด</th>
 
                     </tr>
                 </thead>
                 <tbody>
                     {rows}
+                    <tr>
+                        <td colSpan={5} style={{textAlign:"end" ,fontWeight:'bold'}}>ราคารวม : {total} </td>
+                    </tr>
                 </tbody>
             </table>
         </>

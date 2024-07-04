@@ -58,15 +58,15 @@ const registerSale = async (req, res) => {
 
 const registerAdmin = async (req, res) => {
     try {
-        const { title, firstName, lastName, email, password, tel, role } = req.body;
+        const { title, firstName, lastName, email, password, tel } = req.body;
 
         // ตรวจสอบว่ามีข้อมูลที่จำเป็นทั้งหมดหรือไม่
-        if (!title || !firstName || !lastName || !email || !password || !tel || !role) {
+        if (!title || !firstName || !lastName || !email || !password || !tel) {
             return res.status(400).json({ msg: "กรุณากรอกข้อมูลให้ครบ" });
         }
 
-         // ตรวจสอบเบอร์โทรให้ครบ 10 ตำแหน่ง
-         if (typeof tel !== 'string' || tel.length !== 10) {
+        // ตรวจสอบเบอร์โทรให้ครบ 10 ตำแหน่ง
+        if (typeof tel !== 'string' || tel.length !== 10) {
             return res.status(400).json({ msg: "กรุณากรอกเบอร์โทรให้ครบ 10 ตำแหน่ง" });
         }
 
@@ -95,6 +95,8 @@ const registerAdmin = async (req, res) => {
             tel,
             role: "admin"
         });
+
+        console.log(newUser)
 
         // บันทึกผู้ใช้ใหม่ในฐานข้อมูล
         await newUser.save();

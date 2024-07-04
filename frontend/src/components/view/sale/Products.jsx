@@ -51,8 +51,6 @@ const Products = () => {
                     timer: 1000,
                     timerProgressBar: true,
                     showConfirmButton: false,
-                }).then(() => {
-                    window.location.reload()
                 })
             }
         } catch (error) {
@@ -90,7 +88,7 @@ const Products = () => {
                                 <h5 className='card-title'>{product.name}</h5>
                                 <p className='card-text'>{product.price}</p>
                                 <p className='card-text'>{product.category?.name}</p>
-                                <button onClick={() => { handleAddCard(product._id, product.productName, product.type, product.price) }} className='btn btn-primary'>เพิ่มสินค้า</button>
+                                <button onClick={() => { handleAddCard(product._id, product.productName, product.category, product.price) }} className='btn btn-primary'>เพิ่มสินค้า</button>
                             </div>
                         </div>
                     </div>

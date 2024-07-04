@@ -17,7 +17,7 @@ const ListCart = () => {
 
         // สร้างสำเนาใหม่ของ dataCart เพื่อหลีกเลี่ยงการเปลี่ยนแปลงข้อมูลโดยตรง
         const updatedCart = dataCart.map((data) => {
-            if (data.type === e.target.name) {
+            if (data.type.name === e.target.name) {
                 return { ...data, discount: e.target.value };
             }
             return data;
@@ -100,11 +100,11 @@ const ListCart = () => {
         }
         let Pretotal = 0
         dataCartSS.forEach((product, index) => {
-            if (check !== product.type) {
+            if (check !== product.type.name) {
                 newRows.push(
                     <tr >
                         <td colSpan={5} style={{ textAlign: 'end' }} className=''>
-                            <input type="number"  defaultValue={product.discount} name={product.type} min={0} onChange={editDiscount} style={{ height: "30px", width: "60px" }} max={100} />
+                            <input type="number"  defaultValue={product.discount} name={product.type.name} min={0} onChange={editDiscount} style={{ height: "30px", width: "60px" }} max={100} />
                         </td>
                     </tr>
                 );

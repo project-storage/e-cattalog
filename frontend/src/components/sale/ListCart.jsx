@@ -102,7 +102,7 @@ const ListCart = () => {
         dataCartSS.forEach((product, index) => {
             if (check !== product.type) {
                 newRows.push(
-                    <tr>
+                    <tr >
                         <td colSpan={5} style={{ textAlign: 'end' }} className=''>
                             <input type="number"  defaultValue={product.discount} name={product.type} min={0} onChange={editDiscount} style={{ height: "30px", width: "60px" }} max={100} />
                         </td>
@@ -123,7 +123,7 @@ const ListCart = () => {
 
             setTotal(Pretotal)
             newRows.push(
-                <tr key={index}>
+                <tr >
                     <td>{product.productName}</td>
                     <td style={{ width: 90 }}><input type="number" min={1} onChange={editQty} name={product.id} className='form-control' defaultValue={product.qty} /></td>
                     <td className='d-flex justify-content-center'><button className='btn btn-danger' onClick={delProduct} name={product.id}>ลบ</button></td>

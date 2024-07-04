@@ -39,9 +39,10 @@ const SelectCustomer = () => {
       })
       const reqBody = {
         customer:select,
-        product:createData,
+        products:createData,
         totalPrice:totalPrice
       }
+      console.log(reqBody)
 
       const res = await orderService.createOrder(reqBody)
       if(res.status == '201'){

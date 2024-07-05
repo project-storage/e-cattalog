@@ -1,55 +1,66 @@
 import React, { useState, useEffect } from 'react';
-import Swal from 'sweetalert2'
-const ListCart = () => {
-    const [chDiscount, setDiscount] = useState([])
-    const [dataCartSS, setDataCartSS] = useState([])
-    const [dataCh, setDataCh] = useState([[]]);
-    const [rows, setRows] = useState([])
-    const [total, setTotal] = useState(0)
-    const [FS,setFS] = useState(0);
+import Swal from 'sweetalert2';
 
+const ListCart = () => {
+    const [chDiscount, setDiscount] = useState({});
+    const [dataCartSS, setDataCartSS] = useState([]);
+    const [rows, setRows] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [FS, setFS] = useState(0);
+
+    // ฟังก์ชันสำหรับแก้ไขส่วนลด
     const editDiscount = (e) => {
-        console.log(e.target.name);
-        console.log(e.target.value);
+        const { name, value } = e.target; // ดึงค่าชื่อและค่าใหม่จากอีเวนต์
 
         const dataCartJson = localStorage.getItem('listOrder');
         const dataCart = JSON.parse(dataCartJson);
 
-        // สร้างสำเนาใหม่ของ dataCart เพื่อหลีกเลี่ยงการเปลี่ยนแปลงข้อมูลโดยตรง
+        // อัพเดตข้อมูลในรถเข็นสินค้าโดยเปลี่ยนส่วนลดตามประเภทสินค้า
         const updatedCart = dataCart.map((data) => {
-            if (data.type.name === e.target.name) {
-                return { ...data, discount: e.target.value };
+            if (data.type.name === name) {
+                return { ...data, discount: value };
             }
             return data;
         });
 
-        // อัพเดต state ด้วยข้อมูลใหม่
-        setDataCh(updatedCart);
-
-        // อัพเดตข้อมูลใน localStorage ด้วยข้อมูลใหม่
+        // อัพเดต state และ localStorage
+        setDataCartSS(updatedCart);
         localStorage.setItem('listOrder', JSON.stringify(updatedCart));
+
+        // อัพเดต state สำหรับส่วนลด
+        setDiscount((prevDiscounts) => ({
+            ...prevDiscounts,
+            [name]: value
+        }));
+
+        // กระตุ้นการ re-render
         setFS(!FS);
     };
 
+    // ฟังก์ชันสำหรับแก้ไขจำนวนสินค้า
     const editQty = (e) => {
+        const { name, value } = e.target; // ดึงค่าชื่อและค่าใหม่จากอีเวนต์
+
         const dataCartJson = localStorage.getItem('listOrder');
         const dataCart = JSON.parse(dataCartJson);
 
+        // อัพเดตข้อมูลในรถเข็นสินค้าโดยเปลี่ยนจำนวนสินค้าตาม ID
         const updatedCart = dataCart.map((data) => {
-            if (data.id == e.target.name) {
-                return { ...data, qty: e.target.value }
+            if (data.id == name) {
+                return { ...data, qty: value };
             }
-            return data
-        })
+            return data;
+        });
 
-        // อัพเดต state ด้วยข้อมูลใหม่
-        setDataCh(updatedCart);
-
-        // อัพเดตข้อมูลใน localStorage ด้วยข้อมูลใหม่
+        // อัพเดต state และ localStorage
+        setDataCartSS(updatedCart);
         localStorage.setItem('listOrder', JSON.stringify(updatedCart));
-        setFS(!FS);
-    }
 
+        // กระตุ้นการ re-render
+        setFS(!FS);
+    };
+
+    // ฟังก์ชันสำหรับลบสินค้า
     const delProduct = (e) => {
         Swal.fire({
             title: "ต้องการลบสินค้าหรือไม่",
@@ -60,10 +71,10 @@ const ListCart = () => {
                 const dataCartJson = localStorage.getItem('listOrder');
                 const dataCart = JSON.parse(dataCartJson);
 
-                // ใช้ map เพื่อสร้าง updatedCart โดยลบสินค้าที่มี id ตรงกับ e.target.name ออก
+                // ลบสินค้าที่มี ID ตรงกับที่กดลบ
                 const updatedCart = dataCart.filter((data) => data.id !== e.target.name);
 
-                // อัปเดต localStorage ด้วย updatedCart ที่ถูกแก้ไขแล้ว
+                // อัพเดต localStorage และกระตุ้นการ re-render
                 localStorage.setItem('listOrder', JSON.stringify(updatedCart));
                 Swal.fire({
                     timer: 1000,
@@ -72,12 +83,13 @@ const ListCart = () => {
                     showConfirmButton: false,
                     timerProgressBar: true,
                 }).then(() => {
-                    window.location.reload()
-                })
+                    setFS(!FS);
+                });
             }
-        })
+        });
+    };
 
-    }
+    // useEffect สำหรับการโหลดข้อมูลสินค้าเมื่อคอมโพเนนต์ถูกสร้างหรือเมื่อ FS เปลี่ยนแปลง
     useEffect(() => {
         const dataCartJson = localStorage.getItem('listOrder');
         const dataCart = JSON.parse(dataCartJson);
@@ -86,73 +98,90 @@ const ListCart = () => {
         }
     }, [FS]);
 
+    // useEffect สำหรับการสร้างแถวในตารางตามข้อมูลสินค้า
     useEffect(() => {
         const newRows = [];
         let check = null;
-        if (dataCartSS.length == 0) {
+        if (dataCartSS.length === 0) {
+            // ถ้าไม่มีสินค้าในรถเข็น แสดงข้อความว่าไม่มีรายการสินค้า
             newRows.push(
-                <tr>
+                <tr key="no-items">
                     <td colSpan={5} style={{ textAlign: 'center' }}>ไม่มีรายการสินค้า</td>
                 </tr>
-
-            )
-
+            );
         }
-        let Pretotal = 0
+
+        let Pretotal = 0; // ตัวแปรสำหรับคำนวณราคารวม
         dataCartSS.forEach((product, index) => {
+            // ถ้าประเภทสินค้าปัจจุบันไม่เหมือนกับประเภทสินค้าที่เช็คไว้
             if (check !== product.type.name) {
                 newRows.push(
-                    <tr >
-                        <td colSpan={5} style={{ textAlign: 'end' }} className=''>
-                            <input type="number"  defaultValue={product.discount} name={product.type.name} min={0} onChange={editDiscount} style={{ height: "30px", width: "60px" }} max={100} />
+                    <tr key={`discount-${product.type.name}`}>
+                        <td colSpan={5} style={{ textAlign: 'end' }}>
+                            <input
+                                type="number"
+                                defaultValue={product.discount || 0}
+                                name={product.type.name}
+                                min={0}
+                                onChange={editDiscount}
+                                style={{ height: "30px", width: "60px" }}
+                                max={100}
+                            />
                         </td>
                     </tr>
                 );
-                check = product.type;
-                const data = [product.id, product.type]
-                setDiscount([...chDiscount, data])
-            } else {
-                const data = [product.id, product.type]
-                setDiscount([...chDiscount, data])
+                check = product.type.name; // อัพเดตประเภทสินค้าที่เช็คไว้
             }
 
-            const sum = product.price*product.qty
-            const discount = sum*(product.discount/100)
-            const sumDiscount = sum-discount
-            Pretotal = Pretotal+sumDiscount
+            // คำนวณราคารวมและราคารวมหลังหักส่วนลด
+            const sum = product.price * product.qty;
+            const discount = sum * (product.discount / 100);
+            const sumDiscount = sum - discount;
+            Pretotal += sumDiscount;
 
-            setTotal(Pretotal)
+            // สร้างแถวสำหรับสินค้าแต่ละรายการ
             newRows.push(
-                <tr >
+                <tr key={product.id}>
                     <td>{product.productName}</td>
-                    <td style={{ width: 90 }}><input type="number" min={1} onChange={editQty} name={product.id} className='form-control' defaultValue={product.qty} /></td>
-                    <td className='d-flex justify-content-center'><button className='btn btn-danger' onClick={delProduct} name={product.id}>ลบ</button></td>
+                    <td style={{ width: 90 }}>
+                        <input
+                            type="number"
+                            min={1}
+                            onChange={editQty}
+                            name={product.id}
+                            className='form-control'
+                            defaultValue={product.qty}
+                        />
+                    </td>
+                    <td className='d-flex justify-content-center'>
+                        <button className='btn btn-danger' onClick={delProduct} name={product.id}>ลบ</button>
+                    </td>
                     <td>{product.price}</td>
                     <td>{sum}/{sumDiscount}</td>
                 </tr>
             );
         });
-        setRows(newRows);
-    }, [dataCartSS]);
 
+        setTotal(Pretotal); // อัพเดตยอดรวม
+        setRows(newRows); // อัพเดตแถวในตาราง
+    }, [dataCartSS]);
 
     return (
         <>
             <table className='table'>
                 <thead>
                     <tr>
-                        <th >รายการ</th>
-                        <th >จำนวน</th>
+                        <th>รายการ</th>
+                        <th>จำนวน</th>
                         <th></th>
                         <th>ราคา/หน่วย</th>
                         <th>รวม/หักส่วนลด</th>
-
                     </tr>
                 </thead>
                 <tbody>
                     {rows}
                     <tr>
-                        <td colSpan={5} style={{textAlign:"end" ,fontWeight:'bold'}}>ราคารวม : {total} </td>
+                        <td colSpan={5} style={{ textAlign: "end", fontWeight: 'bold' }}>ราคารวม : {total.toFixed(2)} </td>
                     </tr>
                 </tbody>
             </table>

@@ -11,12 +11,12 @@ userRouter.get('/all', userController.getAllUsers);
 userRouter.get('/search', userController.searchUserByRole);
 
 // Route for getting a user by ID
-userRouter.get('/:id', userController.getUserById);
+userRouter.get('/info/:id', userController.getUserById);
 
 // Route for updating a user by ID
-userRouter.put('/:id', userController.updateUser);
+userRouter.put('/update/:id', userController.updateUser);
 
 // Route for deleting a user by ID
-userRouter.delete('/:id', userController.deleteUser);
+userRouter.delete('/delete/:id', userController.deleteUser);
 
 module.exports = userRouter;

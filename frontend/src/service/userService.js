@@ -13,9 +13,14 @@ const userAll = ()=>{
     return http.get('/api/user/all')
 }
 
+const deleteUser = async (id) => {
+    return http.delete(`/api/user/delete/${id.toString()}`)
+}
+
 const userService = {
     userInfo,
-    userAll
+    userAll,
+    deleteUser
 }
 
 export default userService;

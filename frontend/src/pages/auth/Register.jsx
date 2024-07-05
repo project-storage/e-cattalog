@@ -32,7 +32,7 @@ const Register = () => {
                 title: "เกิดข้อผิดพลาด!",
                 text: "รหัสผ่านไม่ตรงกัน",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1000
             });
             setLoading(false);
             return;

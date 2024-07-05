@@ -21,7 +21,7 @@ const SideNav = () => {
                     icon: 'success',
                     title: 'ออกจากระบบสำเร็จ',
                     text: 'แล้วเจอกันใหม่สวัสดี',
-                    timer: 2000,
+                    timer: 1000,
                     timerProgressBar: true,
                     showConfirmButton: false,
                 })
@@ -89,9 +89,9 @@ const SideNav = () => {
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink to='/admin/users' className="nav-link">
+                                <NavLink to='/admin/sales' className="nav-link">
                                     <i className="nav-icon fas fa-columns" />
-                                    <p>ข้อมูลผู้ใช้งาน</p>
+                                    <p>ข้อมูลเซลล์</p>
                                 </NavLink>
                             </li>
                             <li className="nav-item">

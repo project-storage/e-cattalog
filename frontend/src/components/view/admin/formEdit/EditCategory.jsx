@@ -40,7 +40,7 @@ const EditCategory = () => {
                     icon: 'success',
                     title: 'Updated!',
                     text: 'Category updated successfully.',
-                    timer: 2000,
+                    timer: 1000,
                     timerProgressBar: true,
                     showConfirmButton: false,
                 },

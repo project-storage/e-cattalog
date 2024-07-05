@@ -11,9 +11,16 @@ const CreateCategory = () => {
       const create = await categoriesService.createCategory({ name });
 
       if (create.status === 201) {
+        // Swal.fire({
+        //   icon: 'success',
+        //   title: 'เพิ่มอมูลสำเร็จ!',
+        //   text: 'Category created successfully.',
+        //   timer: 1000,
+        //   timerProgressBar: true,
+        //   showConfirmButton: false,
+        // });
         window.location.reload();
       }
-      console.log(create.data.data);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setError(error.response.data.message); // Ensure the correct key "message"

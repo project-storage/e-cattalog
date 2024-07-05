@@ -4,7 +4,7 @@ import Categories from '../../../components/view/admin/Categories'
 
 const EditCategoryPageAdmin = () => {
   return (
-    <div className='m-3'>
+    <div className='p-3'>
       <div className="content-header">
         <div className="container-fluid">
           <div className="row mb-2">

@@ -84,7 +84,7 @@ const EditCustomer = () => {
           icon: 'success',
           title: 'แก้ไขข้อมูลสำเร็จ!',
           text: 'Customer updated successfully.',
-          timer: 2000,
+          timer: 1000,
           timerProgressBar: true,
           showConfirmButton: false,
         });

@@ -65,7 +65,7 @@ const Categories = () => {
         icon: 'success',
         title: 'Deleted!',
         text: 'Category deleted successfully.',
-        timer: 2000,
+        timer: 1000,
         timerProgressBar: true,
         showConfirmButton: false,
       });

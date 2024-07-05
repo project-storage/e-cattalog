@@ -67,7 +67,7 @@ const CreateCustomer = () => {
         icon: 'success',
         title: 'เพิ่มข้อมูลสำเร็จ!',
         text: 'Customer created successfully.',
-        timer: 2000,
+        timer: 1000,
         timerProgressBar: true,
         showConfirmButton: false,
       });

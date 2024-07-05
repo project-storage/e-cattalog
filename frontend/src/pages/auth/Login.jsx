@@ -28,7 +28,7 @@ const Login = () => {
                         icon: 'success',
                         title: 'เข้าสู่ระบบ',
                         text: 'ยินดีต้อนรับเข้าสู่ระบบ',
-                        timer: 2000,
+                        timer: 1000,
                         timerProgressBar: true,
                         showConfirmButton: false,
                     })
@@ -39,7 +39,7 @@ const Login = () => {
                         icon: 'success',
                         title: 'เข้าสู่ระบบ',
                         text: 'ยินดีต้อนรับเข้าสู่ระบบ',
-                        timer: 2000,
+                        timer: 1000,
                         timerProgressBar: true,
                         showConfirmButton: false,
                     })
@@ -56,7 +56,7 @@ const Login = () => {
                 title: "เกิดข้อผิดพลาด!",
                 text: "โปรดใส่ email และ password ให้ถูกต้อง",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1000
             });
         } finally {
             setLoading(false);

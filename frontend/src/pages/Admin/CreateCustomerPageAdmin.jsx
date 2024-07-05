@@ -3,7 +3,7 @@ import CreateCustomer from '../../components/view/admin/formCreate/CreateCustome
 
 const CreateCustomerPageAdmin = () => {
     return (
-        <div className='m-3'>
+        <div className='p-3'>
             <CreateCustomer />
         </div>
     )

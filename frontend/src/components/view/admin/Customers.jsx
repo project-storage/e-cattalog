@@ -61,7 +61,7 @@ const Customers = () => {
         icon: 'success',
         title: 'Deleted!',
         text: 'Customer deleted successfully.',
-        timer: 2000,
+        timer: 1000,
         timerProgressBar: true,
         showConfirmButton: false,
       });

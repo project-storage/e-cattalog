@@ -74,8 +74,17 @@ const EditProduct = () => {
         setSuccess('');
       } else {
         setSuccess("Product updated successfully!");
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'แก้ไขข้อมูลสำเร็จ!',
+          text: 'Product updated successfully.',
+          timer: 1000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
+
         navigate('/admin/products')
-        window.location.reload()
       }
     } catch (error) {
       console.error('Error updating product:', error);

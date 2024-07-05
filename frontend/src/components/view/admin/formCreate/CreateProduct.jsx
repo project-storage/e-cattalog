@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import categoriesService from '../../../../service/categoriesService';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const CreateProduct = () => {
     const [categories, setCategories] = useState([]);
@@ -51,15 +52,18 @@ const CreateProduct = () => {
                 productData
             );
 
-            if (data.success) {
-                setSuccess("Product created successfully!");
-                setName("");
-                setPrice("");
-                setDescription("");
-                setImage(null);
-                setCategory("");
-            } else {
+            if (data?.success) {
                 setError("An error occurred while creating the product.");
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'เพิ่มข้อมูลสำเร็จ!',
+                    text: 'Product created successfully.',
+                    timer: 1000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                });
+                navigate('/admin/products')
             }
         } catch (error) {
             setError("An error occurred while creating the product.");
@@ -103,7 +107,7 @@ const CreateProduct = () => {
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                     >
-                        <option value="">เลือกประเภทสินค้า</option>
+                        <option value="" disabled>เลือกประเภทสินค้า</option>
                         {categories?.map((category) => (
                             <option key={category._id} value={category._id}>
                                 {category.name}
@@ -112,7 +116,7 @@ const CreateProduct = () => {
                     </select>
                 </div>
                 <div className="form-group">
-                    <input
+                    <textarea
                         type="text"
                         className="form-control"
                         id="inputDescription"

@@ -64,10 +64,33 @@ const SideNav = () => {
                             </li>
                             <li className="nav-header">จัดการระบบ</li>
                             <li className="nav-item">
-                                <NavLink to='/admin/orders' className="nav-link">
-                                    <i className="nav-icon fas fa-columns" />
-                                    <p>ใบเสนอราคา</p>
-                                </NavLink>
+                                <a className="nav-link">
+                                    <i className="nav-icon fas fa-table" />
+                                    <p>
+                                        ใบเสนอราคา
+                                        <i className="fas fa-angle-left right" />
+                                    </p>
+                                </a>
+                                <ul className="nav nav-treeview">
+                                    <li className="nav-item">
+                                        <NavLink to='/admin/orders' className="nav-link">
+                                            <i className="nav-icon fas fa-columns" />
+                                            <p>ตรวจสอบแล้ว</p>
+                                        </NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink to='/admin/order/process' className="nav-link">
+                                            <i className="nav-icon fas fa-columns" />
+                                            <p>ยังไม่ได้ตรวจสอบ</p>
+                                        </NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink to='/admin/order/fail' className="nav-link">
+                                            <i className="nav-icon fas fa-columns" />
+                                            <p>ใบเสนอราคาที่ผิดพลาด</p>
+                                        </NavLink>
+                                    </li>
+                                </ul>
                             </li>
                             <li className="nav-item">
                                 <NavLink to='/admin/products' className="nav-link">
@@ -110,8 +133,8 @@ const SideNav = () => {
                         </ul>
                     </nav>
                 </div>
-            </aside>
-        </div>
+            </aside >
+        </div >
     )
 }
 

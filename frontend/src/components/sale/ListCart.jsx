@@ -142,7 +142,7 @@ const ListCart = () => {
             // สร้างแถวสำหรับสินค้าแต่ละรายการ
             newRows.push(
                 <tr key={product.id}>
-                    <td>{product.productName}</td>
+                    <td>{product.name}</td>
                     <td style={{ width: 90 }}>
                         <input
                             type="number"
@@ -156,8 +156,18 @@ const ListCart = () => {
                     <td className='d-flex justify-content-center'>
                         <button className='btn btn-danger' onClick={delProduct} name={product.id}>ลบ</button>
                     </td>
-                    <td>{product.price}</td>
-                    <td>{sum}/{sumDiscount}</td>
+                    <td className="text-center" style={{ width: '15%' }}>
+                        <p className='border border-dark'>
+                            {product.price}
+                            <span> ฿</span>
+                        </p>
+                    </td>
+                    <td style={{ width: '15%' }}>
+                        <p className="border border-dark">
+                            {sum} <span> ฿</span> /
+                            {sumDiscount} <span> ฿</span>
+                        </p>
+                    </td>
                 </tr>
             );
         });
@@ -168,7 +178,7 @@ const ListCart = () => {
 
     return (
         <>
-            <table className='table'>
+            <table className='table text-center'>
                 <thead>
                     <tr>
                         <th>รายการ</th>
@@ -181,7 +191,7 @@ const ListCart = () => {
                 <tbody>
                     {rows}
                     <tr>
-                        <td colSpan={5} style={{ textAlign: "end", fontWeight: 'bold' }}>ราคารวม : {total.toFixed(2)} </td>
+                        <td colSpan={5} style={{ textAlign: "end", fontWeight: 'bold' }}>ราคารวม : <input type="number" value={total.toFixed(2)} disabled className='text-center' /> </td>
                     </tr>
                 </tbody>
             </table>

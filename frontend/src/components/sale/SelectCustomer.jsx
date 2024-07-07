@@ -77,7 +77,6 @@ const SelectCustomer = () => {
 
   useEffect(() => {
     fetchCustomer()
-
   }, [])
 
   return (

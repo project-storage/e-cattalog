@@ -40,20 +40,29 @@ const getAllOrders = async (req, res) => {
 
 const searchStatus = async (req, res) => {
     try {
-        const { status } = req.query
+        const { status } = req.query;
 
+        // Fetch orders by status and populate the related fields
         const orderByStatus = await orderModel.find({ status })
-
+        .populate('customer')
+        .populate('products.product')
+        .populate('sale'); // Ensure 'sale' is the correct field name and is properly referenced
+    
+        // Check if any orders were found
         if (!orderByStatus || orderByStatus.length === 0) {
-            return res.status(404).json({ message: "no order found with this status" })
+            return res.status(404).json({ message: "No order found with this status" });
         }
 
-        res.status(200).json({ data: orderByStatus })
+        // Respond with the found orders
+        res.status(200).json({ data: orderByStatus });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
-}
+};
+
+module.exports = searchStatus;
+
 
 const getOrderById = async (req, res) => {
     const { id } = req.params;

@@ -9,8 +9,18 @@ const userInfo = () => {
     return http.get("/api/user/info");
 };
 
-const userAll = ()=>{
+const userById = async (id) => {
+    return http.get(`/api/user/info/${id}`).then((res) => {
+        return res;
+    });
+}
+
+const userAll = () => {
     return http.get('/api/user/all')
+}
+
+const updateUser = async(id,updateUser) =>{
+    return http.put(`http://localhost:8080/api/user/update/${id}`,updateUser)
 }
 
 const deleteUser = async (id) => {
@@ -20,7 +30,9 @@ const deleteUser = async (id) => {
 const userService = {
     userInfo,
     userAll,
-    deleteUser
+    deleteUser,
+    userById,
+    updateUser
 }
 
 export default userService;

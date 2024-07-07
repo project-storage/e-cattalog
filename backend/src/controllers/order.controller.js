@@ -1,15 +1,15 @@
 const orderModel = require('../models/order.model');
 
 const createOrder = async (req, res) => {
-    const { customer, products , date,totalPrice } = req.body;
-    const {sale} = req.user._id
+    const { customer, products, date, totalPrice } = req.body;
+    const { sale } = req.user._id
     try {
         const newOrder = new orderModel({
             customer,
             products,
             sale,
             totalPrice,
-            status:"process",
+            status: "process",
             date: date ? new Date(date) : Date.now()
         });
 
@@ -37,6 +37,23 @@ const getAllOrders = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+const searchStatus = async (req, res) => {
+    try {
+        const { status } = req.query
+
+        const orderByStatus = await orderModel.find({ status })
+
+        if (!orderByStatus || orderByStatus.length === 0) {
+            return res.status(404).json({ message: "no order found with this status" })
+        }
+
+        res.status(200).json({ data: orderByStatus })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
 
 const getOrderById = async (req, res) => {
     const { id } = req.params;
@@ -106,5 +123,6 @@ module.exports = {
     getAllOrders,
     getOrderById,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    searchStatus
 };

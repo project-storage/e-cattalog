@@ -8,6 +8,8 @@ orderRouter.post('/create',authToken, orderController.createOrder);
 // Retrieve all orders
 orderRouter.get('/all', orderController.getAllOrders);
 
+orderRouter.get('/search', orderController.searchStatus);
+
 // Retrieve a single order by id
 orderRouter.get('/info/:id', orderController.getOrderById);
 

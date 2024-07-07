@@ -2,7 +2,7 @@ const orderModel = require('../models/order.model');
 
 const createOrder = async (req, res) => {
     const { customer, products, date, totalPrice } = req.body;
-    const { sale } = req.user._id
+    const sale = req.user._id
     try {
         const newOrder = new orderModel({
             customer,
@@ -15,6 +15,7 @@ const createOrder = async (req, res) => {
 
         await newOrder.save();
 
+        console.log(newOrder)
         res.status(201).json({
             msg: "Order Created Successfully",
             data: newOrder,
@@ -44,10 +45,10 @@ const searchStatus = async (req, res) => {
 
         // Fetch orders by status and populate the related fields
         const orderByStatus = await orderModel.find({ status })
-        .populate('customer')
-        .populate('products.product')
-        .populate('sale'); // Ensure 'sale' is the correct field name and is properly referenced
-    
+            .populate('customer')
+            .populate('products.product')
+            .populate('sale'); // Ensure 'sale' is the correct field name and is properly referenced
+
         // Check if any orders were found
         if (!orderByStatus || orderByStatus.length === 0) {
             return res.status(404).json({ message: "No order found with this status" });

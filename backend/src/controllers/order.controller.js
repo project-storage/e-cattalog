@@ -102,13 +102,14 @@ const getOrderById = async (req, res) => {
 
 const updateOrder = async (req, res) => {
     const { id } = req.params;
-    const { customer, products, sale, date } = req.body;
+    const { customer, products, sale, date,status } = req.body;
 
     try {
         const updatedOrder = await orderModel.findByIdAndUpdate(id, {
             customer,
             products,
             sale,
+            status,
             date: date ? new Date(date) : Date.now()
         }, { new: true });
 

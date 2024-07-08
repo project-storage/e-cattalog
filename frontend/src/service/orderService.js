@@ -5,6 +5,11 @@ const createOrder = async (createData) => {
 
 }
 
+const updateOrder = async (id, updateOrder) => {
+    return http.put(`http://localhost:8080/api/order/update/${id}`, updateOrder)
+
+}
+
 const orders = async () => {
     return http.get('/api/order/all')
 }
@@ -32,7 +37,8 @@ const exportService = {
     searchPass,
     searchProcess,
     searchFail,
-    orderById
+    orderById,
+    updateOrder
 }
 
 export default exportService

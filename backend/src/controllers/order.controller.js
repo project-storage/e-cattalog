@@ -15,7 +15,7 @@ const createOrder = async (req, res) => {
 
         await newOrder.save();
 
-        console.log(newOrder)
+        // console.log(newOrder)
         res.status(201).json({
             msg: "Order Created Successfully",
             data: newOrder,
@@ -28,7 +28,16 @@ const createOrder = async (req, res) => {
 
 const getAllOrders = async (req, res) => {
     try {
-        const orders = await orderModel.find().populate('customer').populate('products.product').populate('sale');
+        const orders = await orderModel.find()
+            .populate('customer')
+            .populate({
+                path: 'products.product',
+                populate: {
+                    path: 'category'
+                }
+            })
+            .populate('sale');
+
         res.status(200).json({
             msg: "Orders Retrieved Successfully",
             data: orders
@@ -68,7 +77,16 @@ module.exports = searchStatus;
 const getOrderById = async (req, res) => {
     const { id } = req.params;
     try {
-        const order = await orderModel.findById(id).populate('customer').populate('products.product').populate('sale');
+        const order = await orderModel.findById(id)
+            .populate('customer')
+            .populate({
+                path: 'products.product',
+                populate: {
+                    path: 'category'
+                }
+            })
+            .populate('sale');
+
         if (!order) {
             return res.status(404).json({ message: "Order not found" });
         }

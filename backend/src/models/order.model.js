@@ -11,6 +11,10 @@ const orderSchema = new mongoose.Schema({
                 ref: "Product",
                 required: true
             },
+            qty: {
+                type: Number,
+                required: true
+            },
             discount: {
                 type: Number,
                 required: true
@@ -25,13 +29,13 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.ObjectId,
         ref: "User"
     },
-    totalPrice:{
-        type:Number,
+    totalPrice: {
+        type: Number,
         required: true
     },
-    status:{
-        type:String,
-        enum: ['pass','process','fail'],
+    status: {
+        type: String,
+        enum: ['pass', 'process', 'fail'],
         required: true
     },
     date: {

@@ -42,6 +42,7 @@ const SelectCustomer = () => {
         totalPrice += sumDiscount
         createData.push({
           product: data.id,
+          qty:data.qty,
           discount: data.discount,
           finalPrice: sumDiscount
         })

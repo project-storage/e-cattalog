@@ -6,7 +6,13 @@ const createOrder = async (createData) => {
 }
 
 const orders = async () => {
-    return http.get('/admin/order/all')
+    return http.get('/api/order/all')
+}
+
+const orderById = async (id) => {
+    return http.get(`/api/order/info/${id}`).then((res) => {
+        return res;
+    });
 }
 
 const searchProcess = async () => {
@@ -25,7 +31,8 @@ const exportService = {
     orders,
     searchPass,
     searchProcess,
-    searchFail
+    searchFail,
+    orderById
 }
 
 export default exportService

@@ -3,19 +3,21 @@ import orderService from '../../../service/orderService'
 import productService from '../../../service/productService'
 import customerService from '../../../service/customerService'
 import userService from '../../../service/userService'
+import { useNavigate } from 'react-router-dom'
 
-const Orders = () => {
+const OrderProcess = () => {
   const [orders, setOrders] = useState([])
   const [products, setProducts] = useState([])
   const [customers, setCustomers] = useState([])
   const [sales, setSales] = useState([])
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const res = await orderService.searchProcess()
         setOrders(res.data.data)
-        console.log(res.data.data)
       } catch (error) {
         console.error("Error fetching orders:", error)
       }
@@ -54,6 +56,10 @@ const Orders = () => {
     fetchSales()
   }, [])
 
+  const handleOrderDetail = (id) => {
+    navigate(`/admin/order/process/detail/${id}`)
+  }
+
   return (
     <div className='tb-orders'>
       <div className="table-responsive">
@@ -80,19 +86,18 @@ const Orders = () => {
                   {`${order.sale?.title}${order.sale?.firstName} ${order.sale?.lastName}`}
                 </td>
                 <td>
-                  <button className='btn btn-info'>รายละเอียดข้อมูลการสั่งซื่อ</button>
+                  <button className='btn btn-info' onClick={() => handleOrderDetail(order._id)}>รายละเอียดข้อมูลการสั่งซื้อ</button>
                 </td>
                 <td>
-                  <button className='btn btn-success mr-1 mt-1' >ยืนยันออร์เดอร์</button>
+                  <button className='btn btn-success' >ยืนยันออร์เดอร์</button>
                 </td>
               </tr>
             ))}
           </tbody>
-
         </table>
       </div>
     </div>
   )
 }
 
-export default Orders
+export default OrderProcess

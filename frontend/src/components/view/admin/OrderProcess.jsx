@@ -14,7 +14,7 @@ const OrderProcess = () => {
         setOrders(res.data.data)
       } catch (error) {
         console.error("Error fetching orders:", error)
-       
+
       }
     }
 
@@ -23,58 +23,6 @@ const OrderProcess = () => {
 
   const handleOrderDetail = (id) => {
     navigate(`/admin/order/process/detail/${id}`)
-  }
-
-  const handleConfirmOrder = async (id) => {
-    try {
-      await orderService.updateOrder(id, { status: 'pass' })
-      // Refresh orders list after updating the status
-      const res = await orderService.searchProcess()
-      setOrders(res.data.data)
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Confirmed!',
-        text: 'Order confirmed successfully.',
-        timer: 1000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-      });
-    } catch (error) {
-      console.error("Error updating order status:", error)
-      // Optionally, show an error message to the user
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Error confirming order. Please try again later.',
-      });
-    }
-  }
-
-  const handleFailOrder = async (id) => {
-    try {
-      await orderService.updateOrder(id, { status: 'fail' })
-      // Refresh orders list after updating the status
-      const res = await orderService.searchProcess()
-      setOrders(res.data.data)
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Failed!',
-        text: 'Order marked as failed successfully.',
-        timer: 1000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-      });
-    } catch (error) {
-      console.error("Error updating order status:", error)
-      // Optionally, show an error message to the user
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Error marking order as failed. Please try again later.',
-      });
-    }
   }
 
   return (
@@ -88,7 +36,6 @@ const OrderProcess = () => {
               <th scope="col">สถานะ</th>
               <th scope="col">เซลล์</th>
               <th scope="col">รายละเอียด</th>
-              <th scope="col">action</th>
             </tr>
           </thead>
           <tbody>
@@ -105,10 +52,6 @@ const OrderProcess = () => {
                   </td>
                   <td>
                     <button className='btn btn-info mt-1' onClick={() => handleOrderDetail(order._id)}>รายละเอียดข้อมูลการสั่งซื้อ</button>
-                  </td>
-                  <td>
-                    <button className='btn btn-success mr-2 mt-1' onClick={() => handleConfirmOrder(order._id)}>ยืนยันออร์เดอร์</button>
-                    <button className='btn btn-danger mt-1' onClick={() => handleFailOrder(order._id)}>ออร์เดอร์ผิดพลาด</button>
                   </td>
                 </tr>
               ))

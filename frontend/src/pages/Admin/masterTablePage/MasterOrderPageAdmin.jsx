@@ -1,5 +1,5 @@
 import React from 'react'
-import MasterDataOrder from '../../components/view/admin/MasterDataOrder'
+import MasterDataOrder from '../../../components/view/admin/masterTable/MasterDataOrder'
 
 const MasterOrderPageAdmin = () => {
     return (

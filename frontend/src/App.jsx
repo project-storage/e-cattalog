@@ -23,7 +23,7 @@ import SalesPageAdmin from './pages/Admin/SalesPageAdmin'
 import CreateSalePageAdmin from './pages/Admin/CreateSalePageAdmin'
 import EditSalePageAdmin from './pages/Admin/formEdit/EditSalePageAdmin'
 import OrderProcessPageAdmin from './pages/Admin/OrderProcessPageAdmin'
-import MasterOrderPageAdmin from './pages/Admin/MasterOrderPageAdmin'
+import MasterOrderPageAdmin from './pages/Admin/masterTablePage/MasterOrderPageAdmin'
 
 const App = () => {
   return (

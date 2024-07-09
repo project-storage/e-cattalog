@@ -38,6 +38,10 @@ const orderSchema = new mongoose.Schema({
         enum: ['pass', 'process', 'fail'],
         required: true
     },
+    comment: {
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now

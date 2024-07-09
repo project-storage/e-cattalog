@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import orderService from '../../../service/orderService';
-import { useParams } from 'react-router-dom';
+import orderService from '../../../../service/orderService';
+import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const MasterDataOrder = () => {
     const [orderInfo, setOrderInfo] = useState(null);
@@ -9,8 +10,11 @@ const MasterDataOrder = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [comment, setComment] = useState('');
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchOrder = async () => {
@@ -19,12 +23,15 @@ const MasterDataOrder = () => {
                 if (res.status === 200) {
                     setOrderInfo(res.data.data);
                     setFilteredOrders(res.data.data.products); // Assuming products need to be paginated
+                    setLoading(false);
                 } else {
                     setError('Error fetching order data');
+                    setLoading(false);
                 }
             } catch (error) {
                 console.error("Error fetching order:", error);
                 setError('Error fetching order data');
+                setLoading(false);
             }
         };
         fetchOrder();
@@ -62,6 +69,64 @@ const MasterDataOrder = () => {
     const currentOrders = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
 
     const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+    const handleConfirmOrder = async (id) => {
+        try {
+            await orderService.updateOrder(id, { status: 'pass' });
+            Swal.fire({
+                icon: 'success',
+                title: 'Confirmed!',
+                text: 'Order confirmed successfully.',
+                timer: 1000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+            });
+            navigate('/admin/order/process');
+        } catch (error) {
+            console.error("Error updating order status:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error confirming order. Please try again later.',
+            });
+        }
+    };
+
+    const handleFailOrder = async (id) => {
+        try {
+            await orderService.updateOrder(id, { status: 'fail', comment });
+            Swal.fire({
+                icon: 'success',
+                title: 'Failed!',
+                text: 'Order marked as failed successfully.',
+                timer: 1000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+            });
+            navigate('/admin/order/process');
+        } catch (error) {
+            console.error("Error updating order status:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error marking order as failed. Please try again later.',
+            });
+        }
+    };
+    
+    if (loading) {
+        return (
+            <div className="d-flex align-items-center justify-content-center" style={{ height: '100vh' }}>
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
 
     return (
         <div>
@@ -137,6 +202,7 @@ const MasterDataOrder = () => {
                                 </div>
                             </div>
                         </div>
+
                         <div className="col-md-6">
                             <h3>ข้อมูลเซลล์</h3>
                             <div className="form-row">
@@ -209,6 +275,9 @@ const MasterDataOrder = () => {
                                 ))}
                             </select>
                         </div>
+                        <div className="col-md-6 mt-1">
+                            <p className='border bg-warning rounded text-center w-25 h-75'>{orderInfo?.status}</p>
+                        </div>
                     </div>
                     <div className="table-responsive">
                         <table className="table table-bordered table-gray table-striped text-center">
@@ -240,7 +309,7 @@ const MasterDataOrder = () => {
                     </div>
                     {filteredProducts.length > 0 && (
                         <nav aria-label="Page navigation example">
-                            <ul className="pagination justify-content-end">
+                            <ul className="pagination justify-content-start">
                                 <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
                                     <button className="page-link" onClick={handlePreviousPage}>Previous</button>
                                 </li>
@@ -255,10 +324,26 @@ const MasterDataOrder = () => {
                             </ul>
                         </nav>
                     )}
+                    <div className="row">
+                        <div className="col-md-8">
+                            <textarea
+                                type="text"
+                                name="comment"
+                                id="inputComment"
+                                style={{ width: "100%" }}
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-4">
+                            <button className='btn btn-success mr-2 mt-1' onClick={() => handleConfirmOrder(orderInfo._id)}>ยืนยันออร์เดอร์</button>
+                            <button className='btn btn-danger mt-1' onClick={() => handleFailOrder(orderInfo._id)}>ออร์เดอร์ผิดพลาด</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default MasterDataOrder;

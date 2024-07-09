@@ -113,7 +113,7 @@ const MasterDataOrder = () => {
             });
         }
     };
-    
+
     if (loading) {
         return (
             <div className="d-flex align-items-center justify-content-center" style={{ height: '100vh' }}>
@@ -332,12 +332,13 @@ const MasterDataOrder = () => {
                                 id="inputComment"
                                 style={{ width: "100%" }}
                                 value={comment}
+                                placeholder='เสนอความคิดเห็นเมื่อเสนอราคาผิดพลาด'
                                 onChange={(e) => setComment(e.target.value)}
                             />
                         </div>
                         <div className="col-md-4">
-                            <button className='btn btn-success mr-2 mt-1' onClick={() => handleConfirmOrder(orderInfo._id)}>ยืนยันออร์เดอร์</button>
-                            <button className='btn btn-danger mt-1' onClick={() => handleFailOrder(orderInfo._id)}>ออร์เดอร์ผิดพลาด</button>
+                            <button className='btn btn-danger  mr-2' onClick={() => handleFailOrder(orderInfo._id)}>ออร์เดอร์ผิดพลาด</button>
+                            <button className='btn btn-success ' onClick={() => handleConfirmOrder(orderInfo._id)}>ยืนยันออร์เดอร์</button>
                         </div>
                     </div>
                 </div>

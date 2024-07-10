@@ -24,6 +24,7 @@ import CreateSalePageAdmin from './pages/Admin/CreateSalePageAdmin'
 import EditSalePageAdmin from './pages/Admin/formEdit/EditSalePageAdmin'
 import OrderProcessPageAdmin from './pages/Admin/OrderProcessPageAdmin'
 import MasterOrderPageAdmin from './pages/Admin/masterTablePage/MasterOrderPageAdmin'
+import CatalogPage from './pages/sale/CatalogPage'
 
 const App = () => {
   return (
@@ -54,6 +55,7 @@ const App = () => {
           <Route path='/sale/customers' element={<CustomerPageSale />} />
           <Route path='/sale/customer/create' element={<CreateCustomerPageSale />} />
           <Route path='/sale/cart' element={<Cart />} />
+          <Route path='/sale/catalog' element={<CatalogPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

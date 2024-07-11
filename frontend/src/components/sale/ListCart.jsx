@@ -119,6 +119,7 @@ const ListCart = () => {
                     <tr key={`discount-${product.type.name}`}>
                         <td colSpan={5} style={{ textAlign: 'end' }}>
                             <input
+                                className=""
                                 type="number"
                                 defaultValue={product.discount || 0}
                                 name={product.type.name}
@@ -157,13 +158,13 @@ const ListCart = () => {
                         <button className='btn btn-danger' onClick={delProduct} name={product.id}>ลบ</button>
                     </td>
                     <td className="text-center" style={{ width: '15%' }}>
-                        <p className='border border-dark'>
+                        <p className=''>
                             {product.price}
                             <span> ฿</span>
                         </p>
                     </td>
                     <td style={{ width: '15%' }}>
-                        <p className="border border-dark">
+                        <p className="">
                             {sum} <span> ฿</span> /
                             {sumDiscount} <span> ฿</span>
                         </p>

@@ -128,6 +128,7 @@ const updateOrder = async (req, res) => {
     }
 };
 
+
 const deleteOrder = async (req, res) => {
     const { id } = req.params;
 
@@ -148,11 +149,14 @@ const deleteOrder = async (req, res) => {
     }
 };
 
+const savePDF = async (req,res) => {
+    
+}
 module.exports = {
+    searchStatus,
     createOrder,
     getAllOrders,
     getOrderById,
     updateOrder,
-    deleteOrder,
-    searchStatus
+    deleteOrder
 };

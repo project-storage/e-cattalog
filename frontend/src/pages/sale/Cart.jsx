@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ListCart from '../../components/sale/ListCart'
 import SelectCustomer from '../../components/sale/SelectCustomer'
 
+
 const Cart = () => {
+
+   
+
+
     return (
         <>
             <div className="row">

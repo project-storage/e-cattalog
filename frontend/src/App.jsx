@@ -23,8 +23,13 @@ import SalesPageAdmin from './pages/Admin/SalesPageAdmin'
 import CreateSalePageAdmin from './pages/Admin/CreateSalePageAdmin'
 import EditSalePageAdmin from './pages/Admin/formEdit/EditSalePageAdmin'
 import OrderProcessPageAdmin from './pages/Admin/OrderProcessPageAdmin'
-import MasterOrderPageAdmin from './pages/Admin/masterTablePage/MasterOrderPageAdmin'
+
 import CatalogPage from './pages/sale/CatalogPage'
+import OrderPassPageAdmin from './pages/Admin/OrderPassPageAdmin'
+import MasterOrderProcessPageAdmin from './pages/Admin/masterTablePage/MasterOrderProcessPageAdmin'
+import MasterOrderPassPageAdmin from './pages/Admin/masterTablePage/MasterOrderPassPageAdmin'
+import MasterOrderFailPageAdmin from './pages/Admin/masterTablePage/MasterOrderFailPageAdmin'
+import OrderFailPageAdmin from './pages/Admin/OrderFailPageAdmin'
 
 const App = () => {
   return (
@@ -47,7 +52,11 @@ const App = () => {
           <Route path='/admin/sale/create' element={<CreateSalePageAdmin />} />
           <Route path='/admin/sale/edit/:id' element={<EditSalePageAdmin />} />
           <Route path='/admin/order/process' element={<OrderProcessPageAdmin />} />
-          <Route path='/admin/order/process/detail/:id' element={<MasterOrderPageAdmin />} />
+          <Route path='/admin/order/process/detail/:id' element={<MasterOrderProcessPageAdmin />} />
+          <Route path='/admin/order/pass' element={<OrderPassPageAdmin />} />
+          <Route path='/admin/order/pass/detail/:id' element={<MasterOrderPassPageAdmin />} />
+          <Route path='/admin/order/fail' element={<OrderFailPageAdmin />} />
+          <Route path='/admin/order/fail/detail/:id' element={<MasterOrderFailPageAdmin />} />
         </Route>
         <Route element={<SaleLayout />}>
           <Route path='/sale/dashboard' element={<HomePageSale />} />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import orderService from '../../../service/orderService'
 
-const OrderProcess = () => {
+const OrderFail = () => {
     const [orders, setOrders] = useState([])
     const [loading, setLoading] = useState(true);
 
@@ -11,7 +11,7 @@ const OrderProcess = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const res = await orderService.searchPass()
+                const res = await orderService.searchFail()
                 setOrders(res.data.data)
                 setLoading(false)
             } catch (error) {
@@ -58,7 +58,7 @@ const OrderProcess = () => {
                                     <td>
                                         {`${order.customer?.title}${order.customer?.firstName} ${order.customer?.lastName}`}
                                     </td>
-                                    <td><p className='bg-warning'>{order.status}</p></td>
+                                    <td><p className='bg-danger'>{order.status}</p></td>
                                     <td>
                                         {`${order.sale?.title}${order.sale?.firstName} ${order.sale?.lastName}`}
                                     </td>
@@ -79,4 +79,4 @@ const OrderProcess = () => {
     )
 }
 
-export default OrderProcess
+export default OrderFail

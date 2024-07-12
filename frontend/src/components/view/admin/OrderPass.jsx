@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import orderService from '../../../service/orderService'
 
-const OrderProcess = () => {
+const OrderPass = () => {
     const [orders, setOrders] = useState([])
     const [loading, setLoading] = useState(true);
 
@@ -58,7 +58,7 @@ const OrderProcess = () => {
                                     <td>
                                         {`${order.customer?.title}${order.customer?.firstName} ${order.customer?.lastName}`}
                                     </td>
-                                    <td><p className='bg-warning'>{order.status}</p></td>
+                                    <td><p className='bg-success'>{order.status}</p></td>
                                     <td>
                                         {`${order.sale?.title}${order.sale?.firstName} ${order.sale?.lastName}`}
                                     </td>
@@ -79,4 +79,4 @@ const OrderProcess = () => {
     )
 }
 
-export default OrderProcess
+export default OrderPass

@@ -3,7 +3,7 @@ import orderService from '../../../../service/orderService';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const MasterDataOrder = () => {
+const MasterDataOrderFail = () => {
     const [orderInfo, setOrderInfo] = useState(null);
     const [error, setError] = useState(null);
     const [filteredOrders, setFilteredOrders] = useState([]);
@@ -11,7 +11,6 @@ const MasterDataOrder = () => {
     const [itemsPerPage] = useState(10);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [loading, setLoading] = useState(true);
-    const [comment, setComment] = useState('');
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -69,50 +68,6 @@ const MasterDataOrder = () => {
     const currentOrders = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
 
     const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-
-    const handleConfirmOrder = async (id) => {
-        try {
-            await orderService.updateOrder(id, { status: 'pass' });
-            Swal.fire({
-                icon: 'success',
-                title: 'Confirmed!',
-                text: 'Order confirmed successfully.',
-                timer: 1000,
-                timerProgressBar: true,
-                showConfirmButton: false,
-            });
-            navigate('/admin/order/process');
-        } catch (error) {
-            console.error("Error updating order status:", error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Error confirming order. Please try again later.',
-            });
-        }
-    };
-
-    const handleFailOrder = async (id) => {
-        try {
-            await orderService.updateOrder(id, { status: 'fail', comment });
-            Swal.fire({
-                icon: 'success',
-                title: 'Failed!',
-                text: 'Order marked as failed successfully.',
-                timer: 1000,
-                timerProgressBar: true,
-                showConfirmButton: false,
-            });
-            navigate('/admin/order/process');
-        } catch (error) {
-            console.error("Error updating order status:", error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Error marking order as failed. Please try again later.',
-            });
-        }
-    };
 
     if (loading) {
         return (
@@ -276,7 +231,10 @@ const MasterDataOrder = () => {
                             </select>
                         </div>
                         <div className="col-md-6 mt-1">
-                            <p className='border bg-warning rounded text-center w-25 h-75'>{orderInfo?.status}</p>
+                            <p className=' text-center w-25 h-75'>
+                                สถานะ :
+                                <span className='badge badge-pill badge-danger ml-1 p-2'> {orderInfo?.status}</span>
+                            </p>
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -325,20 +283,15 @@ const MasterDataOrder = () => {
                         </nav>
                     )}
                     <div className="row">
-                        <div className="col-md-8">
+                        <div className="col-md-12">
                             <textarea
                                 type="text"
                                 name="comment"
                                 id="inputComment"
                                 style={{ width: "100%" }}
-                                value={comment}
-                                placeholder='เสนอความคิดเห็นเมื่อเสนอราคาผิดพลาด'
-                                onChange={(e) => setComment(e.target.value)}
+                                value={orderInfo.comment}
+                                disabled
                             />
-                        </div>
-                        <div className="col-md-4">
-                            <button className='btn btn-danger  mr-2' onClick={() => handleFailOrder(orderInfo._id)}>ออร์เดอร์ผิดพลาด</button>
-                            <button className='btn btn-success ' onClick={() => handleConfirmOrder(orderInfo._id)}>ยืนยันออร์เดอร์</button>
                         </div>
                     </div>
                 </div>
@@ -347,4 +300,4 @@ const MasterDataOrder = () => {
     );
 };
 
-export default MasterDataOrder;
+export default MasterDataOrderFail;

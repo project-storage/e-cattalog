@@ -73,7 +73,7 @@ const SideNav = () => {
                                 </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
-                                        <NavLink to='/admin/orders' className="nav-link">
+                                        <NavLink to='/admin/order/pass' className="nav-link">
                                             <i className="nav-icon fas fa-columns" />
                                             <p>ตรวจสอบแล้ว</p>
                                         </NavLink>

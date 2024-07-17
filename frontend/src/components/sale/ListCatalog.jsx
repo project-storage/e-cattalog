@@ -1,78 +1,53 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import Accordion from '@mui/material/Accordion';
-import AccordionActions from '@mui/material/AccordionActions';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import Button from '@mui/material/Button';
-import orderService from '../../service/orderService'
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import orderService from '../../service/orderService';
+import { NavLink, useNavigate } from 'react-router-dom'
 
 
 const ListCatalog = () => {
-    const [dataOrderPass, setdataOrderPass] = useState([])
-    const [dataProduct, setDataProduct] = useState([])
+    const [dataOrderPass, setdataOrderPass] = useState([]);
+    const [dataProduct, setDataProduct] = useState([]);
+    const navigate = useNavigate()
     const fetchOrderByPass = async () => {
         try {
-            const res = await orderService.searchPass()
-            setdataOrderPass(res.data.data)
-            console.log(res.data.data)
+            const res = await orderService.searchPass();
+            setdataOrderPass(res.data.data);
+            console.log(res.data.data);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
+    };
 
-    }
-    const generatePDF = () => {
-        const doc = new jsPDF();
+    const selectOrder = (id) => {
+        const selectedOrder = dataOrderPass.find((data) => data._id === id);
+        if (selectedOrder) {
+            setDataProduct(selectedOrder);
+            generatePDF(selectedOrder);
+        }
+    };
 
-        // ข้อมูลตัวอย่าง
-        const invoice = {
-            company: 'My Company',
-            address: '123 Main St, Anytown, USA',
-            phone: '555-555-5555',
-            email: 'info@mycompany.com',
-            date: '2024-07-11',
-            items: [
-                { description: 'Item 1', quantity: 2, price: 10 },
-                { description: 'Item 2', quantity: 1, price: 20 },
-                { description: 'Item 3', quantity: 3, price: 15 }
+    const generatePDF = (order) => {
+        var docDefinition = {
+            content: [
+                { text: 'สร้าง PDF ภาษาไทยด้วย pdfmake ', fontSize: 15 },
             ],
-            total: 95
+            defaultStyle: {
+                font: 'THSarabunNew'
+            }
         };
-
-        // ส่วนหัวบิลใบเสร็จ
-        doc.setFontSize(18);
-        doc.text(invoice.company, 14, 22);
-        doc.setFontSize(12);
-        doc.text(invoice.address, 14, 30);
-        doc.text(invoice.phone, 14, 36);
-        doc.text(invoice.email, 14, 42);
-        doc.text(`Date: ${invoice.date}`, 14, 48);
-
-        // เพิ่มตาราง
-        doc.autoTable({
-            startY: 60,
-            head: [['Description', 'Quantity', 'Price', 'Total']],
-            body: invoice.items.map(item => [item.description, item.quantity, item.price, item.quantity * item.price])
-        });
-
-        // ส่วนท้ายบิลใบเสร็จ
-        doc.setFontSize(12);
-        doc.text(`Total: $${invoice.total}`, 14, doc.autoTable.previous.finalY + 10);
-
-        // บันทึก PDF
-        doc.save('invoice.pdf');
+        pdfMake.createPdf(docDefinition).open()
     };
 
     useEffect(() => {
-        fetchOrderByPass()
-    }, [])
-
+        fetchOrderByPass();
+    }, []);
 
     return (
         <>
             {dataOrderPass.map((data) => (
-                <Accordion>
+                <Accordion key={data._id}>
                     <AccordionSummary
                         aria-controls="panel1-content"
                         id="panel1-header"
@@ -91,30 +66,27 @@ const ListCatalog = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                    data.products.map((dataProduct) => (
-                                        <tr>
-                                            <td>{dataProduct.product.name}</td>
-                                            <td>{dataProduct.qty}</td>
-                                            <td>{dataProduct.product.price}</td>
-                                            <td>{dataProduct.finalPrice}</td>
-                                            <td>{dataProduct.discount}%</td>
-                                        </tr>
-                                    ))}
-
+                                {data.products.map((dataProduct) => (
+                                    <tr key={dataProduct.product._id}>
+                                        <td>{dataProduct.product.name}</td>
+                                        <td>{dataProduct.qty}</td>
+                                        <td>{dataProduct.product.price}</td>
+                                        <td>{dataProduct.finalPrice}</td>
+                                        <td>{dataProduct.discount}%</td>
+                                    </tr>
+                                ))}
                                 <tr>
                                     <td colSpan={5} className='me-2' style={{ textAlign: 'end' }}>ราคารวม : {data.totalPrice}</td>
                                 </tr>
                             </tbody>
                         </table>
                         <button className='btn btn-success'>ออกใบเสนอราคา</button>
-                        <button className='btn btn-secondary mx-3' onClick={generatePDF}>PDF</button>
+                        <button className='btn btn-secondary mx-3' onClick={() => {navigate(`/sale/create/catagory/${data._id}`)}}>PDF</button>
                     </AccordionDetails>
                 </Accordion>
             ))}
-
         </>
-    )
-}
+    );
+};
 
-export default ListCatalog
+export default ListCatalog;

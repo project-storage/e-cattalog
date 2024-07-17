@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
 import AdminLayout from './Layout/AdminLayout'
 import HomePageAdmin from './pages/Admin/HomePageAdmin'
 import HomePageSale from './pages/sale/HomePageSale'
@@ -30,6 +30,7 @@ import MasterOrderProcessPageAdmin from './pages/Admin/masterTablePage/MasterOrd
 import MasterOrderPassPageAdmin from './pages/Admin/masterTablePage/MasterOrderPassPageAdmin'
 import MasterOrderFailPageAdmin from './pages/Admin/masterTablePage/MasterOrderFailPageAdmin'
 import OrderFailPageAdmin from './pages/Admin/OrderFailPageAdmin'
+import Pdf from './components/sale/Pdf'
 
 const App = () => {
   return (
@@ -66,6 +67,7 @@ const App = () => {
           <Route path='/sale/cart' element={<Cart />} />
           <Route path='/sale/catalog' element={<CatalogPage />} />
         </Route>
+        <Route path='/sale/create/catagory/:id' element={<Pdf />} />
       </Routes>
     </BrowserRouter>
   )

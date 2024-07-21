@@ -3,9 +3,10 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import orderService from '../../service/orderService';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink ,pdf} from '@react-pdf/renderer';
 import DownloadPDF from './DownloadPDF'
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 const ListCatalog = () => {
     const [dataOrderPass, setdataOrderPass] = useState([]);
@@ -19,6 +20,43 @@ const ListCatalog = () => {
             console.log(error);
         }
     };
+
+    const handleDownloadClick = async (data) => {
+        
+        const result = await Swal.fire({
+            title: 'ยืนยันการดาวน์โหลด?',
+            text: "เมื่อกดดาวโหลดสถานะจะเปลี่ยนเป็นส่งให้ลูกค้าแล้ว โปรดทำการส่งใบเสนอราคาให้ลูกค้่าหลังจากกดยืนยัน",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'ยืนยัน!'
+        });
+
+        if (result.isConfirmed) {
+
+            // สร้างไฟล์ PDF ในเบราว์เซอร์
+            const doc = <DownloadPDF dataOrder={data} />;
+            const asBlob = await pdf(doc).toBlob();
+
+            // สร้างลิงก์ดาวน์โหลดชั่วคราว
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(asBlob);
+            link.download = `order_${data._id}.pdf`;
+            link.click();
+
+            // ล้างลิงก์หลังจากการดาวน์โหลด
+            URL.revokeObjectURL(link.href);
+            updateStatusOrder(data)
+            
+        }
+    };
+
+    const updateStatusOrder = async (data) => {
+        data.status = "toCustomer"
+        const res = await orderService.updateOrder(data._id,{status:'toCustomer'})
+        console.log(res)
+    }
 
     useEffect(() => {
         fetchOrderByPass();
@@ -60,9 +98,14 @@ const ListCatalog = () => {
                                 </tr>
                             </tbody>
                         </table>
-                            <PDFDownloadLink className='btn btn-success text-light' document={<DownloadPDF dataOrder={data}/>} fileName={`order_${data._id}.pdf`}>
-                                {({ loading }) => (loading ? 'กำลังโหลดเอกสาร...' : 'ดาวน์โหลดเอกสาร PDF')}
-                            </PDFDownloadLink>
+
+                        <button
+                            className='btn btn-success text-light'
+                            onClick={() => {handleDownloadClick(data)}}
+                        >
+                            ดาวน์โหลดเอกสาร PDF
+                        </button>
+
                         <button className='btn btn-secondary mx-3' onClick={() => navigate(`/sale/create/catagory/${data._id}`)}>ดูรายละเอียดเพิ่มเติม</button>
                     </AccordionDetails>
                 </Accordion>

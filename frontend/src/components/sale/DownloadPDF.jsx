@@ -219,7 +219,7 @@ const DownloadPDF = (dataOrder) => {
                         <Text style={styles.textCustomer}>Address : {dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.address}`}</Text>
                         <Text style={styles.textCustomer}>Tel.&Fax : {dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.tel}`}</Text>
                         <Text style={styles.textCustomer}>Email :{dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.email}`}</Text>
-                        <Text style={styles.textCustomer}>Project :</Text>
+                        <Text style={styles.textCustomer}>Project :{`${dataOrder.dataOrder.project}`}</Text>
                     </View>
                     <View style={styles.boxCatagory}>
                         <Text style={styles.textCatagory}>ใบเสนอราคา</Text>

@@ -1,7 +1,7 @@
 const orderModel = require('../models/order.model');
 
 const createOrder = async (req, res) => {
-    const { customer, products, date, totalPrice } = req.body;
+    const { customer, products, date, totalPrice,project } = req.body;
     const sale = req.user._id
     try {
         const newOrder = new orderModel({
@@ -10,6 +10,7 @@ const createOrder = async (req, res) => {
             sale,
             totalPrice,
             status: "process",
+            project,
             date: date ? new Date(date) : Date.now()
         });
 

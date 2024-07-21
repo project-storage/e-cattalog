@@ -9,6 +9,7 @@ const SelectCustomer = () => {
   const [customer, setCustomer] = useState([])
   const [sale, setSale] = useState({})
   const [select, setSelect] = useState('')
+  const [project, setProject] = useState('No');
 
   const navigate = useNavigate()
 
@@ -23,9 +24,9 @@ const SelectCustomer = () => {
   }
 
   const handleSubmit = async () => {
-    if (select === '') {
+    if (select === '' || project === 'No') {
       Swal.fire({
-        title: "โปรดเลือกลูกค้า",
+        title: "โปรดกรอกข้อมู,ให้ครบถ้วน",
         icon: 'error',
         timer: 1000,
         showConfirmButton: false
@@ -51,9 +52,9 @@ const SelectCustomer = () => {
         customer: select,
         sale: sale._id,
         products: createData,
-        totalPrice: totalPrice
+        totalPrice: totalPrice,
+        project: project
       }
-      console.log(reqBody)
 
       const res = await orderService.createOrder(reqBody)
       if (res.status === 201) {
@@ -86,6 +87,7 @@ const SelectCustomer = () => {
     setSelect(e.target.value);
   };
 
+
   useEffect(() => {
     fetchCustomer()
     fetchSaleInfo()
@@ -94,7 +96,7 @@ const SelectCustomer = () => {
   return (
     <>
       <label htmlFor="">เลือกรายชื่อลูกค้า</label>
-      <select className='form-control' onChange={handleSelectChange} name="" id="">
+      <select className='form-control my-1'  onChange={handleSelectChange} name="" id="">
         <option value="">โปรดเลือกลูกค้า</option>
         {customer.map((data) => (
           <option key={data._id} value={data._id}>
@@ -102,6 +104,8 @@ const SelectCustomer = () => {
           </option>
         ))}
       </select>
+      <label htmlFor="">ใส่ชื่อ Project</label>
+      <input type="text" className='form-control' onChange={(e) => {setProject(e.target.value)}}/>
       <input type="hidden" name="sale" value={sale._id} />
       <input
         type="text"

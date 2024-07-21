@@ -235,7 +235,7 @@ const Pdf = () => {
                             <Text style={styles.textCustomer}>Address : {dataOrder.customer && `${dataOrder.customer.address}` }</Text>
                             <Text style={styles.textCustomer}>Tel.&Fax : {dataOrder.customer && `${dataOrder.customer.tel}` }</Text>
                             <Text style={styles.textCustomer}>Email :{dataOrder.customer && `${dataOrder.customer.email}` }</Text>
-                            <Text style={styles.textCustomer}>Project :</Text>
+                            <Text style={styles.textCustomer}>Project : {dataOrder.project && `${dataOrder.project}`}</Text>
                         </View>
                         <View style={styles.boxCatagory}>
                             <Text style={styles.textCatagory}>ใบเสนอราคา</Text>

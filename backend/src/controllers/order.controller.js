@@ -55,7 +55,12 @@ const searchStatus = async (req, res) => {
         // Fetch orders by status and populate the related fields
         const orderByStatus = await orderModel.find({ status })
             .populate('customer')
-            .populate('products.product')
+            .populate({
+                path: 'products.product',
+                populate: {
+                    path: 'category'
+                }
+            })
             .populate('sale'); // Ensure 'sale' is the correct field name and is properly referenced
 
         // Check if any orders were found

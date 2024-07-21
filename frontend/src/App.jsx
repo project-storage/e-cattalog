@@ -31,6 +31,7 @@ import MasterOrderPassPageAdmin from './pages/Admin/masterTablePage/MasterOrderP
 import MasterOrderFailPageAdmin from './pages/Admin/masterTablePage/MasterOrderFailPageAdmin'
 import OrderFailPageAdmin from './pages/Admin/OrderFailPageAdmin'
 import Pdf from './components/sale/Pdf'
+import DownloadPDF from './components/sale/DownloadPDF'
 
 const App = () => {
   return (
@@ -68,6 +69,7 @@ const App = () => {
           <Route path='/sale/catalog' element={<CatalogPage />} />
         </Route>
         <Route path='/sale/create/catagory/:id' element={<Pdf />} />
+        <Route path='/sale/download/catagory/:id' element={<DownloadPDF />} />
       </Routes>
     </BrowserRouter>
   )

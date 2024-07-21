@@ -3,41 +3,21 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import orderService from '../../service/orderService';
-import { NavLink, useNavigate } from 'react-router-dom'
-
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import DownloadPDF from './DownloadPDF'
+import { useNavigate } from 'react-router-dom';
 
 const ListCatalog = () => {
     const [dataOrderPass, setdataOrderPass] = useState([]);
-    const [dataProduct, setDataProduct] = useState([]);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
     const fetchOrderByPass = async () => {
         try {
             const res = await orderService.searchPass();
             setdataOrderPass(res.data.data);
-            console.log(res.data.data);
         } catch (error) {
             console.log(error);
         }
-    };
-
-    const selectOrder = (id) => {
-        const selectedOrder = dataOrderPass.find((data) => data._id === id);
-        if (selectedOrder) {
-            setDataProduct(selectedOrder);
-            generatePDF(selectedOrder);
-        }
-    };
-
-    const generatePDF = (order) => {
-        var docDefinition = {
-            content: [
-                { text: 'สร้าง PDF ภาษาไทยด้วย pdfmake ', fontSize: 15 },
-            ],
-            defaultStyle: {
-                font: 'THSarabunNew'
-            }
-        };
-        pdfMake.createPdf(docDefinition).open()
     };
 
     useEffect(() => {
@@ -47,12 +27,12 @@ const ListCatalog = () => {
     return (
         <>
             {dataOrderPass.map((data) => (
-                <Accordion key={data._id}>
+                <Accordion key={data._id} className='mx-3 my-3 bg-gary-100'>
                     <AccordionSummary
                         aria-controls="panel1-content"
                         id="panel1-header"
                     >
-                        {data.customer.title}{data.customer.firstName} {data.customer.lastName}
+                        {data.customer.title} {data.customer.firstName} {data.customer.lastName}
                     </AccordionSummary>
                     <AccordionDetails>
                         <table className="table">
@@ -80,8 +60,10 @@ const ListCatalog = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        <button className='btn btn-success'>ออกใบเสนอราคา</button>
-                        <button className='btn btn-secondary mx-3' onClick={() => {navigate(`/sale/create/catagory/${data._id}`)}}>PDF</button>
+                            <PDFDownloadLink className='btn btn-success text-light' document={<DownloadPDF dataOrder={data}/>} fileName={`order_${data._id}.pdf`}>
+                                {({ loading }) => (loading ? 'กำลังโหลดเอกสาร...' : 'ดาวน์โหลดเอกสาร PDF')}
+                            </PDFDownloadLink>
+                        <button className='btn btn-secondary mx-3' onClick={() => navigate(`/sale/create/catagory/${data._id}`)}>ดูรายละเอียดเพิ่มเติม</button>
                     </AccordionDetails>
                 </Accordion>
             ))}

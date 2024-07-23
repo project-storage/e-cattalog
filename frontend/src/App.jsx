@@ -32,6 +32,7 @@ import MasterOrderFailPageAdmin from './pages/Admin/masterTablePage/MasterOrderF
 import OrderFailPageAdmin from './pages/Admin/OrderFailPageAdmin'
 import Pdf from './components/sale/Pdf'
 import DownloadPDF from './components/sale/DownloadPDF'
+import LogCatagory from './pages/sale/LogCatagory'
 
 const App = () => {
   return (
@@ -67,6 +68,7 @@ const App = () => {
           <Route path='/sale/customer/create' element={<CreateCustomerPageSale />} />
           <Route path='/sale/cart' element={<Cart />} />
           <Route path='/sale/catalog' element={<CatalogPage />} />
+          <Route path='/sale/logcatalog' element={<LogCatagory/>} />
         </Route>
         <Route path='/sale/create/catagory/:id' element={<Pdf />} />
         <Route path='/sale/download/catagory/:id' element={<DownloadPDF />} />

@@ -10,6 +10,8 @@ orderRouter.get('/all', orderController.getAllOrders);
 
 orderRouter.get('/search', orderController.searchStatus);
 
+orderRouter.get('/search/customer',orderController.searchByCustomer)
+
 // Retrieve a single order by id
 orderRouter.get('/info/:id', orderController.getOrderById);
 

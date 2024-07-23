@@ -49,6 +49,34 @@ const getAllOrders = async (req, res) => {
     }
 };
 
+const searchByCustomer = async (req,res) => {
+    try {
+        console.log(req)
+        const {status} = req.query
+        const {customer} = req.body
+        console.log(customer)
+
+        const orderByCustomer = await orderModel.find({status,customer})
+        .populate('customer')
+        .populate({
+            path: 'products.product',
+            populate: {
+                path: 'category'
+            }
+        })
+        .populate('sale');
+        if (!orderByCustomer || orderByCustomer.length === 0) {
+            return res.status(404).json({ message: "No order found with this status" });
+        }
+
+        // Respond with the found orders
+        res.status(200).json({ data: orderByCustomer });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
 const searchStatus = async (req, res) => {
     try {
         const { status } = req.query;
@@ -164,5 +192,6 @@ module.exports = {
     getAllOrders,
     getOrderById,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    searchByCustomer
 };

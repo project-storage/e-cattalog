@@ -90,6 +90,14 @@ const SideNav = () => {
                                     </p>
                                 </NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink to="sale/logcatalog" className="nav-link">
+                                    <i className="nav-icon fas fa-clipboard-list" />
+                                    <p>
+                                        ประวัติใบเสนอราคา
+                                    </p>
+                                </NavLink>
+                            </li>
                             <li className="nav-header">จัดการข้อมูล</li>
                             <li className="nav-item">
                                 <NavLink to="sale/customers" className="nav-link">

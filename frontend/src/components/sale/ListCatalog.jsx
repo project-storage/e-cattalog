@@ -9,8 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
 const ListCatalog = () => {
-    const [dataOrderPass, setdataOrderPass] = useState([]);
-    const navigate = useNavigate();
+    const [dataOrderPass, setdataOrderPass] = useState([])
+    const [div,setDiv] = useState("")
+    const navigate = useNavigate()
 
     const fetchOrderByPass = async () => {
         try {
@@ -58,12 +59,25 @@ const ListCatalog = () => {
         console.log(res)
     }
 
+    const empOrder = () => {
+        const  div = <div className='d-flex justify-content-center py-3'>
+            <p>ไม่มีใบเสนอราคาที่ได้รับการยืนยัน</p>
+        </div>
+
+        setDiv(div)
+
+    }
+
     useEffect(() => {
         fetchOrderByPass();
+        if(dataOrderPass.length == 0){
+            empOrder()
+        }
     }, []);
 
     return (
         <>
+        {div}
             {dataOrderPass.map((data) => (
                 <Accordion key={data._id} className='mx-3 my-3 bg-gary-100'>
                     <AccordionSummary

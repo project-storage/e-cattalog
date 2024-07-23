@@ -33,8 +33,7 @@ const searchFail = async () => {
 }
 
 const searchToCustomer = async (data) => {
-    console.log(data)
-    return http.get('http://localhost:8080/api/order/search/customer?status=toCustomer',data)
+    return http.get(`http://localhost:8080/api/order/search/customer/${data}?status=toCustomer`)
 }
 const exportService = {
     createOrder,

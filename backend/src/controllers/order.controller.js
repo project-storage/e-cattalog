@@ -51,10 +51,8 @@ const getAllOrders = async (req, res) => {
 
 const searchByCustomer = async (req,res) => {
     try {
-        console.log(req)
         const {status} = req.query
-        const {customer} = req.body
-        console.log(customer)
+        const {customer} = req.params
 
         const orderByCustomer = await orderModel.find({status,customer})
         .populate('customer')

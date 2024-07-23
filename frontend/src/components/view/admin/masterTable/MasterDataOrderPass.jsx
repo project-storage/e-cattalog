@@ -70,50 +70,6 @@ const MasterDataOrderPass = () => {
 
     const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
-    const handleConfirmOrder = async (id) => {
-        try {
-            await orderService.updateOrder(id, { status: 'pass' });
-            Swal.fire({
-                icon: 'success',
-                title: 'Confirmed!',
-                text: 'Order confirmed successfully.',
-                timer: 1000,
-                timerProgressBar: true,
-                showConfirmButton: false,
-            });
-            navigate('/admin/order/process');
-        } catch (error) {
-            console.error("Error updating order status:", error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Error confirming order. Please try again later.',
-            });
-        }
-    };
-
-    const handleFailOrder = async (id) => {
-        try {
-            await orderService.updateOrder(id, { status: 'fail', comment });
-            Swal.fire({
-                icon: 'success',
-                title: 'Failed!',
-                text: 'Order marked as failed successfully.',
-                timer: 1000,
-                timerProgressBar: true,
-                showConfirmButton: false,
-            });
-            navigate('/admin/order/process');
-        } catch (error) {
-            console.error("Error updating order status:", error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Error marking order as failed. Please try again later.',
-            });
-        }
-    };
-
     if (loading) {
         return (
             <div className="d-flex align-items-center justify-content-center" style={{ height: '100vh' }}>
@@ -279,7 +235,7 @@ const MasterDataOrderPass = () => {
                             <p className=' text-center w-25 h-75'>
                                 สถานะ :
                                 <span className='badge badge-pill badge-success ml-1 p-2'> {orderInfo?.status}</span>
-                                </p>
+                            </p>
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -327,7 +283,7 @@ const MasterDataOrderPass = () => {
                             </ul>
                         </nav>
                     )}
-                   
+
                 </div>
             </div>
         </div>

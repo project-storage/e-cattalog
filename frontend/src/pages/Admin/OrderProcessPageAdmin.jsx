@@ -8,7 +8,7 @@ const OrderProcessPageAdmin = () => {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              {/* <h1 className="m-0">เพิ่มสินค้า</h1> */}
+              <h1 className="m-0">ใบเสนอราคาที่ยังไม่ได้ตรวจสอบ</h1>
             </div>{/* /.col */}
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">

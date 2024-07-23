@@ -81,7 +81,7 @@ const MasterDataOrderProcess = () => {
                 timerProgressBar: true,
                 showConfirmButton: false,
             });
-            navigate('/admin/order/process');
+            navigate('/admin/order/pass');
         } catch (error) {
             console.error("Error updating order status:", error);
             Swal.fire({

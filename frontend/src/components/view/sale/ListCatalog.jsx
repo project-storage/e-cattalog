@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import orderService from '../../service/orderService';
+import orderService from '../../../service/orderService';
 import { PDFDownloadLink ,pdf} from '@react-pdf/renderer';
-import DownloadPDF from './DownloadPDF'
+import DownloadPDF from '../../sale/DownloadPDF'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 

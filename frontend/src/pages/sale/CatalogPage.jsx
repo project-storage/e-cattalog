@@ -1,5 +1,5 @@
 import React from 'react'
-import ListCatalog from '../../components/sale/ListCatalog'
+import ListCatalog from '../../components/view/sale/ListCatalog'
 
 
 const CatalogPage = () => {

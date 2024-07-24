@@ -59,13 +59,13 @@ const SideNav = () => {
                             <li className="nav-item">
                                 <NavLink to='/admin/dashboard' className="nav-link">
                                     <i className="nav-icon fas fa-tachometer-alt" />
-                                    <p>หน้าแรก</p>
+                                    <p>แดชบอร์ด</p>
                                 </NavLink>
                             </li>
                             <li className="nav-header">จัดการระบบ</li>
                             <li className="nav-item">
-                                <a className="nav-link">
-                                    <i className="nav-icon fas fa-table" />
+                                <a href="#" className="nav-link">
+                                    <i className="nav-icon fas fa-book" />
                                     <p>
                                         ใบเสนอราคา
                                         <i className="fas fa-angle-left right" />
@@ -74,19 +74,19 @@ const SideNav = () => {
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
                                         <NavLink to='/admin/order/pass' className="nav-link">
-                                            <i className="nav-icon fas fa-columns" />
+                                            <i className="nav-icon fas fa-clipboard-check" />
                                             <p>ตรวจสอบแล้ว</p>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink to='/admin/order/process' className="nav-link">
-                                            <i className="nav-icon fas fa-columns" />
+                                            <i className="nav-icon fas fa-spinner" />
                                             <p>ยังไม่ได้ตรวจสอบ</p>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink to='/admin/order/fail' className="nav-link">
-                                            <i className="nav-icon fas fa-columns" />
+                                            <i className="nav-icon fas fa-file-excel" />
                                             <p>ใบเสนอราคาที่ผิดพลาด</p>
                                         </NavLink>
                                     </li>
@@ -94,7 +94,7 @@ const SideNav = () => {
                             </li>
                             <li className="nav-item">
                                 <NavLink to='/admin/products' className="nav-link">
-                                    <i className="nav-icon fas fa-columns" />
+                                    <i className="nav-icon fab fa-product-hunt" />
                                     <p>สินค้า</p>
                                 </NavLink>
                             </li>
@@ -106,20 +106,31 @@ const SideNav = () => {
                             </li>
                             <li className="nav-header">จัดการข้อมูล</li>
                             <li className="nav-item">
-                                <NavLink to='/admin/customers' className="nav-link">
-                                    <i className="nav-icon fas fa-columns" />
-                                    <p>ข้อมูลลูกค้า</p>
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to='/admin/sales' className="nav-link">
-                                    <i className="nav-icon fas fa-columns" />
-                                    <p>ข้อมูลเซลล์</p>
-                                </NavLink>
+                                <a href="#" className="nav-link">
+                                    <i className="nav-icon fas fa-book" />
+                                    <p>
+                                        ข้อมูลผู้ใช้งน
+                                        <i className="fas fa-angle-left right" />
+                                    </p>
+                                </a>
+                                <ul className="nav nav-treeview">
+                                    <li className="nav-item">
+                                        <NavLink to='/admin/customers' className="nav-link">
+                                            <i className="nav-icon fas fa-users" />
+                                            <p>ข้อมูลลูกค้า</p>
+                                        </NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink to='/admin/sales' className="nav-link">
+                                            <i className="nav-icon fas fa-users" />
+                                            <p>ข้อมูลเซลล์</p>
+                                        </NavLink>
+                                    </li>
+                                </ul>
                             </li>
                             <li className="nav-item">
                                 <NavLink to='/admin/profile' className="nav-link">
-                                    <i className="nav-icon fas fa-columns" />
+                                    <i className="nav-icon fas fa-user" />
                                     <p>ข้อมูลส่วนตัว</p>
                                 </NavLink>
                             </li>

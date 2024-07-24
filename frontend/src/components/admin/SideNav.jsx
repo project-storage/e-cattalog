@@ -116,13 +116,13 @@ const SideNav = () => {
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
                                         <NavLink to='/admin/customers' className="nav-link">
-                                            <i className="nav-icon fas fa-users" />
+                                            <i className="nav-icon 	fas fa-user-friends" />
                                             <p>ข้อมูลลูกค้า</p>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink to='/admin/sales' className="nav-link">
-                                            <i className="nav-icon fas fa-users" />
+                                            <i className="nav-icon 	fas fa-user-friends" />
                                             <p>ข้อมูลเซลล์</p>
                                         </NavLink>
                                     </li>
@@ -130,7 +130,7 @@ const SideNav = () => {
                             </li>
                             <li className="nav-item">
                                 <NavLink to='/admin/profile' className="nav-link">
-                                    <i className="nav-icon fas fa-user" />
+                                    <i className="nav-icon 	fas fa-user-circle" />
                                     <p>ข้อมูลส่วนตัว</p>
                                 </NavLink>
                             </li>

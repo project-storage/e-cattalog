@@ -67,7 +67,7 @@ const SideNav = () => {
                             </li>
                             <li className="nav-header">จัดการระบบ</li>
                             <li className="nav-item">
-                                <NavLink to="sale/products" className="nav-link">
+                                <NavLink to="/sale/products" className="nav-link">
                                     <i className="nav-icon fas fa-clipboard-list" />
                                     <p>
                                         สร้างใบเสนอราคา
@@ -75,7 +75,7 @@ const SideNav = () => {
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink to="sale/cart" className="nav-link">
+                                <NavLink to="/sale/cart" className="nav-link">
                                     <i className="nav-icon fas fa-clipboard-list" />
                                     <p>
                                         สินค้าที่เลือกไว้
@@ -83,24 +83,43 @@ const SideNav = () => {
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink to="sale/catalog" className="nav-link">
-                                    <i className="nav-icon fas fa-clipboard-list" />
+                                <a href="#" className="nav-link">
+                                    <i className="nav-icon fas fa-book" />
                                     <p>
                                         ใบเสนอราคา
+                                        <i className="fas fa-angle-left right" />
                                     </p>
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="sale/logcatalog" className="nav-link">
-                                    <i className="nav-icon fas fa-clipboard-list" />
-                                    <p>
-                                        ประวัติใบเสนอราคา
-                                    </p>
-                                </NavLink>
+                                </a>
+                                <ul className="nav nav-treeview">
+                                    <li className="nav-item">
+                                        <NavLink to="/sale/order/list-customer" className="nav-link">
+                                            <i className="nav-icon fas fa-clipboard-list" />
+                                            <p>
+                                                ที่ต้องส่งมอบให้ลูกค้า
+                                            </p>
+                                        </NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink to="/sale/order/fail" className="nav-link">
+                                            <i className="nav-icon fas fa-clipboard-list" />
+                                            <p>
+                                                ใบเสนอราคาที่ต้องแก้ไข
+                                            </p>
+                                        </NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink to="/sale/order/history" className="nav-link">
+                                            <i className="nav-icon fas fa-clipboard-list" />
+                                            <p>
+                                                ประวัติใบเสนอราคา
+                                            </p>
+                                        </NavLink>
+                                    </li>
+                                </ul>
                             </li>
                             <li className="nav-header">จัดการข้อมูล</li>
                             <li className="nav-item">
-                                <NavLink to="sale/customers" className="nav-link">
+                                <NavLink to="/sale/customers" className="nav-link">
                                     <i className="nav-icon 	fas fa-user-friends" />
                                     <p>
                                         รายชื่อลูกค้า
@@ -108,7 +127,7 @@ const SideNav = () => {
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink to="sale/profile" className="nav-link">
+                                <NavLink to="/sale/profile" className="nav-link">
                                     <i className="nav-icon 	fas fa-user-circle" />
                                     <p>
                                         ข้อมูลส่วนตัว

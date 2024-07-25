@@ -24,7 +24,7 @@ import CreateSalePageAdmin from './pages/Admin/CreateSalePageAdmin'
 import EditSalePageAdmin from './pages/Admin/formEdit/EditSalePageAdmin'
 import OrderProcessPageAdmin from './pages/Admin/OrderProcessPageAdmin'
 
-import CatalogPage from './pages/sale/CatalogPage'
+import OrderPass from './pages/sale/OrderPassPageSale'
 import OrderPassPageAdmin from './pages/Admin/OrderPassPageAdmin'
 import MasterOrderProcessPageAdmin from './pages/Admin/masterTablePage/MasterOrderProcessPageAdmin'
 import MasterOrderPassPageAdmin from './pages/Admin/masterTablePage/MasterOrderPassPageAdmin'
@@ -67,7 +67,7 @@ const App = () => {
           <Route path='/sale/customers' element={<CustomerPageSale />} />
           <Route path='/sale/customer/create' element={<CreateCustomerPageSale />} />
           <Route path='/sale/cart' element={<Cart />} />
-          <Route path='/sale/order/list-customer' element={<CatalogPage />} />
+          <Route path='/sale/order/list-customer' element={<OrderPass />} />
           <Route path='/sale/order/history' element={<LogCatagory/>} />
         </Route>
         <Route path='/sale/create/catagory/:id' element={<Pdf />} />

@@ -1,10 +1,10 @@
 import React from 'react'
-import ListCatalog from '../../components/view/sale/ListCatalog'
+import OrderPass from '../../components/view/sale/OrderPass'
 
 
 const CatalogPage = () => {
   return (
-    <ListCatalog/>
+    <OrderPass/>
   )
 }
 

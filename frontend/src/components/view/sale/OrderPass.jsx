@@ -8,7 +8,7 @@ import DownloadPDF from '../../sale/DownloadPDF'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
-const ListCatalog = () => {
+const OrderPass = () => {
     const [dataOrderPass, setdataOrderPass] = useState([])
     const [div,setDiv] = useState("")
     const navigate = useNavigate()
@@ -128,4 +128,4 @@ const ListCatalog = () => {
     );
 };
 
-export default ListCatalog;
+export default OrderPass;

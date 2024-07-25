@@ -106,7 +106,7 @@ const ListCart = () => {
             // ถ้าไม่มีสินค้าในรถเข็น แสดงข้อความว่าไม่มีรายการสินค้า
             newRows.push(
                 <tr key="no-items">
-                    <td colSpan={5} style={{ textAlign: 'center' }}>ไม่มีรายการสินค้า</td>
+                    <td colSpan={6} style={{ textAlign: 'center' }}>ไม่มีรายการสินค้า</td>
                 </tr>
             );
         }
@@ -116,8 +116,11 @@ const ListCart = () => {
             // ถ้าประเภทสินค้าปัจจุบันไม่เหมือนกับประเภทสินค้าที่เช็คไว้
             if (check !== product.type.name) {
                 newRows.push(
-                    <tr key={`discount-${product.type.name}`}>
-                        <td colSpan={5} style={{ textAlign: 'end' }}>
+                    <tr key={`type-${product.type.name}`}>
+                        <td colSpan={4} style={{ textAlign: 'start', fontWeight: 'bold' }}>
+                          ประเภทสินค้า: {product.type.name}
+                        </td>
+                        <td colSpan={2} style={{ textAlign: 'end' }}>
                             <input
                                 className=""
                                 type="number"
@@ -143,6 +146,7 @@ const ListCart = () => {
             // สร้างแถวสำหรับสินค้าแต่ละรายการ
             newRows.push(
                 <tr key={product.id}>
+                    <td>{index + 1}</td>
                     <td>{product.name}</td>
                     <td style={{ width: 90 }}>
                         <input
@@ -154,17 +158,17 @@ const ListCart = () => {
                             defaultValue={product.qty}
                         />
                     </td>
-                    <td className='d-flex justify-content-center'>
+                    <td>
                         <button className='btn btn-danger' onClick={delProduct} name={product.id}>ลบ</button>
                     </td>
-                    <td className="text-center" style={{ width: '15%' }}>
-                        <p className=''>
+                    <td className="text-center" >
+                        <p>
                             {product.price}
                             <span> ฿</span>
                         </p>
                     </td>
-                    <td style={{ width: '15%' }}>
-                        <p className="">
+                    <td >
+                        <p>
                             {sum} <span> ฿</span> /
                             {sumDiscount} <span> ฿</span>
                         </p>
@@ -182,9 +186,10 @@ const ListCart = () => {
             <table className='table text-center'>
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>รายการ</th>
                         <th>จำนวน</th>
-                        <th></th>
+                        <th>action</th>
                         <th>ราคา/หน่วย</th>
                         <th>รวม/หักส่วนลด</th>
                     </tr>
@@ -192,7 +197,7 @@ const ListCart = () => {
                 <tbody>
                     {rows}
                     <tr>
-                        <td colSpan={5} style={{ textAlign: "end", fontWeight: 'bold' }}>ราคารวม : <input type="number" value={total.toFixed(2)} disabled className='text-center' /> </td>
+                        <td colSpan={6} style={{ textAlign: "end", fontWeight: 'bold' }}>ราคารวม : <input type="number" value={total.toFixed(2)} disabled className='text-center' /> </td>
                     </tr>
                 </tbody>
             </table>

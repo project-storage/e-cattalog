@@ -68,17 +68,17 @@ const SideNav = () => {
                             <li className="nav-header">จัดการระบบ</li>
                             <li className="nav-item">
                                 <NavLink to="/sale/products" className="nav-link">
-                                    <i className="nav-icon fas fa-clipboard-list" />
+                                    <i className="nav-icon fab fa-product-hunt" />
                                     <p>
-                                        สร้างใบเสนอราคา
+                                        สินค้า
                                     </p>
                                 </NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink to="/sale/cart" className="nav-link">
-                                    <i className="nav-icon fas fa-clipboard-list" />
+                                    <i className="nav-icon fas fa-shopping-cart" />
                                     <p>
-                                        สินค้าที่เลือกไว้
+                                        ตะกร้าสินค้า
                                     </p>
                                 </NavLink>
                             </li>

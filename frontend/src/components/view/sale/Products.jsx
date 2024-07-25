@@ -27,16 +27,16 @@ const Products = () => {
                 const listOrder = existingList ? JSON.parse(existingList) : [];
                 const PreListOrder = listOrder.map((data, index) => {
                     if (data.id == id) {
-                        const intqty = parseInt(qty,10)
-                        const oldqty = parseInt(data.qty,10)
+                        const intqty = parseInt(qty, 10)
+                        const oldqty = parseInt(data.qty, 10)
                         const totalqty = intqty + oldqty
                         count++
                         return { ...data, qty: totalqty }
-                    } 
+                    }
                     return data
                 })
 
-                if(count == 0){
+                if (count == 0) {
                     // เพิ่มรายการใหม่เข้าไปใน array
                     PreListOrder.push({ id: id, price: price, name: name, qty: qty, type: type, discount: 0 });
                 }
@@ -81,9 +81,14 @@ const Products = () => {
         <>
             {
                 cardData.map((product, index) => (
-                    <div className='col-3 my-1 mx-1' key={index}>
+                    <div className='col col-md-2 md-2' key={index}>
                         <div className="card" style={{ width: " 18rem;" }}>
-                            <img className='card-img-top' src={`http://localhost:8080/api/product/image/${product._id}`} alt={product.name} />
+                            <img
+                                className='card-img-top'
+                                src={`http://localhost:8080/api/product/image/${product._id}`}
+                                alt={product.name}
+                                style={{ height: '200px', objectFit: 'cover' }}
+                            />
                             <div className="card-body">
                                 <h5 className='card-title'>{product.name}</h5>
                                 <p className='card-text'>{product.price}</p>

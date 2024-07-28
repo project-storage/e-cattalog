@@ -32,9 +32,10 @@ const searchFail = async () => {
     return http.get('http://localhost:8080/api/order/search?status=fail')
 }
 
-const searchToCustomer = async (data) => {
-    return http.get(`http://localhost:8080/api/order/search/customer/${data}?status=toCustomer`)
+const searchOrderHistory = async()=>{
+    return http.get('http://localhost:8080/api/order/search/sale/status?status=toCustomer')
 }
+
 const exportService = {
     createOrder,
     orders,
@@ -43,7 +44,7 @@ const exportService = {
     searchFail,
     orderById,
     updateOrder,
-    searchToCustomer
+    searchOrderHistory
 }
 
 export default exportService

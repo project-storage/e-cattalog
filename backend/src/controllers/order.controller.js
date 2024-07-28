@@ -1,7 +1,7 @@
 const orderModel = require('../models/order.model');
 
 const createOrder = async (req, res) => {
-    const { customer, products, date, totalPrice,project } = req.body;
+    const { customer, products, date, totalPrice, project } = req.body;
     const sale = req.user._id
     try {
         const newOrder = new orderModel({
@@ -49,20 +49,20 @@ const getAllOrders = async (req, res) => {
     }
 };
 
-const searchByCustomer = async (req,res) => {
+const searchByCustomer = async (req, res) => {
     try {
-        const {status} = req.query
-        const {customer} = req.params
+        const { status } = req.query
+        const { customer } = req.params
 
-        const orderByCustomer = await orderModel.find({status,customer})
-        .populate('customer')
-        .populate({
-            path: 'products.product',
-            populate: {
-                path: 'category'
-            }
-        })
-        .populate('sale');
+        const orderByCustomer = await orderModel.find({ status, customer })
+            .populate('customer')
+            .populate({
+                path: 'products.product',
+                populate: {
+                    path: 'category'
+                }
+            })
+            .populate('sale');
         if (!orderByCustomer || orderByCustomer.length === 0) {
             return res.status(404).json({ message: "No order found with this status" });
         }
@@ -103,8 +103,30 @@ const searchStatus = async (req, res) => {
     }
 };
 
-module.exports = searchStatus;
+const searchOrderBySale = async (req, res) => {
+    try {
+        const { status } = req.query
 
+        const orderBySale = await orderModel.find({sale:req.user._id,status})
+            .populate('customer')
+            // .populate({
+            //     path: 'products.product',
+            //     populate: {
+            //         path: 'category'
+            //     }
+            // })
+            .populate('sale');
+
+        if (!orderBySale || orderBySale.length === 0) {
+            return res.status(404).json({ message: "No order found with this status" });
+        }
+
+        return res.status(200).json({ data: orderBySale })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
 
 const getOrderById = async (req, res) => {
     const { id } = req.params;
@@ -181,9 +203,7 @@ const deleteOrder = async (req, res) => {
     }
 };
 
-const savePDF = async (req,res) => {
-    
-}
+
 module.exports = {
     searchStatus,
     createOrder,
@@ -191,5 +211,6 @@ module.exports = {
     getOrderById,
     updateOrder,
     deleteOrder,
-    searchByCustomer
+    searchByCustomer,
+    searchOrderBySale
 };

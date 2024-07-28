@@ -92,10 +92,10 @@ const SideNav = () => {
                                 </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
-                                        <NavLink to="/sale/order/list-customer" className="nav-link">
+                                        <NavLink to="/sale/order/list-bils" className="nav-link">
                                             <i className="nav-icon fas fa-clipboard-list" />
                                             <p>
-                                                ที่ต้องส่งมอบให้ลูกค้า
+                                                ใบเสนอราคาที่ต้องส่งมอบ
                                             </p>
                                         </NavLink>
                                     </li>
@@ -108,7 +108,7 @@ const SideNav = () => {
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink to="/sale/order/history" className="nav-link">
+                                        <NavLink to="/sale/order/histories" className="nav-link">
                                             <i className="nav-icon fas fa-clipboard-list" />
                                             <p>
                                                 ประวัติใบเสนอราคา

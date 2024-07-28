@@ -1,32 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import orderService from '../../../service/orderService';
-import { PDFDownloadLink ,pdf} from '@react-pdf/renderer';
-import DownloadPDF from '../../sale/DownloadPDF'
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2'
+import orderService from '../../../service/orderService';
+import DownloadPDF from './../../sale/DownloadPDF';
+import Swal from 'sweetalert2';
+import { pdf } from '@react-pdf/renderer';
 
 const OrderPass = () => {
-    const [dataOrderPass, setdataOrderPass] = useState([])
-    const [div,setDiv] = useState("")
-    const navigate = useNavigate()
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [filteredOrders, setFilteredOrders] = useState([]);
+    const [searchCustomer, setSearchCustomer] = useState('');
+    const [searchSale, setSearchSale] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(10);
 
-    const fetchOrderByPass = async () => {
+    const navigate = useNavigate();
+
+    const fetchOrders = async () => {
         try {
             const res = await orderService.searchPass();
-            setdataOrderPass(res.data.data);
+            setOrders(res.data.data);
+            setFilteredOrders(res.data.data);
+            setLoading(false);
         } catch (error) {
-            console.log(error);
+            console.error("Error fetching orders:", error);
+            setLoading(false);
         }
     };
 
-    const handleDownloadClick = async (data) => {
-        
+    useEffect(() => {
+        fetchOrders();
+    }, []);
+
+    const handleSearch = () => {
+        const filtered = orders.filter(order => {
+            const matchesCustomer = `${order.customer?.title}${order.customer?.firstName} ${order.customer?.lastName}`.toLowerCase().includes(searchCustomer.toLowerCase());
+            const matchesSale = `${order.sale?.title}${order.sale?.firstName} ${order.sale?.lastName}`.toLowerCase().includes(searchSale.toLowerCase());
+            return matchesCustomer && matchesSale;
+        });
+        setFilteredOrders(filtered);
+        setCurrentPage(1); // Reset to the first page whenever a new search is made
+    };
+
+    const handleDownloadClick = async (order) => {
         const result = await Swal.fire({
             title: 'ยืนยันการดาวน์โหลด?',
-            text: "เมื่อกดดาวโหลดสถานะจะเปลี่ยนเป็นส่งให้ลูกค้าแล้ว โปรดทำการส่งใบเสนอราคาให้ลูกค้่าหลังจากกดยืนยัน",
+            text: "เมื่อกดดาวโหลดสถานะจะเปลี่ยนเป็นส่งให้ลูกค้าแล้ว โปรดทำการส่งใบเสนอราคาให้ลูกค้าหลังจากกดยืนยัน",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -35,96 +54,168 @@ const OrderPass = () => {
         });
 
         if (result.isConfirmed) {
+            try {
+                const doc = <DownloadPDF dataOrder={order} />;
+                const asBlob = await pdf(doc).toBlob();
 
-            // สร้างไฟล์ PDF ในเบราว์เซอร์
-            const doc = <DownloadPDF dataOrder={data} />;
-            const asBlob = await pdf(doc).toBlob();
+                const projectName = order.project || 'project';
+                const customerName = `${order.customer?.firstName}_${order.customer?.lastName}`;
+                const fileName = `${projectName}_${customerName}.pdf`;
 
-            // สร้างลิงก์ดาวน์โหลดชั่วคราว
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(asBlob);
-            link.download = `order_${data._id}.pdf`;
-            link.click();
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(asBlob);
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
 
-            // ล้างลิงก์หลังจากการดาวน์โหลด
-            URL.revokeObjectURL(link.href);
-            updateStatusOrder(data)
-            
+                await updateStatusOrder(order._id);
+            } catch (error) {
+                console.error("Error creating or downloading PDF:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error creating or downloading PDF. Please try again later.',
+                });
+            }
         }
     };
 
-    const updateStatusOrder = async (data) => {
-        data.status = "toCustomer"
-        const res = await orderService.updateOrder(data._id,{status:'toCustomer'})
-        console.log(res)
-    }
-
-    const empOrder = () => {
-        const  div = <div className='d-flex justify-content-center py-3'>
-            <p>ไม่มีใบเสนอราคาที่ได้รับการยืนยัน</p>
-        </div>
-
-        setDiv(div)
-
-    }
+    const updateStatusOrder = async (id) => {
+        try {
+            await orderService.updateOrder(id, { status: 'toCustomer' });
+            Swal.fire({
+                icon: 'success',
+                title: 'Confirmed!',
+                text: 'Order confirmed successfully.',
+                timer: 1000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+            });
+            navigate('/sale/order/list-bils');
+        } catch (error) {
+            console.error("Error updating order status:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error confirming order. Please try again later.',
+            });
+        }
+    };
 
     useEffect(() => {
-        fetchOrderByPass();
-        if(dataOrderPass.length == 0){
-            empOrder()
-        }
-    }, []);
+        handleSearch();
+    }, [searchCustomer, searchSale]);
+
+    const handleOrderDetail = (id) => {
+        navigate(`/sale/order/list-bil/detail/${id}`);
+    };
+
+    const handlePreviousPage = () => {
+        setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages));
+    };
+
+    const handlePageClick = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+    const currentOrders = filteredOrders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+    if (loading) {
+        return (
+            <div className="d-flex align-items-center justify-content-center" style={{ height: '100vh' }}>
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <>
-        {div}
-            {dataOrderPass.map((data) => (
-                <Accordion key={data._id} className='mx-3 my-3 bg-gary-100'>
-                    <AccordionSummary
-                        aria-controls="panel1-content"
-                        id="panel1-header"
-                    >
-                        {data.customer.title} {data.customer.firstName} {data.customer.lastName}
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>รายการสินค้า</th>
-                                    <th>จำนวน</th>
-                                    <th>ราคา/หน่วย</th>
-                                    <th>ราคารวม</th>
-                                    <th>ส่วนลด</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.products.map((dataProduct) => (
-                                    <tr key={dataProduct.product._id}>
-                                        <td>{dataProduct.product.name}</td>
-                                        <td>{dataProduct.qty}</td>
-                                        <td>{dataProduct.product.price}</td>
-                                        <td>{dataProduct.finalPrice}</td>
-                                        <td>{dataProduct.discount}%</td>
-                                    </tr>
-                                ))}
-                                <tr>
-                                    <td colSpan={5} className='me-2' style={{ textAlign: 'end' }}>ราคารวม : {data.totalPrice}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+        <div className='tb-orders'>
+            <div className="search-bar mb-3">
+                <div className="row">
+                    <div className="col-md-6">
+                        <input type="text"
+                            className='form-control mt-1'
+                            placeholder='Search name customer'
+                            value={searchCustomer}
+                            onChange={(e) => setSearchCustomer(e.target.value)}
+                        />
+                    </div>
+                    <div className="col-md-6">
+                        <input type="text"
+                            className='form-control mt-1'
+                            placeholder='Search name sale'
+                            value={searchSale}
+                            onChange={(e) => setSearchSale(e.target.value)}
+                        />
+                    </div>
+                </div>
+            </div>
+            <div className="table-responsive">
+                <table className="table table-bordered table-gray table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">ลูกค้า</th>
+                            <th scope="col">สถานะ</th>
+                            <th scope="col">เซลล์</th>
+                            <th scope="col">รายละเอียด</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentOrders.length > 0 ? (
+                            currentOrders.map((order, index) => (
+                                <tr key={order.id}>
+                                    <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                                    <td>{`${order.customer?.title}${order.customer?.firstName} ${order.customer?.lastName}`}</td>
+                                    <td><p className='bg-success'>{order.status}</p></td>
+                                    <td>{`${order.sale?.title}${order.sale?.firstName} ${order.sale?.lastName}`}</td>
+                                    <td>
+                                        <button className='btn btn-secondary mt-1 mx-1' onClick={() => handleOrderDetail(order._id)}>ดูรายละเอียดเพิ่มเติม</button>
+                                        <button
+                                            className='btn btn-success text-light mt-1'
+                                            onClick={() => { handleDownloadClick(order) }}
+                                        >
+                                            ดาวน์โหลดเอกสาร PDF
+                                        </button>
+                                    </td>
 
-                        <button
-                            className='btn btn-success text-light'
-                            onClick={() => {handleDownloadClick(data)}}
-                        >
-                            ดาวน์โหลดเอกสาร PDF
-                        </button>
-
-                        <button className='btn btn-secondary mx-3' onClick={() => navigate(`/sale/create/catagory/${data._id}`)}>ดูรายละเอียดเพิ่มเติม</button>
-                    </AccordionDetails>
-                </Accordion>
-            ))}
-        </>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="5" className="text-center">ไม่พบข้อมูล</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+            {filteredOrders.length > 0 && (
+                <nav aria-label="Page navigation example">
+                    <ul className="pagination justify-content-end">
+                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                            <button className="page-link" onClick={handlePreviousPage}>Previous</button>
+                        </li>
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                                <button className="page-link" onClick={() => handlePageClick(index + 1)}>{index + 1}</button>
+                            </li>
+                        ))}
+                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                            <button className="page-link" onClick={handleNextPage}>Next</button>
+                        </li>
+                    </ul>
+                </nav>
+            )}
+        </div>
     );
 };
 

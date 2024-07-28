@@ -31,8 +31,9 @@ import MasterOrderPassPageAdmin from './pages/Admin/masterTablePage/MasterOrderP
 import MasterOrderFailPageAdmin from './pages/Admin/masterTablePage/MasterOrderFailPageAdmin'
 import OrderFailPageAdmin from './pages/Admin/OrderFailPageAdmin'
 import Pdf from './components/sale/Pdf'
-import DownloadPDF from './components/sale/DownloadPDF'
-import LogCatagory from './pages/sale/LogCatagory'
+import HistoryOrderPageSale from './pages/sale/HistoryOrderPageSale';
+import MasterDataOrderHistoryPageSale from './pages/sale/MasterDataPage/MasterDataOrderHistoryPageSale'
+import MasterDataOrderPassPageSale from './pages/sale/MasterDataPage/MasterDataOrderPassPageSale'
 
 const App = () => {
   return (
@@ -67,11 +68,12 @@ const App = () => {
           <Route path='/sale/customers' element={<CustomerPageSale />} />
           <Route path='/sale/customer/create' element={<CreateCustomerPageSale />} />
           <Route path='/sale/cart' element={<Cart />} />
-          <Route path='/sale/order/list-customer' element={<OrderPass />} />
-          <Route path='/sale/order/history' element={<LogCatagory/>} />
+          <Route path='/sale/order/list-bils' element={<OrderPass />} />
+          <Route path='/sale/order/list-bil/detail/:id' element={<MasterDataOrderPassPageSale />} />
+          <Route path='/sale/order/histories' element={<HistoryOrderPageSale />} />
+          <Route path='/sale/order/history/detail/:id' element={<MasterDataOrderHistoryPageSale />} />
         </Route>
-        <Route path='/sale/create/catagory/:id' element={<Pdf />} />
-        <Route path='/sale/download/catagory/:id' element={<DownloadPDF />} />
+        <Route path='/sale/order/create-pdf/:id' element={<Pdf />} />
       </Routes>
     </BrowserRouter>
   )

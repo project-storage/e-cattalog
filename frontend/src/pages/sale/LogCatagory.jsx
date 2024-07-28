@@ -65,12 +65,12 @@ const LogCatagory = () => {
                                         </tr>
                                     ))}
                                     <tr>
-                                        <td colSpan={5} className='me-2' style={{ textAlign: 'end' }}>ราคารวม : {data.totalPrice}</td>
+                                        <td colSpan={5} className='me-2' style={{ textAlign: 'end' }}>ราคารวม : {data.totalPrice} บาท</td>
                                     </tr>
                                 </tbody>
                             </table>
 
-                            <button className='btn btn-secondary mx-3' onClick={() => navigate(`/sale/create/catagory/${data._id}`)}>ดูรายละเอียดเพิ่มเติม</button>
+                            <button className='btn btn-secondary mx-3' onClick={() => navigate(`/sale/order/create-pdf/${data._id}`)}>ดูรายละเอียดเพิ่มเติม</button>
                         </AccordionDetails>
                     </Accordion>
                 ))}

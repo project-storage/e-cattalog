@@ -12,6 +12,7 @@ orderRouter.get('/search', orderController.searchStatus);
 
 orderRouter.get('/search/customer/:customer',orderController.searchByCustomer)
 
+orderRouter.get('/search/sale/status',authToken,orderController.searchOrderBySale)
 // Retrieve a single order by id
 orderRouter.get('/info/:id', orderController.getOrderById);
 

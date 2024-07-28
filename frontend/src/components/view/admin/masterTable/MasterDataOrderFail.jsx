@@ -265,6 +265,18 @@ const MasterDataOrderFail = () => {
                             </tbody>
                         </table>
                     </div>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <textarea
+                                type="text"
+                                name="comment"
+                                id="inputComment"
+                                style={{ width: "100%" }}
+                                value={orderInfo.comment}
+                                disabled
+                            />
+                        </div>
+                    </div>
                     {filteredProducts.length > 0 && (
                         <nav aria-label="Page navigation example">
                             <ul className="pagination justify-content-start">
@@ -282,18 +294,6 @@ const MasterDataOrderFail = () => {
                             </ul>
                         </nav>
                     )}
-                    <div className="row">
-                        <div className="col-md-12">
-                            <textarea
-                                type="text"
-                                name="comment"
-                                id="inputComment"
-                                style={{ width: "100%" }}
-                                value={orderInfo.comment}
-                                disabled
-                            />
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

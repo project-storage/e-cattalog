@@ -34,6 +34,8 @@ import Pdf from './components/sale/Pdf'
 import HistoryOrderPageSale from './pages/sale/HistoryOrderPageSale';
 import MasterDataOrderHistoryPageSale from './pages/sale/MasterDataPage/MasterDataOrderHistoryPageSale'
 import MasterDataOrderPassPageSale from './pages/sale/MasterDataPage/MasterDataOrderPassPageSale'
+import OrderFailPageSale from './pages/sale/OrderFailPageSale'
+import MasterDataOrderFailPageSale from './pages/sale/MasterDataPage/MasterDataOrderFailPageSale'
 
 const App = () => {
   return (
@@ -72,6 +74,8 @@ const App = () => {
           <Route path='/sale/order/list-bil/detail/:id' element={<MasterDataOrderPassPageSale />} />
           <Route path='/sale/order/histories' element={<HistoryOrderPageSale />} />
           <Route path='/sale/order/history/detail/:id' element={<MasterDataOrderHistoryPageSale />} />
+          <Route path='/sale/order/fail' element={<OrderFailPageSale />} />
+          <Route path='/sale/order/fail/detail/:id' element={<MasterDataOrderFailPageSale />} />
         </Route>
         <Route path='/sale/order/create-pdf/:id' element={<Pdf />} />
       </Routes>

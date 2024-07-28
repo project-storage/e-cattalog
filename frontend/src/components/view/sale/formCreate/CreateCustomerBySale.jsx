@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import userService from '../../../../service/userService';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const CreateCustomerBySale = () => {
   const [formData, setFormData] = useState({
@@ -50,7 +51,6 @@ const CreateCustomerBySale = () => {
 
     try {
       const response = await axios.post('http://localhost:8080/api/customer/create', formData);
-      setSuccess(response.data.msg);
       setFormData({
         title: '',
         firstName: '',
@@ -60,6 +60,15 @@ const CreateCustomerBySale = () => {
         address: '',
         sale: saleInfo._id
       });
+      Swal.fire({
+        icon: 'success',
+        title: 'เพิ่มข้อมูลสำเร็จ!',
+        text: 'Customer created successfully.',
+        timer: 1000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+      navigate('/sale/customers')
     } catch (error) {
       if (error.response && error.response.data) {
         setError(error.response.data.msg);

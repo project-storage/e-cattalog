@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import orderService from '../../../../service/orderService';
 import { useNavigate, useParams } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const MasterDataOrderFail = () => {
     const [orderInfo, setOrderInfo] = useState(null);
@@ -11,9 +15,14 @@ const MasterDataOrderFail = () => {
     const [itemsPerPage] = useState(10);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [loading, setLoading] = useState(true);
-
+    const [temp, setTemp] = useState([]);
+    const [modal, setModal] = useState([]);
     const { id } = useParams();
+
     const navigate = useNavigate();
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => { setOpen(true), console.log(modal) };
+    const handleClose = () => setOpen(false);
 
     useEffect(() => {
         const fetchOrder = async () => {
@@ -34,7 +43,9 @@ const MasterDataOrderFail = () => {
             }
         };
         fetchOrder();
+
     }, [id]);
+
 
     useEffect(() => {
         setCurrentPage(1);
@@ -55,6 +66,42 @@ const MasterDataOrderFail = () => {
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
     };
+
+    const handleChangeDiscount = (currentOrders) => {
+        const Premodal = []
+        const Pre = []
+        var log = ""
+        currentOrders.map((data) => {
+            if (data.product.category._id != log) {
+                Pre.push({ ...data.product.category, discount: data.discount });
+                Premodal.push(
+                    <div className="">
+                        <p>{data.product.category.name}</p>
+                        <input type='number' className='form-control my-2' defaultValue={data.discount} onChange={(e) => { setDiscount(e.target.value, data.product.category) }} />
+                    </div>
+                    
+
+
+                )
+            }
+        })
+        setTemp(Pre);
+        setModal(Premodal)
+    }
+
+    useEffect(() => {
+        console.log(temp)
+    }, [temp])
+
+
+    const setDiscount = (value, id) => {
+        console.log(value, id)
+        temp.map((data, index) => {
+            if (data._id == id) {
+                temp[index].discount = value;
+            }
+        })
+    }
 
     const uniqueCategories = [...new Set(filteredOrders.map(product => product.product.category.name))];
 
@@ -283,6 +330,40 @@ const MasterDataOrderFail = () => {
                                 disabled
                             />
                         </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-12">
+
+                            <Button onClick={() => { handleChangeDiscount(currentOrders), handleOpen() }} className='my-2  form-control'>แก้ไขส่วนลด</Button>
+                            <Modal
+                                className='mt-4'
+                                keepMounted
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="keep-mounted-modal-title"
+                                aria-describedby="keep-mounted-modal-description"
+                            >
+                                <div className="container my-3">
+                                    <div className="row justify-content-center">
+                                        <div className=" col-md-7 rounded py-3  bg-light ">
+                                            <div className="d-flex justify-content-end">
+                                                <Button className='text-dark' onClick={() => { handleClose() }}>X</Button>
+                                            </div>
+                                            <div className="px-4 pb-5">
+                                                {modal}
+
+                                                <button className='btn btn-success form-control' onClick={() => { }}>ยืนยัน</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </Modal>
+                        </div>
+
+
                     </div>
                     {filteredProducts.length > 0 && (
                         <nav aria-label="Page navigation example">

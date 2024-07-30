@@ -137,9 +137,11 @@ const getOrderById = async (req, res) => {
                 path: 'products.product',
                 populate: {
                     path: 'category'
-                }
+                },
+                select:'-image'
             })
-            .populate('sale');
+            .populate('sale')
+            
 
         if (!order) {
             return res.status(404).json({ message: "Order not found" });
@@ -166,7 +168,7 @@ const updateOrder = async (req, res) => {
             status,
             comment,
             date: date ? new Date(date) : Date.now()
-        }, { new: true });
+        }, { new: true })
 
         if (!updatedOrder) {
             return res.status(404).json({ message: "Order not found" });

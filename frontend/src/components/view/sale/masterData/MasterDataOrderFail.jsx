@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Swal from 'sweetalert2'
 
 const MasterDataOrderFail = () => {
     const [orderInfo, setOrderInfo] = useState(null);
@@ -21,7 +22,7 @@ const MasterDataOrderFail = () => {
 
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => { setOpen(true), console.log(modal) };
+    const handleOpen = () => { setOpen(true) };
     const handleClose = () => setOpen(false);
 
     useEffect(() => {
@@ -46,6 +47,9 @@ const MasterDataOrderFail = () => {
 
     }, [id]);
 
+    useEffect(() => {
+        console.log(temp)
+    }, [temp])
 
     useEffect(() => {
         setCurrentPage(1);
@@ -67,41 +71,91 @@ const MasterDataOrderFail = () => {
         setSelectedCategory(event.target.value);
     };
 
-    const handleChangeDiscount = (currentOrders) => {
+    useEffect(() => {
         const Premodal = []
         const Pre = []
         var log = ""
-        currentOrders.map((data) => {
-            if (data.product.category._id != log) {
-                Pre.push({ ...data.product.category, discount: data.discount });
-                Premodal.push(
-                    <div className="">
-                        <p>{data.product.category.name}</p>
-                        <input type='number' className='form-control my-2' defaultValue={data.discount} onChange={(e) => { setDiscount(e.target.value, data.product.category) }} />
-                    </div>
-                    
+        if (Pre.length == 0) {
+            currentOrders.forEach((data) => {
+                if (data.product.category._id !== log) {
 
+                    Pre.push({ ...data.product.category, discount: data.discount });
+                    Premodal.push(
+                        <div className="" key={data.product.category._id}>
+                            <p>{data.product.category.name}</p>
+                            <input
+                                type='number'
+                                className='form-control my-2'
+                                defaultValue={data.discount}
+                                onChange={(e) => { setDiscount(e.target.value, data.product.category._id) }}
+                            />
+                        </div>
+                    )
+                    log = data.product.category._id;  // Update the log variable
+                }
+            });
+        }
 
-                )
-            }
-        })
         setTemp(Pre);
-        setModal(Premodal)
-    }
-
-    useEffect(() => {
-        console.log(temp)
-    }, [temp])
+        setModal(Premodal);
+    }, [orderInfo])
 
 
     const setDiscount = (value, id) => {
-        console.log(value, id)
-        temp.map((data, index) => {
+        const PreTemp = temp.map((data) => {
+            console.log(data._id, " == ", id)
             if (data._id == id) {
-                temp[index].discount = value;
+                return { ...data, discount: parseInt(value) };
             }
-        })
+            return data;
+        });
+        console.log(PreTemp)
+        setTemp(PreTemp);  // Update the state
     }
+
+    const handleSubmitChangeOrder = async () => {
+        const body = orderInfo
+        console.log('Before change:', body)
+        console.log(temp)
+
+        body.products.map((dataBody) => {
+            temp.map((dataTemp) => {
+                if (dataBody.product.category._id == dataTemp._id) {
+                    dataBody.discount = dataTemp.discount // เปลี่ยนค่า discount
+                }
+            })
+        })
+
+        console.log('After change:', body.products)
+        const reqBody = {
+            "products":  body.products,
+            "status":"process"
+        }
+        
+        console.log(reqBody)
+
+        const res = await orderService.updateOrder(id,reqBody)
+        if(res.status == 200){
+            handleClose()
+            Swal.fire({
+                title:"ส่งแก้ไขเสร็จสิ้น",
+                icon:"success",
+                showConfirmButton:false,
+                timer:1000,
+                timerProgressBar:true
+            }).then(()=> {
+                navigate('/sale/order/fail')
+            })
+        }else{
+            Swal.fire({
+                title:"เกิดข้อผิดพลาด",
+                icon:"error",
+                showConfirmButton:false,
+                timer:1000
+            })
+        }
+    }
+
 
     const uniqueCategories = [...new Set(filteredOrders.map(product => product.product.category.name))];
 
@@ -334,7 +388,7 @@ const MasterDataOrderFail = () => {
                     <div className="row">
                         <div className="col-md-12">
 
-                            <Button onClick={() => { handleChangeDiscount(currentOrders), handleOpen() }} className='my-2  form-control'>แก้ไขส่วนลด</Button>
+                            <Button onClick={() => { handleOpen() }} className='my-2  form-control'>แก้ไขส่วนลด</Button>
                             <Modal
                                 className='mt-4'
                                 keepMounted
@@ -352,7 +406,7 @@ const MasterDataOrderFail = () => {
                                             <div className="px-4 pb-5">
                                                 {modal}
 
-                                                <button className='btn btn-success form-control' onClick={() => { }}>ยืนยัน</button>
+                                                <button className='btn btn-success form-control' onClick={() => { handleSubmitChangeOrder() }}>ยืนยัน</button>
                                             </div>
 
                                         </div>

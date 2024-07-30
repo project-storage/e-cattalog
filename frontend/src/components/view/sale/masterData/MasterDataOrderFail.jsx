@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOMServer from 'react-dom/server';
+
 import orderService from '../../../../service/orderService';
 import { useNavigate, useParams } from 'react-router-dom';
-import Box from '@mui/material/Box';
+
+
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2'
 
 const MasterDataOrderFail = () => {
@@ -344,7 +344,9 @@ const MasterDataOrderFail = () => {
                             </p>
                         </div>
                     </div>
+
                     <div className="table-responsive">
+                    <Button onClick={() => { handleOpen() }} className='my-2  form-control'>แก้ไขส่วนลด</Button>
                         <table className="table table-bordered table-gray table-striped text-center">
                             <thead>
                                 <tr>
@@ -388,7 +390,7 @@ const MasterDataOrderFail = () => {
                     <div className="row">
                         <div className="col-md-12">
 
-                            <Button onClick={() => { handleOpen() }} className='my-2  form-control'>แก้ไขส่วนลด</Button>
+                            
                             <Modal
                                 className='mt-4'
                                 keepMounted

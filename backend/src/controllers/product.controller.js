@@ -38,7 +38,6 @@ const getAllProduct = async (req, res) => {
         const products = await productModel
             .find({})
             .populate('category')
-            .select('-image')
             .limit(12)
             .sort({ createdAt: -1 })
 
@@ -72,7 +71,6 @@ const getProductById = async (req, res) => {
     try {
         const { id } = req.params
         const product = await productModel.findById(id)
-            .select('-image')
             .populate("category")
 
         res.status(200).send({

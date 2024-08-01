@@ -106,8 +106,12 @@ const searchStatus = async (req, res) => {
 const searchOrderBySale = async (req, res) => {
     try {
         const { status } = req.query
-
-        const orderBySale = await orderModel.find({sale:req.user._id,status})
+        const query = { sale: req.user._id };
+        
+        if (status) {
+            query.status = status;
+        }
+        const orderBySale = await orderModel.find(query)
             .populate('customer')
             // .populate({
             //     path: 'products.product',

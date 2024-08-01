@@ -36,6 +36,21 @@ const searchOrderHistory = async()=>{
     return http.get('http://localhost:8080/api/order/search/sale/status?status=toCustomer')
 }
 
+const searchOrderHistoryPass = async()=>{
+    return http.get('http://localhost:8080/api/order/search/sale/status?status=pass')
+}
+
+const searchOrderHistoryProcess = async()=>{
+    return http.get('http://localhost:8080/api/order/search/sale/status?status=process')
+}
+
+const searchOrderHistoryFail = async()=>{
+    return http.get('http://localhost:8080/api/order/search/sale/status?status=fail')
+}
+const searchOrderBySale = async ()=>{
+    return http.get('http://localhost:8080/api/order/search/sale/status')
+}
+
 const exportService = {
     createOrder,
     orders,
@@ -44,7 +59,11 @@ const exportService = {
     searchFail,
     orderById,
     updateOrder,
-    searchOrderHistory
+    searchOrderHistory,
+    searchOrderHistoryPass,
+    searchOrderHistoryProcess,
+    searchOrderHistoryFail,
+    searchOrderBySale
 }
 
 export default exportService

@@ -346,7 +346,7 @@ const MasterDataOrderFail = () => {
                     </div>
 
                     <div className="table-responsive">
-                    <Button onClick={() => { handleOpen() }} className='my-2  form-control'>แก้ไขส่วนลด</Button>
+                    <button onClick={() => { handleOpen() }} className='my-2 text-light btn btn-danger  form-control'>แก้ไขส่วนลด</button>
                         <table className="table table-bordered table-gray table-striped text-center">
                             <thead>
                                 <tr>
@@ -389,8 +389,6 @@ const MasterDataOrderFail = () => {
                     </div>
                     <div className="row">
                         <div className="col-md-12">
-
-                            
                             <Modal
                                 className='mt-4'
                                 keepMounted

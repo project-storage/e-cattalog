@@ -28,6 +28,10 @@ const searchPass = async () => {
     return http.get('http://localhost:8080/api/order/search?status=pass')
 }
 
+const searchToCustomer = async () => {
+    return http.get('http://localhost:8080/api/order/search?status=toCustomer')
+}
+
 const searchFail = async () => {
     return http.get('http://localhost:8080/api/order/search?status=fail')
 }
@@ -57,6 +61,7 @@ const exportService = {
     searchPass,
     searchProcess,
     searchFail,
+    searchToCustomer,
     orderById,
     updateOrder,
     searchOrderHistory,

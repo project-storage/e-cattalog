@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
 import AdminLayout from './Layout/AdminLayout'
-import HomePageAdmin from './pages/Admin/HomePageAdmin'
+import DashboardAdmin from './pages/Admin/DashboardAdmin'
 import HomePageSale from './pages/sale/HomePageSale'
 import SaleLayout from './Layout/SaleLayout'
 import Login from './pages/auth/Login'
@@ -45,7 +45,7 @@ const App = () => {
         <Route path='/' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route element={<AdminLayout />}>
-          <Route path='/admin/dashboard' element={<HomePageAdmin />} />
+          <Route path='/admin/dashboard' element={<DashboardAdmin />} />
           <Route path='/admin/products' element={<ProductsPageAdmin />} />
           <Route path='/admin/product/create' element={<CreateProductPageAdmin />} />
           <Route path='/admin/product/edit/:id' element={<EditProductPageAdmin />} />

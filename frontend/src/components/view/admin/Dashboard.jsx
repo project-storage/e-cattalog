@@ -1,21 +1,26 @@
 import React from 'react'
-import CardAdmin from './Card/CardAdmin'
+import CardAdmin from '../../admin/CardAdmin'
+import LineChart from '../../admin/LineChart'
+import DoughnutStatusChart from '../../admin/DoughnutStatusChart'
+import BarChart from '../../admin/BarChat'
 
 const Dashboard = () => {
   return (
     <div className='dashboard-admin'>
-      <div className="content-header">
-        <div className="container-fluid">
-          <div className="row mb-2">
-            <div className="col-sm-6">
-              <h1 className="m-0">Dashboard</h1>
-            </div>
-          </div>
-        </div>
-      </div>
       <section className="content">
         <div className="container-fluid">
           <CardAdmin />
+        </div>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-lg-7 col-12">
+              <LineChart />
+              <BarChart />
+            </div>
+            <div className="col-lg-5 col-12">
+              <DoughnutStatusChart />
+            </div>
+          </div>
         </div>
       </section>
     </div>

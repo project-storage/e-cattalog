@@ -35,7 +35,8 @@ const getAllOrders = async (req, res) => {
                 path: 'products.product',
                 populate: {
                     path: 'category'
-                }
+                },
+                select: '-image'
             })
             .populate('sale');
 
@@ -86,7 +87,8 @@ const searchStatus = async (req, res) => {
                 path: 'products.product',
                 populate: {
                     path: 'category'
-                }
+                },
+                select: '-image'
             })
             .populate('sale'); // Ensure 'sale' is the correct field name and is properly referenced
 
@@ -107,7 +109,7 @@ const searchOrderBySale = async (req, res) => {
     try {
         const { status } = req.query
         const query = { sale: req.user._id };
-        
+
         if (status) {
             query.status = status;
         }
@@ -142,10 +144,10 @@ const getOrderById = async (req, res) => {
                 populate: {
                     path: 'category'
                 },
-                select:'-image'
+                select: '-image'
             })
             .populate('sale')
-            
+
 
         if (!order) {
             return res.status(404).json({ message: "Order not found" });

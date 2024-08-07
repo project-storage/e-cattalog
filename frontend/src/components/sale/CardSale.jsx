@@ -5,16 +5,15 @@ const CardSale = () => {
     const [orderPass, setOrderPass] = useState([])
     const [orderProcess, setOrderProcess] = useState([])
     const [orderFail, setOrderFail] = useState([])
-    const [orderToCustomer , setOrderToCustomer] = useState([])
-    const [customer,setCustomer] = useState([])
-
+    const [orderToCustomer, setOrderToCustomer] = useState([])
+    const [customer, setCustomer] = useState([])
 
     const fetchOrderPass = async () => {
         try {
             const res = await orderService.searchOrderHistoryPass()
             setOrderPass(res.data.data)
         } catch (error) {
-            
+
         }
     }
 
@@ -23,7 +22,7 @@ const CardSale = () => {
             const res = await orderService.searchOrderHistoryProcess()
             setOrderProcess(res.data.data)
         } catch (error) {
-            
+
         }
     }
 
@@ -32,7 +31,7 @@ const CardSale = () => {
             const res = await orderService.searchOrderHistoryFail()
             setOrderFail(res.data.data)
         } catch (error) {
-            
+
         }
     }
 
@@ -41,17 +40,16 @@ const CardSale = () => {
             const res = await orderService.searchOrderHistory()
             setOrderToCustomer(res.data.data)
         } catch (error) {
-            
+
         }
     }
-
 
     const fetchCustomer = async () => {
         try {
             const res = await customerService.customerBysaleId()
             setCustomer(res.data.data)
         } catch (error) {
-            
+
         }
     }
 
@@ -64,7 +62,7 @@ const CardSale = () => {
     }, [])
 
     return (
-        <div>
+        <div className='dashobard-sale'>
             <div className="row">
                 <div className="col-lg-3 col-6">
                     {/* small box */}
@@ -122,7 +120,6 @@ const CardSale = () => {
                     </div>
                 </div>
                 <div className="col-12">
-                    {/* small box */}
                     <div className="small-box bg-info">
                         <div className="inner">
                             <h3>{customer.length}</h3>
@@ -131,7 +128,6 @@ const CardSale = () => {
                         <div className="icon">
                             <i className="ion ion-person" />
                         </div>
-
                     </div>
                 </div>
                 {/* ./col */}

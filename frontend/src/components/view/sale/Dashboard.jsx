@@ -1,11 +1,19 @@
 import React from 'react'
 import CardSale from '../../sale/CardSale'
-import ChartSale from '../../sale/ChartSale'
+import LineChart from '../../sale/LineChart'
+import BarChart from '../../sale/BarChart'
 const Dashboard = () => {
   return (
-    <div className="container mt-2">
+    <div className="p-2">
       <CardSale />
-      <ChartSale />
+      <div className="row">
+        <div className="col-lg-6 ">
+          <LineChart />
+        </div>
+        <div className="col-lg-6 ">
+          <BarChart />
+        </div>
+      </div>
     </div>
   )
 }

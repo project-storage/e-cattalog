@@ -203,7 +203,7 @@ const EditCustomer = () => {
           ยกเลิก
         </button>
         <button type='submit' className='btn btn-primary'>
-          อัปเดตสินค้า
+          แก้ไขข้อมูล
         </button>
       </form>
     </div>

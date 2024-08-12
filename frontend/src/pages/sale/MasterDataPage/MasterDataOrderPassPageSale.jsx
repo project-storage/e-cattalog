@@ -3,8 +3,8 @@ import MasterDataOrderPass from '../../../components/view/sale/masterData/Master
 
 const MasterDataOrderPassPageSale = () => {
   return (
-    <div>
-        <MasterDataOrderPass/>
+    <div className='p-3'>
+      <MasterDataOrderPass />
     </div>
   )
 }

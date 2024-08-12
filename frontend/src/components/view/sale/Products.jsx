@@ -4,6 +4,21 @@ import Swal from 'sweetalert2';
 
 const Products = () => {
     const [cardData, setCardData] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    const fetchProduct = async () => {
+        try {
+            const res = await productService.getAllProduct()
+            setCardData(res.data.data)
+            setLoading(false)
+        } catch (error) {
+            console.error('Error fetching products:', error)
+        }
+    }
+
+    useEffect(() => {
+        fetchProduct()
+    }, [])
 
     const handleAddCard = async (id, name, type, price) => {
         try {
@@ -63,23 +78,15 @@ const Products = () => {
         }
     }
 
-    const fetchProduct = async () => {
-        try {
-            const res = await productService.getAllProduct()
-            setCardData(res.data.data)
-        } catch (error) {
-            console.error('Error fetching products:', error)
-        }
-    }
-
-    useEffect(() => {
-        fetchProduct()
-    }, [])
-
-
     return (
         <>
-            {
+            {loading ? (
+                <div className="d-flex align-items-center justify-content-center" style={{ height: '100vh' }}>
+                    <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                </div>
+            ) : (
                 cardData.map((product, index) => (
                     <div className='col col-md-2 md-2' key={index}>
                         <div className="card" style={{ width: " 18rem;" }}>
@@ -98,7 +105,8 @@ const Products = () => {
                         </div>
                     </div>
                 ))
-            }
+            )}
+
         </>
     )
 }

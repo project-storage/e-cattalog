@@ -21,7 +21,7 @@ const SideNav = () => {
                     icon: 'success',
                     title: 'ออกจากระบบสำเร็จ',
                     text: 'แล้วเจอกันใหม่สวัสดี',
-                    timer: 2000,
+                    timer: 1000,
                     timerProgressBar: true,
                     showConfirmButton: false,
                 })
@@ -61,7 +61,7 @@ const SideNav = () => {
                                 <NavLink to='/sale/dashboard' className="nav-link">
                                     <i className="nav-icon fas fa-tachometer-alt" />
                                     <p>
-                                        หน้าแรก
+                                        แดชบอร์ด
                                     </p>
                                 </NavLink>
                             </li>

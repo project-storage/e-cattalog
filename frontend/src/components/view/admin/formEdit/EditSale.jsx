@@ -186,10 +186,10 @@ const EditSale = () => {
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <button type="button" className="btn btn-secondary mr-1" onClick={handleCancel} disabled={loading}>
-                            Cancel
+                           ยกเลิก
                         </button>
                         <button type="submit" className="btn btn-primary" disabled={loading}>
-                            {loading ? 'Updating...' : 'Update'}
+                            {loading ? 'กำลังแก้ไขข้อมูล...' : 'แก้ไขข้อมูล'}
                         </button>
                     </div>
                 </div>

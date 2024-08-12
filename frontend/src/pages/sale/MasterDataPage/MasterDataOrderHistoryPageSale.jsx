@@ -3,8 +3,8 @@ import MasterDataOrderHistory from '../../../components/view/sale/masterData/Mas
 
 const MasterDataOrderHistoryPageSale = () => {
   return (
-    <div>
-        <MasterDataOrderHistory/>
+    <div className='p-3'>
+      <MasterDataOrderHistory />
     </div>
   )
 }

@@ -12,13 +12,14 @@ const Products = () => {
   const [categories, setCategories] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   const fetchProducts = async () => {
     const res = await productService.getAllProduct()
     setProducts(res.data.data)
     setFilteredProducts(res.data.data)
+    setLoading(false)
   }
 
   const fetchCategories = async () => {
@@ -119,47 +120,56 @@ const Products = () => {
       </div>
       <button className='btn btn-primary mb-3' onClick={handleCreateForm}>เพิ่มข้อมูล</button>
 
-      <div className="table-responsive">
-        <table className="table table-bordered table-gray table-striped text-center">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">รูปภาพ</th>
-              <th scope="col">ชื่อสินค้า</th>
-              <th scope="col">ประเภทสินค้า</th>
-              <th scope="col">รายละเอียด</th>
-              <th scope="col">ราคา</th>
-              <th scope="col">action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentProducts.length > 0 ? (
-              currentProducts.map((product, index) => (
-                <tr key={product._id}>
-                  <td>{indexOfFirstItem + index + 1}</td>
-                  <td>
-                    <img src={`http://localhost:8080/api/product/image/${product._id}`} alt={product.name} className="product-image" style={{ width: '50px', height: '50px' }} />
-                  </td>
-                  <td>{product.name}</td>
-                  <td>{product.category?.name}</td>
-                  <td>{product.description}</td>
-                  <td>{product.price} ฿</td>
-                  <td>
-                    <button className='btn btn-warning mr-1 mt-1' onClick={() => handleEdit(product._id)}>แก้ไข</button>
-                    <button className='btn btn-danger mt-1' onClick={() => handleDelete(product._id)}>ลบ</button>
+      {loading ? (
+        <div className="d-flex align-items-center justify-content-center" style={{ height: '100vh' }}>
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      ) : (
+        <div className="table-responsive">
+          <table className="table table-bordered table-gray table-striped text-center">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">รูปภาพ</th>
+                <th scope="col">ชื่อสินค้า</th>
+                <th scope="col">ประเภทสินค้า</th>
+                <th scope="col">รายละเอียด</th>
+                <th scope="col">ราคา</th>
+                <th scope="col">action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentProducts.length > 0 ? (
+                currentProducts.map((product, index) => (
+                  <tr key={product._id}>
+                    <td>{indexOfFirstItem + index + 1}</td>
+                    <td>
+                      <img src={`http://localhost:8080/api/product/image/${product._id}`} alt={product.name} className="product-image" style={{ width: '50px', height: '50px' }} />
+                    </td>
+                    <td>{product.name}</td>
+                    <td>{product.category?.name}</td>
+                    <td>{product.description}</td>
+                    <td>{product.price} ฿</td>
+                    <td>
+                      <button className='btn btn-warning mr-1 mt-1' onClick={() => handleEdit(product._id)}>แก้ไข</button>
+                      <button className='btn btn-danger mt-1' onClick={() => handleDelete(product._id)}>ลบ</button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="8">
+                    ไม่พบข้อมูล
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="8">
-                  ไม่พบข้อมูล
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+
       {filteredProducts.length > 0 && (
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-end">

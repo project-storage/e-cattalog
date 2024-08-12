@@ -74,7 +74,7 @@ const EditProduct = () => {
         setSuccess('');
       } else {
         setSuccess("Product updated successfully!");
-        
+
         Swal.fire({
           icon: 'success',
           title: 'แก้ไขข้อมูลสำเร็จ!',
@@ -185,7 +185,7 @@ const EditProduct = () => {
           ยกเลิก
         </button>
         <button type='submit' className='btn btn-primary'>
-          อัปเดตสินค้า
+          แก้ไขข้อมูล
         </button>
       </form>
     </div>

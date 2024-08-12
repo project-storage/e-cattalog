@@ -162,7 +162,7 @@ const Profile = () => {
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn-primary mt-4">Update Profile</button>
+                <button type="submit" className="btn btn-primary mt-4">แก้ไขข้อมูล</button>
             </form>
         </div>
     );

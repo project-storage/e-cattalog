@@ -279,7 +279,7 @@ const MasterDataOrderProcess = () => {
                             <p className=' text-center w-25 h-75'>
                                 สถานะ :
                                 <span className='badge badge-pill badge-warning ml-1 p-2'> {orderInfo?.status}</span>
-                                </p>
+                            </p>
                         </div>
                     </div>
                     <div className="table-responsive">
@@ -340,7 +340,7 @@ const MasterDataOrderProcess = () => {
                             />
                         </div>
                         <div className="col-md-4">
-                            <button className='btn btn-danger  mr-2' onClick={() => handleFailOrder(orderInfo._id)}>ออร์เดอร์ผิดพลาด</button>
+                            <button className='btn btn-danger  mr-2' onClick={() => handleFailOrder(orderInfo._id)}>ยืนยันผิดพลาด</button>
                             <button className='btn btn-success ' onClick={() => handleConfirmOrder(orderInfo._id)}>ยืนยันออร์เดอร์</button>
                         </div>
                     </div>

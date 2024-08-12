@@ -111,8 +111,8 @@ const Categories = () => {
                   <th scope="row">{indexOfFirstItem + index + 1}</th>
                   <td>{category.name}</td>
                   <td>
-                    <button className='btn btn-warning mr-1' onClick={() => handleEidt(category._id)}>Edit</button>
-                    <button className='btn btn-danger ' onClick={() => handleDelete(category._id)}>Delete</button>
+                    <button className='btn btn-warning mr-1' onClick={() => handleEidt(category._id)}>แก้ไข</button>
+                    <button className='btn btn-danger ' onClick={() => handleDelete(category._id)}>ลบ</button>
                   </td>
                 </tr>
               ))

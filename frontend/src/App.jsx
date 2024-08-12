@@ -23,6 +23,7 @@ import SalesPageAdmin from './pages/Admin/SalesPageAdmin'
 import CreateSalePageAdmin from './pages/Admin/CreateSalePageAdmin'
 import EditSalePageAdmin from './pages/Admin/formEdit/EditSalePageAdmin'
 import OrderProcessPageAdmin from './pages/Admin/OrderProcessPageAdmin'
+import ProfileAdmin from './pages/Admin/ProfileAdmin'
 
 import OrderPass from './pages/sale/OrderPassPageSale'
 import OrderPassPageAdmin from './pages/Admin/OrderPassPageAdmin'
@@ -36,6 +37,7 @@ import MasterDataOrderHistoryPageSale from './pages/sale/MasterDataPage/MasterDa
 import MasterDataOrderPassPageSale from './pages/sale/MasterDataPage/MasterDataOrderPassPageSale'
 import OrderFailPageSale from './pages/sale/OrderFailPageSale'
 import MasterDataOrderFailPageSale from './pages/sale/MasterDataPage/MasterDataOrderFailPageSale'
+import ProfileSale from './pages/sale/ProfileSale'
 
 const App = () => {
   return (
@@ -63,6 +65,7 @@ const App = () => {
           <Route path='/admin/order/pass/detail/:id' element={<MasterOrderPassPageAdmin />} />
           <Route path='/admin/order/fail' element={<OrderFailPageAdmin />} />
           <Route path='/admin/order/fail/detail/:id' element={<MasterOrderFailPageAdmin />} />
+          <Route path='/admin/profile' element={<ProfileAdmin />} />
         </Route>
         <Route element={<SaleLayout />}>
           <Route path='/sale/dashboard' element={<HomePageSale />} />
@@ -76,6 +79,7 @@ const App = () => {
           <Route path='/sale/order/history/detail/:id' element={<MasterDataOrderHistoryPageSale />} />
           <Route path='/sale/order/fail' element={<OrderFailPageSale />} />
           <Route path='/sale/order/fail/detail/:id' element={<MasterDataOrderFailPageSale />} />
+          <Route path='/sale/profile' element={<ProfileSale />} />
         </Route>
         <Route path='/sale/order/create-pdf/:id' element={<Pdf />} />
       </Routes>

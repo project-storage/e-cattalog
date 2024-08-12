@@ -20,7 +20,7 @@ const EditSale = () => {
     const fetchSale = async () => {
         try {
             const res = await userService.userById(id);
-            console.log(res)
+
             if (res.status === 200) {
                 const user = res.data.data;
                 setTitle(user.title);
@@ -31,7 +31,7 @@ const EditSale = () => {
             } else {
                 setError('Error fetching sale data');
             }
-            
+
         } catch (error) {
             setError('Error fetching sale data');
         }
@@ -185,13 +185,11 @@ const EditSale = () => {
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-6">
+                        <button type="button" className="btn btn-secondary mr-1" onClick={handleCancel} disabled={loading}>
+                            Cancel
+                        </button>
                         <button type="submit" className="btn btn-primary" disabled={loading}>
                             {loading ? 'Updating...' : 'Update'}
-                        </button>
-                    </div>
-                    <div className="form-group col-md-6">
-                        <button type="button" className="btn btn-secondary" onClick={handleCancel} disabled={loading}>
-                            Cancel
                         </button>
                     </div>
                 </div>

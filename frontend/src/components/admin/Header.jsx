@@ -1,33 +1,6 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import Swal from 'sweetalert2'
 
 const Header = () => {
-    const navigate = useNavigate()
-
-    const handleLogout = () => {
-        Swal.fire({
-            icon: 'warning',
-            title: 'แน่ใจแล้วหรอที่จะออกจากระบบ',
-            showCancelButton: true,
-            confirmButtonText: 'กดเพื่อออกจากระบบ',
-            cancelButtonText: 'กดยกเลิกยังไม่แน่ใจ'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                localStorage.removeItem('token')
-                Swal.fire({
-                    icon: 'success',
-                    title: 'ออกจากระบบสำเร็จ',
-                    text: 'แล้วเจอกันใหม่สวัสดี',
-                    timer: 2000,
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                })
-                navigate('/')
-            }
-        })
-    }
-
     return (
         <div>
             {/* Navbar */}
@@ -41,24 +14,9 @@ const Header = () => {
                         <a href="index.php" class="nav-link">ระบบจัดทำใบเสนอราคา</a>
                     </li>
                 </ul>
-                {/* Right navbar links */}
-                <ul className="navbar-nav ml-auto">
-                    {/* Notifications Dropdown Menu */}
-                    <li className="nav-item dropdown">
-                        <div className="btn-group">
-                            <button type="button" className="btn border dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i className="fa fa-cog" />   ตั้งค่า
-                            </button>
-                            <div className="dropdown-menu dropdown-menu-right">
-                                <button className="dropdown-item" type="button"> <i className='fas fa-user-circle' /> ข้อมูลส่วนตัว</button>
-                                <button className="dropdown-item" type="button" onClick={handleLogout}> <i className='far fa-circle text-danger' /> ออกจากระบบ</button>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
             </nav>
             {/* /.navbar */}
-
+            
         </div>
     )
 }

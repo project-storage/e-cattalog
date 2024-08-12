@@ -19,8 +19,12 @@ const userAll = () => {
     return http.get('/api/user/all')
 }
 
-const updateUser = async(id,updateUser) =>{
-    return http.put(`http://localhost:8080/api/user/update/${id}`,updateUser)
+const updateUser = async (id, updateUser) => {
+    return http.put(`http://localhost:8080/api/user/update/${id}`, updateUser)
+}
+
+const updateProfile = async (updateProfile) => {
+    return http.put(`http://localhost:8080/api/user/profile`, updateProfile)
 }
 
 const deleteUser = async (id) => {
@@ -32,6 +36,7 @@ const userService = {
     userAll,
     deleteUser,
     userById,
+    updateProfile,
     updateUser
 }
 

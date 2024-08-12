@@ -13,6 +13,8 @@ userRouter.get('/search', userController.searchUserByRole);
 // Route for getting a user by ID
 userRouter.get('/info/:id', userController.getUserById);
 
+userRouter.put("/profile", authenticateToken, userController.updateProfile)
+
 // Route for updating a user by ID
 userRouter.put('/update/:id', userController.updateUser);
 

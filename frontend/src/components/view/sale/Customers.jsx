@@ -1,34 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import customerService from '../../../service/customerService'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import customerService from '../../../service/customerService';
 
 const Customers = () => {
-  const [customerBySaleId, setCustomerBySaleId] = useState([])
+  const [customerBySaleId, setCustomerBySaleId] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-  const [error, setError] = useState("")
+  const [error, setError] = useState('');
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleCreate = () => {
-    navigate('/sale/customer/create')
-  }
+    navigate('/sale/customer/create');
+  };
 
   const fetchData = async () => {
     try {
-      const res = await customerService.customerBysaleId()
-      setCustomerBySaleId(res.data.data)
+      const res = await customerService.customerBysaleId();
+      setCustomerBySaleId(res.data.data);
       setFilteredCustomers(res.data.data);
     } catch (error) {
-      setError("Failed to fetch customer data.")
+      setError('Failed to fetch customer data.');
     }
-  }
+  };
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value;
@@ -36,10 +37,9 @@ const Customers = () => {
     filterCustomers(searchTerm);
   };
 
-  const filterCustomers = (searchTerm, saleId) => {
+  const filterCustomers = (searchTerm) => {
     let filtered = customerBySaleId;
 
-    // Apply search filter
     if (searchTerm.trim() !== '') {
       filtered = filtered.filter(customer =>
         customer.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -51,10 +51,9 @@ const Customers = () => {
     }
 
     setFilteredCustomers(filtered);
-    setCurrentPage(1); // Reset to first page when filters change
+    setCurrentPage(1);
   };
 
-  // Pagination handlers
   const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
 
   const handlePageClick = (pageNumber) => {
@@ -73,22 +72,37 @@ const Customers = () => {
     }
   };
 
-  // Calculate current page items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentCustomers = filteredCustomers.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Placeholder functions for edit and delete
-  const handleEdit = (customerId) => {
-    // Handle edit logic
-    navigate(`/sale/customer/edit/${customerId}`);
+  const handleEdit = (id) => {
+    navigate(`/sale/customer/eidt/${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await customerService.deleteCustomer(id);
+      fetchData();
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Deleted!',
+        text: 'Customer deleted successfully.',
+        timer: 1000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      setError('An error occurred while deleting the Customer.');
+    }
   };
 
   return (
     <div className='tb-customers'>
       <div className="search-bar mb-3">
-        <div className='row'>
-          <div className="col-sm-10 mt-1">
+        <div className='row justify-content-center'>
+          <div className="col-md-8">
             <input
               type="text"
               className="form-control"
@@ -97,16 +111,19 @@ const Customers = () => {
               onChange={handleSearch}
             />
           </div>
-          <div className="col-sm-2 mt-1">
-            <button className='btn btn-primary' onClick={handleCreate}>เพิ่มข้อมูล</button>
+          <div className="col-md-2">
+            <button className='btn btn-primary btn-block' onClick={handleCreate}>
+              เพิ่มข้อมูล
+            </button>
           </div>
         </div>
       </div>
 
       {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
+
       <div className="table-responsive">
-        <table className="table table-bordered table-gray table-striped text-center">
+        <table className="table table-bordered table-gray table-hover text-center">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -127,7 +144,8 @@ const Customers = () => {
                   <td>{customer.tel}</td>
                   <td>{customer.address}</td>
                   <td>
-                    <button className='btn btn-warning mr-1 mt-1' onClick={() => handleEdit(customer._id)}>แก้ไข</button>
+                    <button className='btn btn-warning btn-sm mr-1 mt-1' onClick={() => handleEdit(customer._id)} title="Edit">แก้ไข</button>
+                    <button className='btn btn-danger btn-sm mt-1' onClick={() => handleDelete(customer._id)} title="Delete">ลบ</button>
                   </td>
                 </tr>
               ))
@@ -139,7 +157,8 @@ const Customers = () => {
           </tbody>
         </table>
       </div>
-      {filteredCustomers.length > 0 && (
+
+      {filteredCustomers.length > 0 && totalPages > 1 && (
         <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-end">
             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
@@ -157,7 +176,7 @@ const Customers = () => {
         </nav>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Customers
+export default Customers;

@@ -82,8 +82,7 @@ const CreateCustomerBySale = () => {
     navigate('/sale/customers')
   }
   return (
-    <div>
-      <h2>Create Customer</h2>
+    <div className='create-customer-sale'>
       {error && <div className="alert alert-danger">{error}</div>}
       {success && <div className="alert alert-success">{success}</div>}
       <form onSubmit={handleSubmit}>

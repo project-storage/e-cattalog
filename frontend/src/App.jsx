@@ -38,6 +38,7 @@ import MasterDataOrderPassPageSale from './pages/sale/MasterDataPage/MasterDataO
 import OrderFailPageSale from './pages/sale/OrderFailPageSale'
 import MasterDataOrderFailPageSale from './pages/sale/MasterDataPage/MasterDataOrderFailPageSale'
 import ProfileSale from './pages/sale/ProfileSale'
+import EditCustomerPageSale from './pages/sale/EditCustomerPageSale'
 
 const App = () => {
   return (
@@ -72,6 +73,7 @@ const App = () => {
           <Route path='/sale/products' element={<ProductPageSale />} />
           <Route path='/sale/customers' element={<CustomerPageSale />} />
           <Route path='/sale/customer/create' element={<CreateCustomerPageSale />} />
+          <Route path='/sale/customer/eidt/:id' element={<EditCustomerPageSale />} />
           <Route path='/sale/cart' element={<Cart />} />
           <Route path='/sale/order/list-bils' element={<OrderPass />} />
           <Route path='/sale/order/list-bil/detail/:id' element={<MasterDataOrderPassPageSale />} />

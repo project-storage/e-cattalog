@@ -65,7 +65,7 @@ const SideNav = () => {
                                     </p>
                                 </NavLink>
                             </li>
-                            <li className="nav-header">จัดการระบบ</li>
+                            <li className="nav-header">จัดการสั่ฃซื้อ</li>
                             <li className="nav-item">
                                 <NavLink to="/sale/products" className="nav-link">
                                     <i className="nav-icon fab fa-product-hunt" />
@@ -82,40 +82,30 @@ const SideNav = () => {
                                     </p>
                                 </NavLink>
                             </li>
+                            <li className="nav-header">จัดการใบเสนอราคา</li>
                             <li className="nav-item">
-                                <a href='#' className='nav-link'>
-                                    <i className="nav-icon fas fa-book" />
+                                <NavLink to="/sale/order/list-bils" className="nav-link">
+                                    <i className="nav-icon fas fa-clipboard-list" />
                                     <p>
-                                        ใบเสนอราคา
-                                        <i className="fas fa-angle-left right" />
+                                        ใบเสนอราคาที่ต้องส่งมอบ
                                     </p>
-                                </a>
-                                <ul className="nav nav-treeview">
-                                    <li className="nav-item">
-                                        <NavLink to="/sale/order/list-bils" className="nav-link">
-                                            <i className="nav-icon fas fa-clipboard-list" />
-                                            <p>
-                                                ใบเสนอราคาที่ต้องส่งมอบ
-                                            </p>
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item">
-                                        <NavLink to="/sale/order/fail" className="nav-link">
-                                            <i className="nav-icon fas fa-clipboard-list" />
-                                            <p>
-                                                ใบเสนอราคาที่ต้องแก้ไข
-                                            </p>
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item">
-                                        <NavLink to="/sale/order/histories" className="nav-link">
-                                            <i className="nav-icon fas fa-clipboard-list" />
-                                            <p>
-                                                ประวัติใบเสนอราคา
-                                            </p>
-                                        </NavLink>
-                                    </li>
-                                </ul>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink to="/sale/order/fail" className="nav-link">
+                                    <i className="nav-icon fas fa-clipboard-list" />
+                                    <p>
+                                        ใบเสนอราคาที่ต้องแก้ไข
+                                    </p>
+                                </NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink to="/sale/order/histories" className="nav-link">
+                                    <i className="nav-icon fas fa-clipboard-list" />
+                                    <p>
+                                        ประวัติใบเสนอราคา
+                                    </p>
+                                </NavLink>
                             </li>
                             <li className="nav-header">จัดการข้อมูล</li>
                             <li className="nav-item">

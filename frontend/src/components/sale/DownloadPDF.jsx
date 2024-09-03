@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Document, Page, Text, View, StyleSheet, Image, Font } from '@react-pdf/renderer';
 import fontRegular from '../../font/Kanit-Regular.ttf'
-
+import United from '../../assets/United.png'
 
 Font.register({
     family: 'Kanit',
@@ -9,6 +9,189 @@ Font.register({
         { src: fontRegular, fontWeight: 'normal' },
     ],
 });
+
+const DownloadPDF = (dataOrder) => {
+    let today = new Date()
+    let type = "jjjjjjj";
+    const [table, setTable] = useState([])
+
+    let Pretable = []
+
+    useEffect(() => {
+        dataOrder.dataOrder.products && dataOrder.dataOrder.products.forEach((data, index) => {
+            console.log(data)
+            if (data.product.category.name != type) {
+                Pretable.push(
+                    <View style={styles.tr}>
+                        <View style={{ width: "100%" }}><Text style={{ fontSize: 10, borderBottom: 1, borderTop: 1, paddingLeft: "10px" }}>{data.product.category.name}</Text></View>
+                    </View>
+                )
+                type = data.product.category.name
+            }
+
+            Pretable.push(<View style={styles.tr} key={index}>
+                <View style={{ width: "10%", borderRight: 1 }}>
+                    <Text style={styles.text}>{index + 1}</Text>
+                </View>
+                <View style={{ width: "30%", borderRight: 1 }}>
+                    <Text style={styles.text}>{data.product.name}</Text>
+                </View>
+                <View style={{ width: "10%", borderRight: 1 }}>
+                    <Text style={styles.text}>{/* ไม่มีข้อมูลที่แสดง */}</Text>
+                </View>
+                <View style={{ width: "10%", borderRight: 1 }}>
+                    <Text style={styles.text}>{data.qty}</Text>
+                </View>
+                <View style={{ width: "10%", borderRight: 1 }}>
+                    <Text style={styles.text}>{/* ไม่มีข้อมูลที่แสดง */}</Text>
+                </View>
+                <View style={{ width: "10%", borderRight: 1 }}>
+                    <Text style={styles.text}>{data.product.price}</Text>
+                </View>
+                <View style={{ width: "5%", borderRight: 1 }}>
+                    <Text style={styles.text}>{data.discount}</Text>
+                </View>
+                <View style={{ width: "15%" }}>
+                    <Text style={styles.text}>{data.finalPrice}</Text>
+                </View>
+            </View>
+            )
+
+        })
+        setTable(Pretable)
+    }, [dataOrder.dataOrder])
+
+    const vat = dataOrder.dataOrder.totalPrice * 0.07
+    const total = parseFloat(dataOrder.dataOrder.totalPrice) + vat
+
+    const date = `${today.getDay()+1}/${(today.getMonth() + 1).toString().padStart(2, "0")}/${today.getFullYear() + 543}`
+    return (
+        <Document>
+            <Page size="A4" style={styles.page}>
+                <View style={styles.header}>
+                    <View style={styles.boxImage}>
+                        <Image src={United} style={styles.company} />
+                    </View>
+                    <View style={styles.boxCompany}>
+                        <Text style={styles.Textcompany}>บริษัท ยูไนเต็ด แมนยูเฟคเจอริ่ง จำกัด </Text>
+                        <Text style={styles.Textcompany}>99/99 หมู่ที่2 ตำบลหอมเกล็ด </Text>
+                        <Text style={styles.Textcompany}>อำเภอสามพราน จังหวัดนครปฐม 73110</Text>
+                        <Text style={styles.Textcompany}>โทรศัพท์ 0-3438-8672-3 โทรสาร 0-3438-8674</Text>
+                    </View>
+                </View>
+                <View style={styles.link}>
+                    <Text style={styles.link}>www.unitedmanufacturing.co.th</Text>
+                </View>
+                <View style={styles.line} />
+                <View style={styles.boxDescCus}>
+                    <View style={styles.boxCustomer}>
+                        <Text style={styles.textCustomer}>Attention :</Text>
+                        <Text style={styles.textCustomer}>Customer : {dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.title} ${dataOrder.dataOrder.customer.firstName} ${dataOrder.dataOrder.customer.lastName}`}</Text>
+                        <Text style={styles.textCustomer}>Address : {dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.address}`}</Text>
+                        <Text style={styles.textCustomer}>Tel.&Fax : {dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.tel}`}</Text>
+                        <Text style={styles.textCustomer}>Email :{dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.email}`}</Text>
+                        <Text style={styles.textCustomer}>Project :{`${dataOrder.dataOrder.project}`}</Text>
+                    </View>
+                    <View style={styles.boxCatagory}>
+                        <Text style={styles.textCatagory}>ใบเสนอราคา</Text>
+                        <Text style={styles.textCatagory}>QUOTATION</Text>
+                        <Text style={{ margin: "10px" }}></Text>
+                        <Text style={styles.textCatagory}>Est. No. :{dataOrder.dataOrder.estNo}</Text>
+                        <Text style={styles.textCatagory}>Date : {date}</Text>
+                    </View>
+                </View>
+                <View>
+                    <Text style={styles.textBold}> บริษัทฯ มีคามยินดีเสนอราคาดังรายละเอียกต่อไปนี้</Text>
+                </View>
+                {/* table start */}
+                <View style={styles.table}>
+                    <View style={styles.tHead}>
+                        <View style={{ width: "10%", borderRight: 1 }}>
+                            <Text style={styles.text}>Item</Text>
+                        </View>
+                        <View style={{ width: "30%", borderRight: 1 }}>
+                            <Text style={styles.text}>Description</Text>
+                        </View>
+                        <View style={{ width: "10%", borderRight: 1 }}>
+                            <Text style={styles.text}>Particle</Text>
+                        </View>
+                        <View style={{ width: "10%", borderRight: 1 }}>
+                            <Text style={styles.text}>Qty</Text>
+                        </View>
+                        <View style={{ width: "10%", borderRight: 1 }}>
+                            <Text style={styles.text}>Unit</Text>
+                        </View>
+                        <View style={{ width: "10%", borderRight: 1 }}>
+                            <Text style={styles.text}>Unit Price</Text>
+                        </View>
+                        <View style={{ width: "5%", borderRight: 1 }}>
+                            <Text style={styles.text}>Dis%</Text>
+                        </View>
+                        <View style={{ width: "15%" }}>
+                            <Text style={styles.text}>Total Price</Text>
+                        </View>
+
+                    </View>
+                    {table}
+
+
+                    <View style={{ borderBottom: 1, borderTop: 1 }}>
+                        <View style={{ width: "100%" }}>
+                            <Text style={{ marginLeft: "15px", fontSize: 10, color: "red" }}>ราคานี้ไม่รวมค่าจัดส่ง</Text>
+                        </View>
+                    </View>
+
+
+                    <View style={styles.tr}>
+                        <View style={{ width: "70%", borderRight: 1 }}>
+                            <Text style={{ paddingLeft: "15px", fontSize: 10, backgroundColor: "#6FBA44" }}>เงื่อนไข  : เครดิต 30 วัน</Text>
+                        </View>
+                        <View style={{ width: "10%", borderRight: 1 }}><Text style={{ fontSize: 10 }}>Total</Text></View>
+                        <View style={{ width: "5%", borderRight: 1 }}></View>
+                        <View style={{ width: "15%" }}>
+                            <Text style={{ textAlign: "right", fontSize: 10 }}>{parseFloat(dataOrder.dataOrder.totalPrice).toFixed([2])}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.tr}>
+                        <View style={{ width: "70%", borderRight: 1, backgroundColor: "#6FBA44" }}>
+                            <Text style={{ marginLeft: "15px", fontSize: 10 }}>Validity  : 7 วัน นับจากวันที่เสนอราคา</Text>
+                        </View>
+                        <View style={{ width: "10%", borderRight: 1 }}>
+                            <Text style={{ fontSize: 10 }}>VAT 7%</Text>
+                        </View>
+                        <View style={{ width: "5%", borderRight: 1 }}></View>
+                        <View style={{ width: "15%" }}>
+                            <Text style={{ textAlign: "right", fontSize: 10 }}>{vat.toFixed([2])}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.tr}>
+                        <View style={{ width: "70%", borderRight: 1, backgroundColor: "#6FBA44" }}>
+                            <Text style={{ marginLeft: "15px", fontSize: 10 }}>หมายเหตุ  : กรณีที่มีการเปลี่ยนแปลงจากรายละเอียดที่เสนอราคาบริษัทขอสงวนสิทธิ์ในการเสนอ</Text>
+                        </View>
+                        <View style={{ width: "15%", borderRight: 1, borderTop: 1 }}><Text style={{ fontSize: 10 }}>Total Amount</Text></View>
+                        <View style={{ width: "15%" }}>
+                            <Text style={{ textAlign: "right", fontSize: 10 }}>{total.toFixed([2])}</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.boxFooter}>
+                    <View style={styles.subBoxFooter}>
+                        <Text style={styles.footer}>.............{dataOrder.dataOrder.sale && `${dataOrder.dataOrder.sale.title}${dataOrder.dataOrder.sale.firstName}  ${dataOrder.dataOrder.sale.lastName}`}................</Text>
+                        <Text style={styles.footer}>Sales Meketinf Director</Text>
+                        <Text style={styles.footer}>Tel: {dataOrder.dataOrder.sale && dataOrder.dataOrder.sale.tel}</Text>
+                    </View>
+                    <View style={styles.subBoxFooter}>
+                        <View style={styles.whFull}>
+                            <Text style={{ fontSize: 10, textAlign: "center" }}>ลงชื่อ........{dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.title}${dataOrder.dataOrder.customer.firstName}  ${dataOrder.dataOrder.customer.lastName}`}.........ผู้สั่งซื้อ</Text>
+                            <Text style={{ fontSize: 10, textAlign: "center" }}>วันที่....{today.getDate()}...../........{(today.getMonth() + 1).toString().padStart(2, "0")}....../....{today.getFullYear() + 543}....</Text>
+                            <Text style={{ fontSize: 10, textAlign: "center" }}>ยืนยันการสั่งซื้อตามรายการนี้</Text>
+                        </View>
+                    </View>
+                </View>
+            </Page>
+        </Document>
+    )
+}
 
 // Create styles
 const styles = StyleSheet.create({
@@ -138,190 +321,5 @@ const styles = StyleSheet.create({
     }
 
 });
-
-
-const DownloadPDF = (dataOrder) => {
-
-    let today = new Date()
-    let type = "jjjjjjj";
-    const [table, setTable] = useState([])
-
-    let Pretable = []
-
-    useEffect(() => {
-        dataOrder.dataOrder.products && dataOrder.dataOrder.products.forEach((data, index) => {
-            console.log(data)
-            if (data.product.category.name != type) {
-                Pretable.push(
-                    <View style={styles.tr}>
-                        <View style={{ width: "100%" }}><Text style={{ fontSize: 10, borderBottom: 1, borderTop: 1, paddingLeft: "10px" }}>{data.product.category.name}</Text></View>
-                    </View>
-                )
-                type = data.product.category.name
-            }
-
-            Pretable.push(<View style={styles.tr} key={index}>
-                <View style={{ width: "10%", borderRight: 1 }}>
-                    <Text style={styles.text}>{index + 1}</Text>
-                </View>
-                <View style={{ width: "30%", borderRight: 1 }}>
-                    <Text style={styles.text}>{data.product.name}</Text>
-                </View>
-                <View style={{ width: "10%", borderRight: 1 }}>
-                    <Text style={styles.text}>{/* ไม่มีข้อมูลที่แสดง */}</Text>
-                </View>
-                <View style={{ width: "10%", borderRight: 1 }}>
-                    <Text style={styles.text}>{data.qty}</Text>
-                </View>
-                <View style={{ width: "10%", borderRight: 1 }}>
-                    <Text style={styles.text}>{/* ไม่มีข้อมูลที่แสดง */}</Text>
-                </View>
-                <View style={{ width: "10%", borderRight: 1 }}>
-                    <Text style={styles.text}>{data.product.price}</Text>
-                </View>
-                <View style={{ width: "5%", borderRight: 1 }}>
-                    <Text style={styles.text}>{data.discount}</Text>
-                </View>
-                <View style={{ width: "15%" }}>
-                    <Text style={styles.text}>{data.finalPrice}</Text>
-                </View>
-            </View>
-            )
-
-        })
-        setTable(Pretable)
-    }, [dataOrder.dataOrder])
-
-    const vat = dataOrder.dataOrder.totalPrice * 0.07
-    const total = parseFloat(dataOrder.dataOrder.totalPrice) + vat
-    return (
-        <Document>
-            <Page size="A4" style={styles.page}>
-                <View style={styles.header}>
-                    <View style={styles.boxImage}>
-                        <Text style={styles.company}>image</Text>
-                    </View>
-                    <View style={styles.boxCompany}>
-                        <Text style={styles.Textcompany}>บริษัท ยูไนเต็ด แมนยูเฟคเจอริ่ง จำกัด </Text>
-                        <Text style={styles.Textcompany}>99/99 หมู่ที่2 ตำบลหอมเกล็ด </Text>
-                        <Text style={styles.Textcompany}>อำเภอสามพราน จังหวัดนครปฐม 73110</Text>
-                        <Text style={styles.Textcompany}>โทรศัพท์ 0-3438-8672-3 โทรสาร 0-3438-8674</Text>
-                    </View>
-                </View>
-                <View style={styles.link}>
-                    <Text style={styles.link}>www.unitedmanufacturing.co.th</Text>
-                </View>
-                <View style={styles.line} />
-                <View style={styles.boxDescCus}>
-                    <View style={styles.boxCustomer}>
-                        <Text style={styles.textCustomer}>Attention :</Text>
-                        <Text style={styles.textCustomer}>Customer : {dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.title} ${dataOrder.dataOrder.customer.firstName} ${dataOrder.dataOrder.customer.lastName}`}</Text>
-                        <Text style={styles.textCustomer}>Address : {dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.address}`}</Text>
-                        <Text style={styles.textCustomer}>Tel.&Fax : {dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.tel}`}</Text>
-                        <Text style={styles.textCustomer}>Email :{dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.email}`}</Text>
-                        <Text style={styles.textCustomer}>Project :{`${dataOrder.dataOrder.project}`}</Text>
-                    </View>
-                    <View style={styles.boxCatagory}>
-                        <Text style={styles.textCatagory}>ใบเสนอราคา</Text>
-                        <Text style={styles.textCatagory}>QUOTATION</Text>
-                        <Text style={{ margin: "10px" }}></Text>
-                        <Text style={styles.textCatagory}>Est. No. :</Text>
-                        <Text style={styles.textCatagory}>Date : {dataOrder.date}</Text>
-
-                    </View>
-                </View>
-                <View>
-                    <Text style={styles.textBold}> บริษัทฯ มีคามยินดีเสนอราคาดังรายละเอียกต่อไปนี้</Text>
-                </View>
-                {/* table start */}
-                <View style={styles.table}>
-                    <View style={styles.tHead}>
-                        <View style={{ width: "10%", borderRight: 1 }}>
-                            <Text style={styles.text}>Item</Text>
-                        </View>
-                        <View style={{ width: "30%", borderRight: 1 }}>
-                            <Text style={styles.text}>Description</Text>
-                        </View>
-                        <View style={{ width: "10%", borderRight: 1 }}>
-                            <Text style={styles.text}>Particle</Text>
-                        </View>
-                        <View style={{ width: "10%", borderRight: 1 }}>
-                            <Text style={styles.text}>Qty</Text>
-                        </View>
-                        <View style={{ width: "10%", borderRight: 1 }}>
-                            <Text style={styles.text}>Unit</Text>
-                        </View>
-                        <View style={{ width: "10%", borderRight: 1 }}>
-                            <Text style={styles.text}>Unit Price</Text>
-                        </View>
-                        <View style={{ width: "5%", borderRight: 1 }}>
-                            <Text style={styles.text}>Dis%</Text>
-                        </View>
-                        <View style={{ width: "15%" }}>
-                            <Text style={styles.text}>Total Price</Text>
-                        </View>
-
-                    </View>
-                    {table}
-
-
-                    <View style={{ borderBottom: 1, borderTop: 1 }}>
-                        <View style={{ width: "100%" }}>
-                            <Text style={{ marginLeft: "15px", fontSize: 10, color: "red" }}>ราคานี้ไม่รวมค่าจัดส่ง</Text>
-                        </View>
-                    </View>
-
-
-                    <View style={styles.tr}>
-                        <View style={{ width: "70%", borderRight: 1 }}>
-                            <Text style={{ paddingLeft: "15px", fontSize: 10, backgroundColor: "#6FBA44" }}>เงื่อนไข  : เครดิต 30 วัน</Text>
-                        </View>
-                        <View style={{ width: "10%", borderRight: 1 }}><Text style={{ fontSize: 10 }}>Total</Text></View>
-                        <View style={{ width: "5%", borderRight: 1 }}></View>
-                        <View style={{ width: "15%" }}>
-                            <Text style={{ textAlign: "right", fontSize: 10 }}>{parseFloat(dataOrder.dataOrder.totalPrice).toFixed([2])}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.tr}>
-                        <View style={{ width: "70%", borderRight: 1, backgroundColor: "#6FBA44" }}>
-                            <Text style={{ marginLeft: "15px", fontSize: 10 }}>Validity  : 7 วัน นับจากวันที่เสนอราคา</Text>
-                        </View>
-                        <View style={{ width: "10%", borderRight: 1 }}>
-                            <Text style={{ fontSize: 10 }}>VAT 7%</Text>
-                        </View>
-                        <View style={{ width: "5%", borderRight: 1 }}></View>
-                        <View style={{ width: "15%" }}>
-                            <Text style={{ textAlign: "right", fontSize: 10 }}>{vat.toFixed([2])}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.tr}>
-                        <View style={{ width: "70%", borderRight: 1, backgroundColor: "#6FBA44" }}>
-                            <Text style={{ marginLeft: "15px", fontSize: 10 }}>หมายเหตุ  : กรณีที่มีการเปลี่ยนแปลงจากรายละเอียดที่เสนอราคาบริษัทขอสงวนสิทธิ์ในการเสนอ</Text>
-                        </View>
-                        <View style={{ width: "15%", borderRight: 1, borderTop: 1 }}><Text style={{ fontSize: 10 }}>Total Amount</Text></View>
-                        <View style={{ width: "15%" }}>
-                            <Text style={{ textAlign: "right", fontSize: 10 }}>{total.toFixed([2])}</Text>
-                        </View>
-                    </View>
-                </View>
-                <View style={styles.boxFooter}>
-                    <View style={styles.subBoxFooter}>
-                        <Text style={styles.footer}>.............{dataOrder.dataOrder.sale && `${dataOrder.dataOrder.sale.firstName} ${dataOrder.dataOrder.sale.lastName}`}................</Text>
-                        <Text style={styles.footer}>Sales Meketinf Director</Text>
-                        <Text style={styles.footer}>{dataOrder.dataOrder.customer && `(${dataOrder.dataOrder.customer.title} ${dataOrder.dataOrder.customer.firstName} ${dataOrder.dataOrder.customer.lastName})`}</Text>
-                        <Text style={styles.footer}>Tel: {dataOrder.dataOrder.customer && dataOrder.dataOrder.customer.tel}</Text>
-                    </View>
-                    <View style={styles.subBoxFooter}>
-                        <View style={styles.whFull}>
-                            <Text style={{ fontSize: 10, textAlign: "center" }}>ลงชื่อ........{dataOrder.dataOrder.customer && `${dataOrder.dataOrder.customer.firstName} ${dataOrder.dataOrder.customer.lastName}`}.........ผู้สั่งซื้อ</Text>
-                            <Text style={{ fontSize: 10, textAlign: "center" }}>วันที่....{today.getDate()}...../........{today.getMonth()}....../....{today.getFullYear()}....</Text>
-                            <Text style={{ fontSize: 10, textAlign: "center" }}>ยืนยันการสั่งซื้อตามรายการนี้</Text>
-                        </View>
-                    </View>
-                </View>
-            </Page>
-        </Document>
-    )
-}
 
 export default DownloadPDF

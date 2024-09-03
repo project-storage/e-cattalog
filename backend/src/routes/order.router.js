@@ -8,6 +8,9 @@ orderRouter.post('/create',authToken, orderController.createOrder);
 // Retrieve all orders
 orderRouter.get('/all', orderController.getAllOrders);
 
+// Retrieve new orders
+orderRouter.get('/new', orderController.getOrderNew);
+
 orderRouter.get('/search', orderController.searchStatus);
 
 orderRouter.get('/search/customer/:customer',orderController.searchByCustomer)

@@ -99,6 +99,7 @@ const HistoryOrder = () => {
                     <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">EstNo</th>
                             <th scope="col">ลูกค้า</th>
                             <th scope="col">สถานะ</th>
                             <th scope="col">เซลล์</th>
@@ -110,6 +111,7 @@ const HistoryOrder = () => {
                             currentOrders.map((order, index) => (
                                 <tr key={order.id}>
                                     <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                                    <td><p >{order.estNo}</p></td>
                                     <td>
                                         {`${order.customer?.title}${order.customer?.firstName} ${order.customer?.lastName}`}
                                     </td>

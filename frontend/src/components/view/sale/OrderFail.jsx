@@ -164,6 +164,7 @@ const OrderFail = () => {
           <thead>
             <tr>
               <th scope="col">#</th>
+              <th scope="col">EstNo</th>
               <th scope="col">ลูกค้า</th>
               <th scope="col">สถานะ</th>
               <th scope="col">comment</th>
@@ -175,16 +176,17 @@ const OrderFail = () => {
               currentOrders.map((order, index) => (
                 <tr key={order.id}>
                   <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                  <td><p>{order.estNo}</p></td>
                   <td>{`${order.customer?.title}${order.customer?.firstName} ${order.customer?.lastName}`}</td>
                   <td><p className='bg-danger'>{order.status}</p></td>
                   <td>{order.comment}</td>
-                  <td><button className='btn btn-warning' onClick={()=> handleOrderDetail(order._id)} >แก้ไขใบเสนอราคา</button></td>
+                  <td><button className='btn btn-warning' onClick={() => handleOrderDetail(order._id)} >แก้ไขใบเสนอราคา</button></td>
 
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="text-center">ไม่พบข้อมูล</td>
+                <td colSpan="6" className="text-center">ไม่พบข้อมูล</td>
               </tr>
             )}
           </tbody>

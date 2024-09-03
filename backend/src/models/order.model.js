@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const orderSchema = new mongoose.Schema({
+    estNo: {
+        type: String
+    },
     customer: {
         type: mongoose.ObjectId,
         ref: "Customer"
@@ -35,7 +38,7 @@ const orderSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['pass', 'process', 'fail','toCustomer'],
+        enum: ['pass', 'process', 'fail', 'toCustomer'],
         required: true
     },
     comment: {

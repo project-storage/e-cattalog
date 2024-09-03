@@ -237,6 +237,7 @@ const MasterDataOrderFail = () => {
                             </p>
                         </div>
                     </div>
+                    <p>EstNo: {orderInfo.estNo}</p>
                     <div className="table-responsive">
                         <table className="table table-bordered table-gray table-striped text-center">
                             <thead>

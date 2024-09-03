@@ -14,6 +14,10 @@ const orders = async () => {
     return http.get('/api/order/all')
 }
 
+const newOrde = async () => {
+    return http.get('/api/order/new')
+}
+
 const orderById = async (id) => {
     return http.get(`/api/order/info/${id}`).then((res) => {
         return res;
@@ -58,6 +62,7 @@ const searchOrderBySale = async ()=>{
 const exportService = {
     createOrder,
     orders,
+    newOrde,
     searchPass,
     searchProcess,
     searchFail,

@@ -55,8 +55,9 @@ const MasterDataOrderPass = () => {
                 const asBlob = await pdf(doc).toBlob();
 
                 const projectName = orderInfo.project || 'project';
+                const estNo = orderInfo.estNo || 'estNo';
                 const customerName = `${orderInfo.customer?.firstName}_${orderInfo.customer?.lastName}`;
-                const fileName = `${projectName}_${customerName}.pdf`;
+                const fileName = `${estNo}_${projectName}_${customerName}.pdf`;
 
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(asBlob);
@@ -307,6 +308,7 @@ const MasterDataOrderPass = () => {
                             </p>
                         </div>
                     </div>
+                    <p>EstNo: {orderInfo.estNo}</p>
                     <div className="table-responsive">
                         <table className="table table-bordered table-gray table-striped text-center">
                             <thead>

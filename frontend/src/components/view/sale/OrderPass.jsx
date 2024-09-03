@@ -59,8 +59,9 @@ const OrderPass = () => {
                 const asBlob = await pdf(doc).toBlob();
 
                 const projectName = order.project || 'project';
+                const estNo = order.estNo || 'estNo';
                 const customerName = `${order.customer?.firstName}_${order.customer?.lastName}`;
-                const fileName = `${projectName}_${customerName}.pdf`;
+                const fileName = `${estNo}_${projectName}_${customerName}.pdf`;
 
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(asBlob);
@@ -93,7 +94,7 @@ const OrderPass = () => {
                 timerProgressBar: true,
                 showConfirmButton: false,
             });
-            navigate('/sale/order/list-bils');
+            navigate('/sale/order/histories');
         } catch (error) {
             console.error("Error updating order status:", error);
             Swal.fire({
@@ -164,6 +165,7 @@ const OrderPass = () => {
                     <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">EstNo</th>
                             <th scope="col">ลูกค้า</th>
                             <th scope="col">สถานะ</th>
                             <th scope="col">เซลล์</th>
@@ -175,6 +177,7 @@ const OrderPass = () => {
                             currentOrders.map((order, index) => (
                                 <tr key={order.id}>
                                     <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                                    <td><p>{order.estNo}</p></td>
                                     <td>{`${order.customer?.title}${order.customer?.firstName} ${order.customer?.lastName}`}</td>
                                     <td><p className='bg-success'>{order.status}</p></td>
                                     <td>{`${order.sale?.title}${order.sale?.firstName} ${order.sale?.lastName}`}</td>
@@ -187,12 +190,11 @@ const OrderPass = () => {
                                             ดาวน์โหลดเอกสาร PDF
                                         </button>
                                     </td>
-
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="5" className="text-center">ไม่พบข้อมูล</td>
+                                <td colSpan="6" className="text-center">ไม่พบข้อมูล</td>
                             </tr>
                         )}
                     </tbody>

@@ -1,10 +1,18 @@
 const orderModel = require('../models/order.model');
 
 const createOrder = async (req, res) => {
-    const { customer, products, date, totalPrice, project } = req.body;
+    const { estNo, customer, products, date, totalPrice, project } = req.body;
     const sale = req.user._id
     try {
+
+        // Check if an order with the same estNo already exists
+        const existsEstNo = await orderModel.findOne({ estNo });
+        if (existsEstNo) {
+            return res.status(400).json({ message: "Order with this estimate number already exists" });
+        }
+
         const newOrder = new orderModel({
+            estNo,
             customer,
             products,
             sale,
@@ -134,6 +142,17 @@ const searchOrderBySale = async (req, res) => {
     }
 }
 
+const getOrderNew = async (req, res) => {
+    try {
+        const getOrder = await orderModel.find().sort({ date: -1 }).limit(1)
+
+        return res.status(200).json({ data: getOrder })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
 const getOrderById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -164,10 +183,11 @@ const getOrderById = async (req, res) => {
 
 const updateOrder = async (req, res) => {
     const { id } = req.params;
-    const { customer, products, sale, date, status, comment } = req.body;
+    const { estNo, customer, products, sale, date, status, comment } = req.body;
 
     try {
         const updatedOrder = await orderModel.findByIdAndUpdate(id, {
+            estNo,
             customer,
             products,
             sale,
@@ -216,6 +236,7 @@ module.exports = {
     searchStatus,
     createOrder,
     getAllOrders,
+    getOrderNew,
     getOrderById,
     updateOrder,
     deleteOrder,

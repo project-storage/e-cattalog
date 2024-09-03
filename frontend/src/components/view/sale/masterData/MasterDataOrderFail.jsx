@@ -344,7 +344,7 @@ const MasterDataOrderFail = () => {
                             </p>
                         </div>
                     </div>
-
+                    <p>EstNo: {orderInfo.estNo}</p>
                     <div className="table-responsive">
                     <button onClick={() => { handleOpen() }} className='my-2 text-light btn btn-danger  form-control'>แก้ไขส่วนลด</button>
                         <table className="table table-bordered table-gray table-striped text-center">

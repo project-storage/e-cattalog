@@ -4,6 +4,7 @@ import fontRegular from '../../font/Kanit-Regular.ttf'
 import { useParams } from 'react-router-dom';
 import orderService from '../../service/orderService'
 import { PDFViewer } from '@react-pdf/renderer';
+import United from '../../assets/United.png'
 
 Font.register({
     family: 'Kanit',
@@ -82,13 +83,14 @@ const Pdf = () => {
     const vat = dataOrder.totalPrice * 0.07
     const total = parseFloat(dataOrder.totalPrice) + vat
 
+    const date = `${today.getDay()+1}/${(today.getMonth() + 1).toString().padStart(2, "0")}/${today.getFullYear() + 543}`
     return (
         <PDFViewer style={{ width: '100%', height: '100vh' }}>
             <Document>
                 <Page size="A4" style={styles.page}>
                     <View style={styles.header}>
                         <View style={styles.boxImage}>
-                            <Text style={styles.company}>image</Text>
+                            <Image src={United} style={styles.company} />
                         </View>
                         <View style={styles.boxCompany}>
                             <Text style={styles.Textcompany}>บริษัท ยูไนเต็ด แมนยูเฟคเจอริ่ง จำกัด </Text>
@@ -114,9 +116,8 @@ const Pdf = () => {
                             <Text style={styles.textCatagory}>ใบเสนอราคา</Text>
                             <Text style={styles.textCatagory}>QUOTATION</Text>
                             <Text style={{ margin: "10px" }}></Text>
-                            <Text style={styles.textCatagory}>Est. No. :</Text>
-                            <Text style={styles.textCatagory}>Date : {dataOrder.date}</Text>
-
+                            <Text style={styles.textCatagory}>Est. No. :{dataOrder.estNo}</Text>
+                            <Text style={styles.textCatagory}>Date : {date}</Text>
                         </View>
                     </View>
                     <View>
@@ -195,15 +196,14 @@ const Pdf = () => {
                     </View>
                     <View style={styles.boxFooter}>
                         <View style={styles.subBoxFooter}>
-                            <Text style={styles.footer}>.............{dataOrder.sale && `${dataOrder.sale.firstName} ${dataOrder.sale.lastName}`}................</Text>
+                            <Text style={styles.footer}>.............{dataOrder.sale && `${dataOrder.sale.title}${dataOrder.sale.firstName}  ${dataOrder.sale.lastName}`}................</Text>
                             <Text style={styles.footer}>Sales Meketinf Director</Text>
-                            <Text style={styles.footer}>{dataOrder.customer && `(${dataOrder.customer.title} ${dataOrder.customer.firstName} ${dataOrder.customer.lastName})`}</Text>
-                            <Text style={styles.footer}>Tel: {dataOrder.customer && dataOrder.customer.tel}</Text>
+                            <Text style={styles.footer}>Tel: {dataOrder.sale && dataOrder.sale.tel}</Text>
                         </View>
                         <View style={styles.subBoxFooter}>
                             <View style={styles.whFull}>
-                                <Text style={{ fontSize: 10, textAlign: "center" }}>ลงชื่อ........{dataOrder.customer && `${dataOrder.customer.firstName} ${dataOrder.customer.lastName}`}.........ผู้สั่งซื้อ</Text>
-                                <Text style={{ fontSize: 10, textAlign: "center" }}>วันที่....{today.getDate()}...../........{today.getMonth()}....../....{today.getFullYear()}....</Text>
+                                <Text style={{ fontSize: 10, textAlign: "center" }}>ลงชื่อ........{dataOrder.customer && `${dataOrder.customer.title}${dataOrder.customer.firstName}  ${dataOrder.customer.lastName}`}.........ผู้สั่งซื้อ</Text>
+                                <Text style={{ fontSize: 10, textAlign: "center" }}>วันที่....{today.getDate()}...../........{(today.getMonth() + 1).toString().padStart(2, "0")}....../....{today.getFullYear() + 543}....</Text>
                                 <Text style={{ fontSize: 10, textAlign: "center" }}>ยืนยันการสั่งซื้อตามรายการนี้</Text>
                             </View>
                         </View>

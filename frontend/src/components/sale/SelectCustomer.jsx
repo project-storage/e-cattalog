@@ -77,10 +77,10 @@ const SelectCustomer = () => {
     });
 
     // Generate new estNo by incrementing the last one
-    const newEstNo = String(parseInt(newOrder) + 1).padStart(8, "0");
+    // const newEstNo = String(parseInt(newOrder) + 1).padStart(8, "0");
 
     const reqBody = {
-      estNo: newEstNo,
+      estNo: newOrder,
       customer: select,
       sale: sale._id,
       products: createData,
@@ -130,7 +130,6 @@ const SelectCustomer = () => {
   };
 
   const newEstNo = String(parseInt(newOrder) + 1).padStart(8, "0");
-
   return (
     <>
       <p>Est No: {newEstNo}</p>

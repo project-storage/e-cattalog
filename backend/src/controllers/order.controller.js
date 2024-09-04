@@ -2,29 +2,38 @@ const orderModel = require('../models/order.model');
 
 const createOrder = async (req, res) => {
     const { estNo, customer, products, date, totalPrice, project } = req.body;
-    const sale = req.user._id
-    try {
+    const sale = req.user._id;
 
-        // Check if an order with the same estNo already exists
-        const existsEstNo = await orderModel.findOne({ estNo });
-        if (existsEstNo) {
-            return res.status(400).json({ message: "Order with this estimate number already exists" });
+    try {
+        const currentYear = new Date().getFullYear().toString().slice(-2);
+        const currentMonth = ('0' + (new Date().getMonth() + 1)).slice(-2);
+        const yearMonth = currentYear + currentMonth;
+
+        // Find the last order created in the same year and month
+        const lastOrder = await orderModel.findOne({ estNo: { $regex: `^${yearMonth}` } })
+                                          .sort({ estNo: -1 });
+
+        let newSequence = '0001'; // Default sequence if no order exists
+        if (lastOrder) {
+            const lastSequence = parseInt(lastOrder.estNo.slice(-4), 10);
+            newSequence = ('0000' + (lastSequence + 1)).slice(-4);
         }
 
+        const newEstNo = yearMonth + newSequence;
+
         const newOrder = new orderModel({
-            estNo,
+            estNo: newEstNo,
             customer,
             products,
             sale,
             totalPrice,
             status: "process",
             project,
-            date: date ? new Date(date) : Date.now()
+            date: date ? new Date(date) : Date.now(),
         });
 
         await newOrder.save();
 
-        // console.log(newOrder)
         res.status(201).json({
             msg: "Order Created Successfully",
             data: newOrder,
@@ -34,6 +43,7 @@ const createOrder = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
 
 const getAllOrders = async (req, res) => {
     try {

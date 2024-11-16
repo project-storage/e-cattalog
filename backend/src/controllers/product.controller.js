@@ -38,11 +38,12 @@ const getAllProduct = async (req, res) => {
         const products = await productModel
             .find({})
             .populate('category')
-            .limit(12)
-            .sort({ createdAt: -1 })
+            .sort({ createdAt: -1 });
 
-        // console.log(products)
-        res.status(200).json({ data: products })
+        // Get the count of all products
+        const count = await productModel.countDocuments();
+
+        res.status(200).json({ data: products, count });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });

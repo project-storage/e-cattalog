@@ -9,6 +9,11 @@ const Products = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [loading, setLoading] = useState(true);
 
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
+    const totalPages = Math.ceil(cardData.length / itemsPerPage);
+
     const fetchProduct = async () => {
         try {
             const res = await productService.getAllProduct();
@@ -91,6 +96,24 @@ const Products = () => {
         ? cardData.filter(product => product.category?._id === selectedCategory)
         : cardData;
 
+    // Paginated Products
+    const paginatedProducts = filteredProducts.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const handlePageClick = (page) => {
+        setCurrentPage(page);
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    };
+
     return (
         <div className="container my-4">
             <div className="row mb-4">
@@ -117,7 +140,7 @@ const Products = () => {
                 </div>
             ) : (
                 <div className="row">
-                    {filteredProducts.map((product, index) => (
+                    {paginatedProducts.map((product, index) => (
                         <div className='col-lg-3 col-md-4 col-sm-6 mb-4' key={index}>
                             <div className="card shadow-sm h-100">
                                 <img
@@ -136,6 +159,25 @@ const Products = () => {
                         </div>
                     ))}
                 </div>
+            )}
+
+            {/* Pagination Controls */}
+            {filteredProducts.length > itemsPerPage && (
+                <nav aria-label="Page navigation example">
+                    <ul className="pagination justify-content-end">
+                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                            <button className="page-link" onClick={handlePreviousPage}>Previous</button>
+                        </li>
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                                <button className="page-link" onClick={() => handlePageClick(index + 1)}>{index + 1}</button>
+                            </li>
+                        ))}
+                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                            <button className="page-link" onClick={handleNextPage}>Next</button>
+                        </li>
+                    </ul>
+                </nav>
             )}
         </div>
     )

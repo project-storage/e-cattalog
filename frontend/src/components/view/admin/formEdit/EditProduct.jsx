@@ -67,7 +67,7 @@ const EditProduct = () => {
     }
 
     try {
-      const { data } = await axios.put(`http://localhost:8080/api/product/update/${id}`, updateProduct);
+      const { data } = await axios.put(`https://e-cattalog-backend.onrender.com/api/product/update/${id}`, updateProduct);
 
       if (data?.success) {
         setError('Faile updating product.');
@@ -173,7 +173,7 @@ const EditProduct = () => {
           ) : (
             <div className='text-center'>
               <img
-                src={`http://localhost:8080/api/product/image/${id}`}
+                src={`https://e-cattalog-backend.onrender.com/api/product/image/${id}`}
                 alt='product_image'
                 height={'200px'}
                 className='img img-responsive'

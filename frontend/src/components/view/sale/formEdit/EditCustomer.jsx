@@ -71,7 +71,7 @@ const EditCustomer = () => {
         sale,
       };
 
-      const { data } = await axios.put(`http://localhost:8080/api/customer/update/${id}`, updatedCustomer);
+      const { data } = await axios.put(`https://e-cattalog-backend.onrender.com/api/customer/update/${id}`, updatedCustomer);
 
       if (data?.success) {
         setError('Failed updating customer.');

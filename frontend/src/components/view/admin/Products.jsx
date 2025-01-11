@@ -146,7 +146,7 @@ const Products = () => {
                   <tr key={product._id}>
                     <td>{indexOfFirstItem + index + 1}</td>
                     <td>
-                      <img src={`http://localhost:8080/api/product/image/${product._id}`} alt={product.name} className="product-image" style={{ width: '50px', height: '50px' }} />
+                      <img src={`https://e-cattalog-backend.onrender.com/api/product/image/${product._id}`} alt={product.name} className="product-image" style={{ width: '50px', height: '50px' }} />
                     </td>
                     <td>{product.name}</td>
                     <td>{product.category?.name}</td>

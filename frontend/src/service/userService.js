@@ -20,11 +20,11 @@ const userAll = () => {
 }
 
 const updateUser = async (id, updateUser) => {
-    return http.put(`http://localhost:8080/api/user/update/${id}`, updateUser)
+    return http.put(`https://e-cattalog-backend.onrender.com/api/user/update/${id}`, updateUser)
 }
 
 const updateProfile = async (updateProfile) => {
-    return http.put(`http://localhost:8080/api/user/profile`, updateProfile)
+    return http.put(`https://e-cattalog-backend.onrender.com/api/user/profile`, updateProfile)
 }
 
 const deleteUser = async (id) => {

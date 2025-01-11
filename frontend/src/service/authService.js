@@ -8,7 +8,7 @@ const register = (registerData) => {
     return http.post('/api/auth/register', registerData)
 }
 
-const registerAdmin = (userData) => {
+const registerAdmin = (registerData) => {
     return http.post('/api/auth/register/admin', registerData)
 }
 

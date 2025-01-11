@@ -145,7 +145,7 @@ const Products = () => {
                             <div className="card shadow-sm h-100">
                                 <img
                                     className='card-img-top'
-                                    src={`http://localhost:8080/api/product/image/${product._id}`}
+                                    src={`https://e-cattalog-backend.onrender.com/api/product/image/${product._id}`}
                                     alt={product.name}
                                     style={{ height: '200px', objectFit: 'cover' }}
                                 />

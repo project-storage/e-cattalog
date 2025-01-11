@@ -1,12 +1,12 @@
 import http from './http-common'
 
 const createOrder = async (createData) => {
-    return http.post(`http://localhost:8080/api/order/create`, createData)
+    return http.post(`https://e-cattalog-backend.onrender.com/api/order/create`, createData)
 
 }
 
 const updateOrder = async (id, updateOrder) => {
-    return http.put(`http://localhost:8080/api/order/update/${id}`, updateOrder)
+    return http.put(`https://e-cattalog-backend.onrender.com/api/order/update/${id}`, updateOrder)
 
 }
 
@@ -25,38 +25,38 @@ const orderById = async (id) => {
 }
 
 const searchProcess = async () => {
-    return http.get('http://localhost:8080/api/order/search?status=process')
+    return http.get('https://e-cattalog-backend.onrender.com/api/order/search?status=process')
 }
 
 const searchPass = async () => {
-    return http.get('http://localhost:8080/api/order/search?status=pass')
+    return http.get('https://e-cattalog-backend.onrender.com/api/order/search?status=pass')
 }
 
 const searchToCustomer = async () => {
-    return http.get('http://localhost:8080/api/order/search?status=toCustomer')
+    return http.get('https://e-cattalog-backend.onrender.com/api/order/search?status=toCustomer')
 }
 
 const searchFail = async () => {
-    return http.get('http://localhost:8080/api/order/search?status=fail')
+    return http.get('https://e-cattalog-backend.onrender.com/api/order/search?status=fail')
 }
 
 const searchOrderHistory = async()=>{
-    return http.get('http://localhost:8080/api/order/search/sale/status?status=toCustomer')
+    return http.get('https://e-cattalog-backend.onrender.com/api/order/search/sale/status?status=toCustomer')
 }
 
 const searchOrderHistoryPass = async()=>{
-    return http.get('http://localhost:8080/api/order/search/sale/status?status=pass')
+    return http.get('https://e-cattalog-backend.onrender.com/api/order/search/sale/status?status=pass')
 }
 
 const searchOrderHistoryProcess = async()=>{
-    return http.get('http://localhost:8080/api/order/search/sale/status?status=process')
+    return http.get('https://e-cattalog-backend.onrender.com/api/order/search/sale/status?status=process')
 }
 
 const searchOrderHistoryFail = async()=>{
-    return http.get('http://localhost:8080/api/order/search/sale/status?status=fail')
+    return http.get('https://e-cattalog-backend.onrender.com/api/order/search/sale/status?status=fail')
 }
 const searchOrderBySale = async ()=>{
-    return http.get('http://localhost:8080/api/order/search/sale/status')
+    return http.get('https://e-cattalog-backend.onrender.com/api/order/search/sale/status')
 }
 
 const exportService = {

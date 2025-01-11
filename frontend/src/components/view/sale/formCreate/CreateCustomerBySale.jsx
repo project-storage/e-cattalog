@@ -50,7 +50,7 @@ const CreateCustomerBySale = () => {
     setSuccess('');
 
     try {
-      const response = await axios.post('http://localhost:8080/api/customer/create', formData);
+      const response = await axios.post('https://e-cattalog-backend.onrender.com/api/customer/create', formData);
       setFormData({
         title: '',
         firstName: '',

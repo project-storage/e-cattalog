@@ -48,7 +48,7 @@ const CreateProduct = () => {
             productData.append("image", image);
 
             const { data } = await axios.post(
-                'http://localhost:8080/api/product/create',
+                'https://e-cattalog-backend.onrender.com/api/product/create',
                 productData
             );
 

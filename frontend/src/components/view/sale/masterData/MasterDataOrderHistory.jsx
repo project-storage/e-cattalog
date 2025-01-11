@@ -27,6 +27,7 @@ const MasterDataOrderHistory = () => {
                     setError('Error fetching order data');
                     setLoading(false);
                 }
+                console.log(res.data.data); 
             } catch (error) {
                 console.error("Error fetching order:", error);
                 setError('Error fetching order data');

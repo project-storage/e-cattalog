@@ -46,14 +46,6 @@ const SideNav = () => {
         <div>
             <aside className="main-sidebar sidebar-dark-primary elevation-4">
                 <div className="sidebar">
-                    {userInfo && (
-                        <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-                            <div className="info">
-                                <h5 className="d-block bg-dark">{userInfo.title}{userInfo.firstName} {userInfo.lastName}</h5>
-                                <p className="d-block text-center bg-dark">สถานะ: <span className='bg-success p-1'>{userInfo.role}</span></p>
-                            </div>
-                        </div>
-                    )}
                     <nav className="mt-2">
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li className="nav-item">

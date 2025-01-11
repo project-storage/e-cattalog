@@ -19,6 +19,7 @@
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "frontend": "file:",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
     "pdfmake": "^0.2.10",
